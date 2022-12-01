@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 type accumulator = { previous: string[][], current: string[] };
 
 function mostCalories(calories: string[]): number {
-  const groupByElves = _.flow(
+  const groupByEmptyLine = _.flow(
     _.reduce((acc: accumulator, current: string) => {
       if (current)
         return {...acc, current: [...acc.current, current]};
@@ -12,7 +12,7 @@ function mostCalories(calories: string[]): number {
     (acc: accumulator) => [...acc.previous, acc.current],
   );
   return _.flow(
-    groupByElves,
+    groupByEmptyLine,
     _.map(_.map(parseInt)),
     _.map(_.sum),
     _.sum,
