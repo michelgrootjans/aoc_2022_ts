@@ -15,7 +15,7 @@ const mostCalories = _.flow(
   groupByEmptyLine,
   _.map(_.map(parseInt)),
   _.map(_.sum),
-  _.sum,
+  _.max,
 );
 
 it('no input', () => {
@@ -38,6 +38,6 @@ it('one calorie and empty', () => {
   expect(mostCalories(['1000', ''])).toEqual(1000);
 });
 
-xit('two elves', () => {
+it('two elves', () => {
   expect(mostCalories(['1000', '', '2000'])).toEqual(2000);
 });
