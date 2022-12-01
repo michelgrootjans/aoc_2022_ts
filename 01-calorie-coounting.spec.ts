@@ -15,6 +15,11 @@ const caloriesByElves = _.flow(
   _.map(_.sum),
 );
 
+const fromHighToLow = _.flow(
+    _.sortBy(_.identity),
+    _.reverse,
+);
+
 const mostCalories = _.flow(
   caloriesByElves,
   _.max,
@@ -22,8 +27,7 @@ const mostCalories = _.flow(
 
 const topThree = _.flow(
   caloriesByElves,
-  _.sortBy(_.identity),
-  _.reverse,
+  fromHighToLow,
   _.take(3),
   _.sum,
 );
