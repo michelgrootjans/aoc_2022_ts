@@ -11,12 +11,12 @@ const groupByEmptyLine = _.flow(
     return {previous: [...acc.previous, acc.current], current: []};
   }, {previous: [], current: []}),
   (acc: accumulator) => [...acc.previous, acc.current],
+  _.map(_.map(parseInt)),
+  _.map(_.sum),
 );
 
 const mostCalories = _.flow(
   groupByEmptyLine,
-  _.map(_.map(parseInt)),
-  _.map(_.sum),
   _.max,
 );
 
