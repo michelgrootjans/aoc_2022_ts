@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "jest": {
+    "preset": "ts-jest"
+  },
   "dependencies": {
     "lodash": "^4.17.21"
   },
