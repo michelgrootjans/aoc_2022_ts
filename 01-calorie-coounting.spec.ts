@@ -1,5 +1,16 @@
-import {countCalories} from "./01-calorie-coounting";
+import _ from 'lodash/fp'
 
-it('should work', () => {
-  expect(countCalories()).toEqual(0);
+function mostCalories(calories: string[]): number {
+  return _.flow(
+    _.map(parseInt),
+    _.sum
+  )(calories);
+}
+
+it('no input', () => {
+  expect(mostCalories([])).toEqual(0);
+});
+
+it('one calorie', () => {
+  expect(mostCalories(['1000'])).toEqual(1000);
 });
