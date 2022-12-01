@@ -80,4 +80,5 @@ it('the example', () => {
 it('my exercise', () => {
   const input = readFileSync('./01-input.txt', 'utf-8').split(/\r?\n/);
   expect(mostCalories(input)).toEqual(70698);
+  expect(topThree(input)).toEqual(206643);
 });
