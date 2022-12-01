@@ -4,7 +4,7 @@ import {readFileSync} from "fs";
 
 type accumulator = { previous: string[][], current: string[] };
 
-const groupByEmptyLine = _.flow(
+const caloriesByElves = _.flow(
   _.reduce((acc: accumulator, current: string) => {
     if (current)
       return {...acc, current: [...acc.current, current]};
@@ -16,8 +16,16 @@ const groupByEmptyLine = _.flow(
 );
 
 const mostCalories = _.flow(
-  groupByEmptyLine,
+  caloriesByElves,
   _.max,
+);
+
+const topThree = _.flow(
+  caloriesByElves,
+  _.sortBy(_.identity),
+  _.reverse,
+  _.take(3),
+  _.sum,
 );
 
 it('no input', () => {
@@ -66,6 +74,7 @@ it('the example', () => {
     '10000', // 10000
   ];
   expect(mostCalories(example)).toEqual(24000);
+  expect(topThree(example)).toEqual(45000);
 });
 
 it('my exercise', () => {
