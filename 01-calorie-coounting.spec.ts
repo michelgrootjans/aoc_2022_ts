@@ -1,4 +1,6 @@
 import _ from 'lodash/fp'
+import {readFileSync} from "fs";
+
 
 type accumulator = { previous: string[][], current: string[] };
 
@@ -44,4 +46,9 @@ it('two elves', () => {
 
 it('two elves with multiple calories', () => {
   expect(mostCalories(['1000', '1000', '', '2000', '2000'])).toEqual(4000);
+});
+
+it('my exercise', () => {
+  const input = readFileSync('./01-input.txt', 'utf-8').split(/\r?\n/);
+  expect(mostCalories(input)).toEqual(70698);
 });
