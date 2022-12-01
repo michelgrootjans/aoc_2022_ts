@@ -1,9 +1,18 @@
 import _ from 'lodash/fp'
 
+type accumulator = { previous: string[][], current: string[] };
+
 function mostCalories(calories: string[]): number {
   return _.flow(
-    _.map(parseInt),
-    _.sum
+    _.reduce((acc: accumulator, current: string) => {
+      if (current)
+        return {...acc, current: [...acc.current, current]};
+      return {previous: [...acc.previous, acc.current], current: []};
+    }, {previous: [], current: []}),
+    (acc: accumulator) => [...acc.previous, acc.current],
+    _.map(_.map(parseInt)),
+    _.map(_.sum),
+    _.sum,
   )(calories);
 }
 
@@ -21,4 +30,8 @@ it('one calorie', () => {
 
 it('two calories', () => {
   expect(mostCalories(['1000', '1000'])).toEqual(2000);
+});
+
+it('one calorie and empty', () => {
+  expect(mostCalories(['1000', ''])).toEqual(1000);
 });
