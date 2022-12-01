@@ -41,3 +41,7 @@ it('one calorie and empty', () => {
 it('two elves', () => {
   expect(mostCalories(['1000', '', '2000'])).toEqual(2000);
 });
+
+it('two elves with multiple calories', () => {
+  expect(mostCalories(['1000', '1000', '', '2000', '2000'])).toEqual(4000);
+});
