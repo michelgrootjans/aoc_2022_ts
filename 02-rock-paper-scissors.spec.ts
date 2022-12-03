@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import {input} from "./02-input";
 
 function score(left: string, right: string): number {
     const moveScore = {X: 1, Y: 2, Z: 3}[right] || 0;
@@ -7,8 +8,7 @@ function score(left: string, right: string): number {
         AX: 3, BY: 3, CZ: 3,
         AZ: 0, BX: 0, CY: 0,
     }[left + right] || 0;
-    const score = moveScore + winScore;
-    return score;
+    return moveScore + winScore;
 }
 
 function totalScore(hands: string[][]): number {
@@ -29,4 +29,5 @@ it('CY', () => expect(score('C', 'Y')).toEqual(2 + 0));
 it('CZ', () => expect(score('C', 'Z')).toEqual(3 + 3));
 
 it('example', () => expect(totalScore([['A', 'Y'], ['B', 'X'], ['C', 'Z']])).toEqual(8 + 1 + 6));
+it('input', () => expect(totalScore(input)).toEqual(11386));
 
