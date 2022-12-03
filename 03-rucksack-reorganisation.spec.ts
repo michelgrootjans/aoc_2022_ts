@@ -9,6 +9,16 @@ function commonItem(contents: string) {
     throw `no common elements found in rucksack with [${contents}]`;
 }
 
-it('pp', () => expect(commonItem('pp')).toEqual('p'));
-it('aa', () => expect(commonItem('aa')).toEqual('a'));
-it('vJrwpWtwJgWrhcsFMMfFFhFp', () => expect(commonItem('vJrwpWtwJgWrhcsFMMfFFhFp')).toEqual('p'));
+it.each([
+    ['a', 'aa'],
+    ['p', 'pp'],
+    ['p', 'vJrwpWtwJgWrhcsFMMfFFhFp'],
+])("'%s' is common in '%s'", (common, contents) => expect(commonItem(contents)).toEqual(common));
+
+function priorityOf(item: string) {
+    return 1;
+}
+
+it.each([
+    ['a', 1],
+])("'%s' has prioroty %d", (item, priority) => expect(priorityOf(item)).toEqual(priority));
