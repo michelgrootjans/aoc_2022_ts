@@ -16,9 +16,14 @@ it.each([
 ])("'%s' is common in '%s'", (common, contents) => expect(commonItem(contents)).toEqual(common));
 
 function priorityOf(item: string) {
-    return 1;
+    if(item >= 'a') return 1 + (item.charCodeAt(0) - 'a'.charCodeAt(0));
+    return 27 + (item.charCodeAt(0) - 'A'.charCodeAt(0));
 }
 
 it.each([
     ['a', 1],
+    ['b', 2],
+    ['z', 26],
+    ['A', 26 + 1],
+    ['Z', 26 + 26],
 ])("'%s' has prioroty %d", (item, priority) => expect(priorityOf(item)).toEqual(priority));
