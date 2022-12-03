@@ -27,7 +27,7 @@ it.each([
     ['z', 26],
     ['A', 26 + 1],
     ['Z', 26 + 26],
-])("'%s' has prioroty %d", (item, priority) => expect(priorityOf(item)).toEqual(priority));
+])("'%s' has priority %d", (item, priority) => expect(priorityOf(item)).toEqual(priority));
 
 const sumOfPriorities = _.flow(
     _.map(commonItem),
@@ -35,7 +35,7 @@ const sumOfPriorities = _.flow(
     _.sum,
 );
 
-it('example', () => {
+it('example - part 1', () => {
     expect(sumOfPriorities([
         'vJrwpWtwJgWrhcsFMMfFFhFp',
         'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
@@ -47,4 +47,5 @@ it('example', () => {
     ])).toEqual(16 + 38 + 42 + 22 + 20 + 19);
 });
 
-it('example', () => expect(sumOfPriorities(input)).toEqual(8243));
+it('input - part 1', () => expect(sumOfPriorities(input)).toEqual(8243));
+
