@@ -1,5 +1,5 @@
 import {readFileSync} from "fs";
-import {mostCalories, topThree} from "./01-calorie-coounting";
+import {mostCalories, topThree} from "./01-calorie-counting";
 
 it('one calorie', () => {
   expect(mostCalories(['1000'])).toEqual(1000);

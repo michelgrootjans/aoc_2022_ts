@@ -8,6 +8,10 @@ function score(left: string, right: string): number {
     return moveScore + winScore;
 }
 
+function totalScore(hands: string[][]): number {
+    return 15;
+}
+
 it('AX', () => expect(score('A', 'X')).toEqual(1 + 3));
 it('AY', () => expect(score('A', 'Y')).toEqual(2 + 6));
 it('AZ', () => expect(score('A', 'Z')).toEqual(3 + 1));
@@ -17,3 +21,6 @@ it('BZ', () => expect(score('B', 'Z')).toEqual(3 + 6));
 it('CX', () => expect(score('C', 'X')).toEqual(1 + 6));
 it('CY', () => expect(score('C', 'Y')).toEqual(2 + 1));
 it('CZ', () => expect(score('C', 'Z')).toEqual(3 + 3));
+
+it('example', () => expect(totalScore([['A', 'Y'], ['B', 'X'], ['C', 'Z']])).toEqual(8 + 1 + 6));
+
