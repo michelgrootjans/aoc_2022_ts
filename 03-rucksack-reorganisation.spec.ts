@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import {input} from "./03-input";
 
 function commonItem(contents: string) {
     const half = contents.length / 2;
@@ -45,3 +46,5 @@ it('example', () => {
 
     ])).toEqual(16 + 38 + 42 + 22 + 20 + 19);
 });
+
+it('example', () => expect(sumOfPriorities(input)).toEqual(8243));
