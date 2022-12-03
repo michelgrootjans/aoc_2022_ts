@@ -49,3 +49,29 @@ it('example - part 1', () => {
 
 it('input - part 1', () => expect(sumOfPriorities(input)).toEqual(8243));
 
+const sumOfBadges = _.flow(
+    _.chunk(3),
+    _.map(([one, two, three]: string[]) => {
+        for (const element of one) {
+            if (two.includes(element) && three.includes(element)) return element;
+        }
+        throw `no common elements found in groups with [${one}, ${two}, ${three}]`;
+    }),
+    _.map(priorityOf),
+    _.sum
+);
+
+it('example - part 2', () => {
+    expect(sumOfBadges([
+        'vJrwpWtwJgWrhcsFMMfFFhFp',
+        'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
+        'PmmdzqPrVvPwwTWBwg',
+
+        'wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn',
+        'ttgJtRGJQctTZtZT',
+        'CrZsJsPPZsGzwwsLwLmpwMDw',
+
+    ])).toEqual(18 + 52);
+});
+
+it('input - part 2', () => expect(sumOfBadges(input)).toEqual(2631));
