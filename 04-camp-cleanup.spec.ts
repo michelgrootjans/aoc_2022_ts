@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import {input} from "./04-input";
 
 class Section {
     private start: number;
@@ -47,7 +48,7 @@ function countOverlaps(example: string[][]): number {
     )(example);
 }
 
-it('example', () => {
+it('example - part 1', () => {
     const example = [
         ['2-4','6-8'],
         ['2-3','4-5'],
@@ -57,4 +58,8 @@ it('example', () => {
         ['2-6','4-8'],
     ]
     expect(countOverlaps(example)).toBe(2);
+});
+
+it('input - part 1', () => {
+    expect(countOverlaps(input)).toBe(515);
 });
