@@ -13,33 +13,38 @@ class Section {
         this.end = split[1];
     }
 
-    overlaps(that: Section) {
-        return this.start <= that.end && that.end <= this.end
+    containsFully(that: Section) {
+        return this.start <= that.start && that.end <= this.end
     }
 }
 
-function overlaps([leftIds, rightIds]: string[]): boolean {
+function containsFully([leftIds, rightIds]: string[]): boolean {
     const left = new Section(leftIds)
     const right = new Section(rightIds)
-    return left.overlaps(right) || right.overlaps(left);
+    const a = left.containsFully(right);
+    const b = right.containsFully(left);
+    return a || b;
 }
 
 it.each([
     ['1-1', '2-2'],
     ['2-2', '1-1'],
 ])("%s don't overlap", (left, right) => {
-    expect(overlaps([left, right])).toBeFalsy();
+    expect(containsFully([left, right])).toBeFalsy();
 });
 
 it.each([
     ['1-2', '1-1'],
     ['1-1', '1-2'],
 ])('%s overlaps', (left, right) => {
-    expect(overlaps([left, right])).toBeTruthy();
+    expect(containsFully([left, right])).toBeTruthy();
 });
 
-function containsFully(example: string[][]): number {
-    return 2;
+function countOverlaps(example: string[][]): number {
+    return _.flow(
+        _.filter(containsFully),
+        _.size
+    )(example);
 }
 
 it('example', () => {
@@ -51,5 +56,5 @@ it('example', () => {
         ['6-6','4-6'],
         ['2-6','4-8'],
     ]
-    expect(containsFully(example)).toBe(2);
+    expect(countOverlaps(example)).toBe(2);
 });
