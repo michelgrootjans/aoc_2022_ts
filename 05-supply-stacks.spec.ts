@@ -1,3 +1,5 @@
+import _ from 'lodash/fp'
+
 class Move {
     private column: number;
     private from: number;
@@ -18,7 +20,14 @@ class Move {
     }
 
     apply(state: string[][]): string[][] {
-        return [[], ['A']];
+
+        const first = _.drop(1)(state[0]);
+        const second = _.take(1)(state[0]);
+
+        return [
+            first,
+            second,
+        ];
     }
 }
 
