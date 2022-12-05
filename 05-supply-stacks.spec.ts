@@ -125,5 +125,5 @@ test('example - part 2', function () {
 
 test('part 2 - challenge', function () {
     const state = apply(initialState, moves, false);
-    expect(top(state)).toBe('HBTMTBSDC')
+    expect(top(state)).toBe('PQTJRSHWS')
 });
