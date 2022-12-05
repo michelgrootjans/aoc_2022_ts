@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import {initialState, moves} from "./05-input";
 
 class Move {
     private numberOfCrates: number;
@@ -21,13 +22,13 @@ class Move {
 
     apply(state: string[][]): string[][] {
         const crates = _.flow(
-            _.take(1),
+            _.take(this.numberOfCrates),
             _.reverse,
         )(state[this.from])
 
 
         const newState = [...state];
-        newState[this.from] = _.drop(1)(state[this.from]);
+        newState[this.from] = _.drop(this.numberOfCrates)(state[this.from]);
         newState[this.to] = [...crates, ...newState[this.to]];
 
         return newState;
@@ -68,7 +69,8 @@ describe('moves', () => {
 })
 
 function top(state: string[][]) {
-    return state[0][0] + state[1][0];
+    return state.map(stack => stack[0] || '')
+        .reduce((acc, letter) => acc+letter, '')
 }
 
 describe('top', () => {
@@ -76,5 +78,31 @@ describe('top', () => {
         const state = [['A', 'B'], ['C', 'D']];
         expect(top(state)).toBe('AC')
     });
+
+    test('[[A, B], [C, D], [C, D], [C, D]] => AC', function () {
+        const state = [['A', 'B'], ['C', 'D'], ['C', 'D'], ['C', 'D']];
+        expect(top(state)).toBe('ACCC')
+    });
 })
 
+const exampleState = [
+    ['N', 'Z'],
+    ['D', 'C', 'M'],
+    ['P'],
+]
+const exampleMoves = [
+    'move 1 from 2 to 1',
+    'move 3 from 1 to 3',
+    'move 2 from 2 to 1',
+    'move 1 from 1 to 2',
+]
+
+test('exampld', function () {
+    const state = apply(exampleState, exampleMoves);
+    expect(top(state)).toBe('CMZ')
+});
+
+test('part 1 - challenge', function () {
+    const state = apply(initialState, moves);
+    expect(top(state)).toBe('HBTMTBSDC')
+});
