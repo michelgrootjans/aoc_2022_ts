@@ -44,23 +44,37 @@ function apply(state: string[][], moveDescriptions: string[]): string[][] {
     return blah(state, moves);
 }
 
-test('no moves', function () {
-    const state = [['A'], []];
-    expect(apply(state, [])).toMatchObject(state)
-});
+describe('moves', () => {
+    test('no moves', function () {
+        const state = [['A'], []];
+        expect(apply(state, [])).toMatchObject(state)
+    });
 
-test('[[A], []] => [[], [A]]', function () {
-    const state = [['A'], []];
-    expect(apply(state, ['move 1 from 1 to 2'])).toMatchObject([[], ['A']])
-});
+    test('[[A], []] => [[], [A]]', function () {
+        const state = [['A'], []];
+        expect(apply(state, ['move 1 from 1 to 2'])).toMatchObject([[], ['A']])
+    });
 
 
-test('[[], [A]] => [[A], []]', function () {
-    const state = [[], ['A']];
-    expect(apply(state, ['move 1 from 2 to 1'])).toMatchObject([['A'], []])
-});
+    test('[[], [A]] => [[A], []]', function () {
+        const state = [[], ['A']];
+        expect(apply(state, ['move 1 from 2 to 1'])).toMatchObject([['A'], []])
+    });
 
-test('[[A, B], []] => [[B], [A]]', function () {
-    const state = [['A', 'B'], []];
-    expect(apply(state, ['move 1 from 1 to 2'])).toMatchObject([['B'], ['A']])
-});
+    test('[[A, B], []] => [[B], [A]]', function () {
+        const state = [['A', 'B'], []];
+        expect(apply(state, ['move 1 from 1 to 2'])).toMatchObject([['B'], ['A']])
+    });
+})
+
+function top(state: string[][]) {
+    return state[0][0] + state[1][0];
+}
+
+describe('top', () => {
+    test('[[A, B], [C, D]] => AC', function () {
+        const state = [['A', 'B'], ['C', 'D']];
+        expect(top(state)).toBe('AC')
+    });
+})
+
