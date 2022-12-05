@@ -117,8 +117,13 @@ test('part 1 - challenge', function () {
     const state = apply(initialState, moves, true);
     expect(top(state)).toBe('HBTMTBSDC')
 });
-
 test('example - part 2', function () {
     const state = apply(exampleState, exampleMoves, false);
     expect(top(state)).toBe('MCD')
+});
+
+
+test('part 2 - challenge', function () {
+    const state = apply(initialState, moves, false);
+    expect(top(state)).toBe('HBTMTBSDC')
 });
