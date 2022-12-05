@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 
 class Move {
-    private column: number;
+    private numberOfCrates: number;
     private from: number;
     private to: number;
 
@@ -14,25 +14,28 @@ class Move {
             .split(' ')
             .map((p: string) => parseInt(p))
 
-        this.column = flatten[0] - 1;
-        this.from = flatten[1];
-        this.to = flatten[2];
+        this.numberOfCrates = flatten[0];
+        this.from = flatten[1] - 1;
+        this.to = flatten[2] - 1;
     }
 
     apply(state: string[][]): string[][] {
+        const crates = _.flow(
+            _.take(1),
+            _.reverse,
+        )(state[this.from])
 
-        const first = _.drop(1)(state[0]);
-        const second = _.take(1)(state[0]);
 
-        return [
-            first,
-            second,
-        ];
+        const newState = [...state];
+        newState[this.from] = _.drop(1)(state[this.from]);
+        newState[this.to] = [...crates, ...newState[this.to]];
+
+        return newState;
     }
 }
 
 function blah(state: string[][], [head, ...tail]: Move[]): string [][] {
-    if(head) return blah(head.apply(state), tail);
+    if (head) return blah(head.apply(state), tail);
     return state;
 }
 
@@ -46,7 +49,18 @@ test('no moves', function () {
     expect(apply(state, [])).toMatchObject(state)
 });
 
-test('one move', function () {
+test('[[A], []] => [[], [A]]', function () {
     const state = [['A'], []];
     expect(apply(state, ['move 1 from 1 to 2'])).toMatchObject([[], ['A']])
+});
+
+
+test('[[], [A]] => [[A], []]', function () {
+    const state = [[], ['A']];
+    expect(apply(state, ['move 1 from 2 to 1'])).toMatchObject([['A'], []])
+});
+
+test('[[A, B], []] => [[B], [A]]', function () {
+    const state = [['A', 'B'], []];
+    expect(apply(state, ['move 1 from 1 to 2'])).toMatchObject([['B'], ['A']])
 });
