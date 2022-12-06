@@ -19,7 +19,7 @@ test.each([
     ['nppdvjthqldpwncqszvftbrmjlhg', 6],
     ['nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg', 10],
     ['zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw', 11],
-    [input, 11],
+    [input, 1042],
 ])("'%s' => %d", (stream, expectedMarker) => {
     expect(markerPosition(stream)).toBe(expectedMarker);
 });
