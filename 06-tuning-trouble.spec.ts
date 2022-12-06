@@ -1,4 +1,5 @@
 import _ from 'lodash/fp';
+import {input} from "./06-input";
 
 function markerPosition(stream: string) {
     const characters = _.split('')(stream);
@@ -18,6 +19,7 @@ test.each([
     ['nppdvjthqldpwncqszvftbrmjlhg', 6],
     ['nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg', 10],
     ['zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw', 11],
+    [input, 11],
 ])("'%s' => %d", (stream, expectedMarker) => {
     expect(markerPosition(stream)).toBe(expectedMarker);
 });
