@@ -15,6 +15,9 @@ function markerPosition(stream: string) {
 test.each([
     ['abcde', 4],
     ['mjqjpqmgbljsphdztnvjfqwrcgsmlb', 7],
+    ['nppdvjthqldpwncqszvftbrmjlhg', 6],
+    ['nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg', 10],
+    ['zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw', 11],
 ])("'%s' => %d", (stream, expectedMarker) => {
     expect(markerPosition(stream)).toBe(expectedMarker);
 });
