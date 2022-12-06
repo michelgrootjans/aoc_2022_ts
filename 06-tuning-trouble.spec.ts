@@ -1,26 +1,13 @@
 import _ from 'lodash/fp';
 import {input} from "./06-input";
 
-function markerPosition(stream: string) {
-    const characters = _.split('')(stream);
-    for (let i = 0; i < characters.length - 4; i++) {
+function firstUniquePacket(stream: string, length: number) {
+    for (let i = 0; i < stream.length - length; i++) {
         const mark = _.flow(
             _.drop(i),
-            _.take(4)
-        )(characters);
-        if (mark.length === _.uniq(mark).length) return i + 4
-    }
-    return -1;
-}
-
-function messagePosition(stream: string) {
-    const characters = _.split('')(stream);
-    for (let i = 0; i < characters.length - 14; i++) {
-        const mark = _.flow(
-            _.drop(i),
-            _.take(14)
-        )(characters);
-        if (mark.length === _.uniq(mark).length) return i + 14
+            _.take(length)
+        )(stream);
+        if (mark.length === _.uniq(mark).length) return i + length
     }
     return -1;
 }
@@ -34,7 +21,7 @@ test.each([
     ['zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw', 11],
     [input, 1042],
 ])("'%s' packet starts at %d", (stream, expectedMarker) => {
-    expect(markerPosition(stream)).toBe(expectedMarker);
+    expect(firstUniquePacket(stream, 4)).toBe(expectedMarker);
 });
 
 test.each([
@@ -46,5 +33,5 @@ test.each([
     ['zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw', 26],
     [input, 2980],
 ])("'%s' message starts at %d", (stream, expectedMarker) => {
-    expect(messagePosition(stream)).toBe(expectedMarker);
+    expect(firstUniquePacket(stream, 14)).toBe(expectedMarker);
 });
