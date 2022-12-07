@@ -181,9 +181,8 @@ function sizeOfDirectoryToDelete(terminalOutput: string[]) {
 
     const directoryToDelete = _.flow(
         _.filter((d: Directory) => d.name !== '/'),
-        // _.filter((d: Directory) => d.totalSize > spaceToDelete),
+        _.filter((d: Directory) => d.totalSize >= spaceToDelete),
         _.sortBy('totalSize'),
-        _.reverse,
         _.head
     )(directories)
 
@@ -193,4 +192,8 @@ function sizeOfDirectoryToDelete(terminalOutput: string[]) {
 
 test('part 2 - example', function () {
     expect(sizeOfDirectoryToDelete(exampleOutput)).toBe(24933642);
+});
+
+test('part 2 - input', function () {
+    expect(sizeOfDirectoryToDelete(input)).toBe(2877389);
 });
