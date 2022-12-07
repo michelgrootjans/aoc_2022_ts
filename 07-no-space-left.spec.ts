@@ -5,7 +5,6 @@ function nameOf(currentDirectory: string[]) {
 }
 
 function sumOfDirectories(terminalOutput: string[]) {
-    let sum = 0;
     let currentPath: string[] = []
     let directories: Directory[] = []
 
@@ -43,6 +42,7 @@ function sumOfDirectories(terminalOutput: string[]) {
 
     console.log({directories})
     return directories.map(d => d.size)
+        .filter(s => s <= 100*1000)
         .reduce((sum: number, size: number) => sum + size, 0);
 }
 
@@ -117,3 +117,22 @@ test('a/one.txt: 1 + a/b/two.txt: 1', function () {
     const sizeOfB = 1;
     expect(sumOfDirectories(terminalOutput)).toBe(sizeOfA + sizeOfB);
 });
+
+test('a/one.txt: 1 + b/two.txt: 100.000', function () {
+    const terminalOutput = [
+        '$ cd /',
+        '$ ls',
+        'dir a',
+        'dir b',
+        '$ cd a',
+        '$ ls',
+        '1 one.txt',
+        '$ cd ..',
+        '$ cd b',
+        '$ ls',
+        '100001 two.txt',
+    ];
+    const sizeOfA = 1;
+    expect(sumOfDirectories(terminalOutput)).toBe(sizeOfA);
+});
+
