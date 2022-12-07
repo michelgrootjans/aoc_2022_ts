@@ -1,12 +1,49 @@
-import _ from 'lodash/fp';
+type Directory = {name: string, size: 0}
+
+function nameOf(currentDirectory: string[]) {
+    return currentDirectory.join('/')
+}
 
 function sumOfDirectories(terminalOutput: string[]) {
-    return terminalOutput.reduce((sum: number, line: string) => {
-        if(line.startsWith('$')) return sum;
-        if(line.startsWith('dir')) return sum;
-        line.split(' ');
-        return sum + parseInt(line[0])
-    }, 0);
+    let sum = 0;
+    let currentPath: string[] = []
+    let directories: Directory[] = []
+
+    function cd(directoryName: string) {
+        currentPath.push(directoryName);
+    }
+
+    for (const line of terminalOutput) {
+        if (line.startsWith('$ cd')) {
+            const directoryName = line.replace('$ cd ', '');
+            if (directoryName === '/') {
+            } else if (directoryName === '..') {
+                currentPath.pop();
+            } else {
+                cd(directoryName);
+                directories.push({name: nameOf(currentPath), size: 0});
+            }
+            console.log({line, currentPath})
+        }
+        else if (line.startsWith('$ ls')) {
+
+        }
+        else if (line.startsWith('dir')) {
+
+        } else {
+            const size = parseInt((line.split(' '))[0]);
+            const currentDirectory = nameOf(currentPath);
+            for (const directory of directories) {
+                if (currentDirectory.startsWith(directory.name)) {
+                    directory.size += size;
+                }
+            }
+        }
+    }
+
+    console.log({directories})
+    return directories.map(d => d.size)
+        .reduce((sum: number, size: number) => sum + size, 0);
 }
 
 test('a/one.txt: 1', function () {
@@ -56,10 +93,27 @@ test('a/one.txt: 1 + b/two.txt: 1', function () {
         '$ ls',
         '1 one.txt',
         '$ cd ..',
-        '$ cd a',
+        '$ cd b',
         '$ ls',
         '1 two.txt',
     ];
     expect(sumOfDirectories(terminalOutput)).toBe(2);
 });
 
+test('a/one.txt: 1 + a/b/two.txt: 1', function () {
+    const terminalOutput = [
+        '$ cd /',
+        '$ ls',
+        'dir a',
+        '$ cd a',
+        '$ ls',
+        'dir b',
+        '1 one.txt',
+        '$ cd b',
+        '$ ls',
+        '1 two.txt',
+    ];
+    const sizeOfA = 2;
+    const sizeOfB = 1;
+    expect(sumOfDirectories(terminalOutput)).toBe(sizeOfA + sizeOfB);
+});
