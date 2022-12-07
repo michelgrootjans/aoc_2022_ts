@@ -1,12 +1,12 @@
 import {input} from "./07-input";
 
-type Directory = {name: string, size: 0}
+type Directory = { name: string, totalSize: 0, size: 0 }
 
 function nameOf(currentDirectory: string[]) {
     return currentDirectory.join('/')
 }
 
-function sumOfDirectories(terminalOutput: string[]) {
+function parseDirectories(terminalOutput: string[]): Directory[] {
     let currentPath: string[] = []
     let directories: Directory[] = []
 
@@ -17,35 +17,37 @@ function sumOfDirectories(terminalOutput: string[]) {
     for (const line of terminalOutput) {
         if (line.startsWith('$ cd')) {
             const directoryName = line.replace('$ cd ', '');
-            if (directoryName === '/') {
-            } else if (directoryName === '..') {
+            if (directoryName === '..') {
                 currentPath.pop();
             } else {
                 cd(directoryName);
-                directories.push({name: nameOf(currentPath), size: 0});
+                directories.push({name: nameOf(currentPath), totalSize: 0, size: 0});
             }
             // console.log({line, currentPath})
-        }
-        else if (line.startsWith('$ ls')) {
+        } else if (line.startsWith('$ ls')) {
 
-        }
-        else if (line.startsWith('dir')) {
+        } else if (line.startsWith('dir')) {
 
         } else {
             const size = parseInt((line.split(' '))[0]);
             const currentDirectory = nameOf(currentPath);
             for (const directory of directories) {
-                if (currentDirectory.startsWith(directory.name)) {
-                    directory.size += size;
-                }
+                if (currentDirectory.startsWith(directory.name)) directory.totalSize += size;
+                if (currentDirectory === directory.name) directory.size += size;
             }
         }
     }
+    return directories;
+}
 
-    // console.log({directories})
-    return directories.map(d => d.size)
-        .filter(s => s <= 100*1000)
-        .reduce((sum: number, size: number) => sum + size, 0);
+const sum = (sum: number, size: number) => sum + size;
+
+function sumOfDirectories(terminalOutput: string[]) {
+    return parseDirectories(terminalOutput)
+        .filter(d => d.name !== '/')
+        .map(d => d.totalSize)
+        .filter(s => s <= 100 * 1000)
+        .reduce(sum, 0);
 }
 
 test('a/one.txt: 1', function () {
@@ -173,7 +175,10 @@ test('part 1 - input', function () {
 });
 
 function sizeOfDirectoryToDelete(terminalOutput: string[]) {
-    return 24933642;
+    const directories = parseDirectories(terminalOutput);
+    const totalSize = directories.map(d => d.size).reduce(sum, 0)
+    console.log({totalSize, directories})
+    return directories[3].size;
 }
 
 test('part 1 - example', function () {
