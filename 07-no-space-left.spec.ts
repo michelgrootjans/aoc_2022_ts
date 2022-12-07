@@ -1,3 +1,4 @@
+import _ from 'lodash/fp'
 import {input} from "./07-input";
 
 type Directory = { name: string, totalSize: 0, size: 0 }
@@ -10,20 +11,15 @@ function parseDirectories(terminalOutput: string[]): Directory[] {
     let currentPath: string[] = []
     let directories: Directory[] = []
 
-    function cd(directoryName: string) {
-        currentPath.push(directoryName);
-    }
-
     for (const line of terminalOutput) {
         if (line.startsWith('$ cd')) {
             const directoryName = line.replace('$ cd ', '');
             if (directoryName === '..') {
                 currentPath.pop();
             } else {
-                cd(directoryName);
+                currentPath.push(directoryName);
                 directories.push({name: nameOf(currentPath), totalSize: 0, size: 0});
             }
-            // console.log({line, currentPath})
         } else if (line.startsWith('$ ls')) {
 
         } else if (line.startsWith('dir')) {
@@ -175,12 +171,26 @@ test('part 1 - input', function () {
 });
 
 function sizeOfDirectoryToDelete(terminalOutput: string[]) {
-    const directories = parseDirectories(terminalOutput);
-    const totalSize = directories.map(d => d.size).reduce(sum, 0)
-    console.log({totalSize, directories})
-    return directories[3].size;
+    const directories: Directory[] = parseDirectories(terminalOutput);
+    const totalDiskSpace = 70000000;
+    const spaceNeeded = 30000000;
+    const usedSpace = directories.map(d => d.size).reduce(sum, 0);
+    const availableSpace = totalDiskSpace - usedSpace;
+    const spaceToDelete = spaceNeeded - availableSpace;
+
+
+    const directoryToDelete = _.flow(
+        _.filter((d: Directory) => d.name !== '/'),
+        // _.filter((d: Directory) => d.totalSize > spaceToDelete),
+        _.sortBy('totalSize'),
+        _.reverse,
+        _.head
+    )(directories)
+
+    // @ts-ignore
+    return directoryToDelete?.totalSize || directories[0];
 }
 
-test('part 1 - example', function () {
+test('part 2 - example', function () {
     expect(sizeOfDirectoryToDelete(exampleOutput)).toBe(24933642);
 });
