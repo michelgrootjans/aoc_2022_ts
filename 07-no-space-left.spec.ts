@@ -1,3 +1,5 @@
+import {input} from "./07-input";
+
 type Directory = {name: string, size: 0}
 
 function nameOf(currentDirectory: string[]) {
@@ -22,7 +24,7 @@ function sumOfDirectories(terminalOutput: string[]) {
                 cd(directoryName);
                 directories.push({name: nameOf(currentPath), size: 0});
             }
-            console.log({line, currentPath})
+            // console.log({line, currentPath})
         }
         else if (line.startsWith('$ ls')) {
 
@@ -40,7 +42,7 @@ function sumOfDirectories(terminalOutput: string[]) {
         }
     }
 
-    console.log({directories})
+    // console.log({directories})
     return directories.map(d => d.size)
         .filter(s => s <= 100*1000)
         .reduce((sum: number, size: number) => sum + size, 0);
@@ -136,3 +138,35 @@ test('a/one.txt: 1 + b/two.txt: 100.000', function () {
     expect(sumOfDirectories(terminalOutput)).toBe(sizeOfA);
 });
 
+const exampleOutput = [
+    '$ cd /',
+    '$ ls',
+    'dir a',
+    '14848514 b.txt',
+    '8504156 c.dat',
+    'dir d',
+    '$ cd a',
+    '$ ls',
+    'dir e',
+    '29116 f',
+    '2557 g',
+    '62596 h.lst',
+    '$ cd e',
+    '$ ls',
+    '584 i',
+    '$ cd ..',
+    '$ cd ..',
+    '$ cd d',
+    '$ ls',
+    '4060174 j',
+    '8033020 d.log',
+    '5626152 d.ext',
+    '7214296 k',
+];
+test('part 1 - example', function () {
+    expect(sumOfDirectories(exampleOutput)).toBe(95437);
+});
+
+test('part 1 - input', function () {
+    expect(sumOfDirectories(input)).toBe(919137);
+});
