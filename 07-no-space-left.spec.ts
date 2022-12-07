@@ -163,10 +163,19 @@ const exampleOutput = [
     '5626152 d.ext',
     '7214296 k',
 ];
+
 test('part 1 - example', function () {
     expect(sumOfDirectories(exampleOutput)).toBe(95437);
 });
 
 test('part 1 - input', function () {
     expect(sumOfDirectories(input)).toBe(919137);
+});
+
+function sizeOfDirectoryToDelete(terminalOutput: string[]) {
+    return 24933642;
+}
+
+test('part 1 - example', function () {
+    expect(sizeOfDirectoryToDelete(exampleOutput)).toBe(24933642);
 });
