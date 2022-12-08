@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import {forOwn} from "lodash";
+import {input} from "./08-input";
 
 function visibleTrees(trees: number[][]) {
     let visibleTrees = 0;
@@ -65,3 +65,5 @@ test('example', () => {
         [3,5,3,9,0,],
     ])).toBe(21)
 });
+
+test('input', () => expect(visibleTrees(input)).toBe(1849));
