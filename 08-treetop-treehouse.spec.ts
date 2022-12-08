@@ -104,4 +104,4 @@ test('example part 2', () => {
     ])).toBe(8)
 });
 
-xtest('input part 2', () => expect(bestScenicScore(input)).toBe(1849));
+test('input part 2', () => expect(bestScenicScore(input)).toBe(201600));
