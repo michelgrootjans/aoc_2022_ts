@@ -10,25 +10,9 @@ class Command {
     }
 
     move(state: State): State {
-        const history = [state.now, ...state.history];
-        const now = this.execute(state.now);
-        console.log({now, history})
-        return {now, history};
-    }
-    private execute(rope: Rope): Rope {
-        let {head, tail} = rope;
-
-        for (let i = 0; i < this.steps; i++) {
-            head = head.right();
-            tail = this.moveTail(head, tail);
-        }
-
-        return {head, tail};
-    }
-
-    private moveTail(head: Knot, tail: Knot): Knot {
-        if(head.isCloseTo(tail)) return tail;
-        return tail.right();
+        if (this.steps === 0) return state;
+        return new Command(this.direction, this.steps - 1)
+            .move(state.next(state.now.right()))
     }
 }
 
@@ -49,6 +33,11 @@ class Knot {
     right() {
         return new Knot(this.x + 1, this.y);
     }
+
+    follow(that: Knot) {
+        if(this.isCloseTo(that)) return this;
+        return this.right();
+    }
 }
 
 class Rope {
@@ -60,6 +49,11 @@ class Rope {
         this.head = head;
         this.tail = tail;
     }
+
+    right() {
+        const head = this.head.right();
+        return new Rope(head, this.tail.follow(head));
+    }
 }
 
 class State {
@@ -69,6 +63,10 @@ class State {
     constructor(now: Rope, history: Rope[] = []) {
         this.now = now;
         this.history = history;
+    }
+
+    next(rope: Rope) {
+        return new State(rope, [this.now, ...this.history]);
     }
 }
 
@@ -106,7 +104,7 @@ test('R 2', function () {
     expect(positionsOfTail([right(2)])).toBe(2);
 });
 
-xtest('R 3', function () {
+test('R 3', function () {
     expect(positionsOfTail([right(3)])).toBe(3);
 });
 
