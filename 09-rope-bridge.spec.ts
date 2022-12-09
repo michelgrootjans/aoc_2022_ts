@@ -14,7 +14,11 @@ interface Rope {head: Knot, tail: Knot}
 interface State {now: Rope, past: Rope[]}
 
 function positionsOfTail(commands: Command[]) {
-    const initialState: State = {now: {head: {x: 0, y: 0}, tail: {x: 0, y: 0}}, past: []}
+    const initialState: State = {
+        now: {
+            head: {x: 0, y: 0},
+            tail: {x: 0, y: 0}},
+        past: []}
     return commands.reduce((sum, command) => sum + command.steps, 0) || 1;
 }
 
