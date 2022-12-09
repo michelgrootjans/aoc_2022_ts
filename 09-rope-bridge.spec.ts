@@ -6,11 +6,6 @@ class Command {
 
     private readonly operation: (rope: Rope) => Rope;
 
-    movements = {
-        'R': (rope: Rope) => rope.right(),
-        'L': (rope: Rope) => rope.left(),
-    }
-
     constructor(direction: string, steps: number) {
         this.direction = direction;
         this.steps = steps;
