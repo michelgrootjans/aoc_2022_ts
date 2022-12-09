@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import {input} from "./09-input";
+import {input} from "./input";
 
 class Command {
     public readonly direction: string;
