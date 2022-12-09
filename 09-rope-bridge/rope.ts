@@ -3,8 +3,8 @@ import {Knot} from "./knot";
 
 export class Rope {
     private knots: Knot[];
-    private headd: Knot;
-    private taill: Knot;
+    public readonly headd: Knot;
+    public readonly taill: Knot;
 
     static build(numberOfKnots: number) {
         return new Rope(_.range(numberOfKnots).map(_ => new Knot(0,0)))
