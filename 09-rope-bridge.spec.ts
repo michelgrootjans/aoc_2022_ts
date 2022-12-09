@@ -69,7 +69,7 @@ class Knot {
         if(that.x > this.x) return this.right();
         if(that.y > this.y) return this.up();
         if(that.y < this.y) return this.down();
-        return this.right();
+        throw 'illegal state';
     }
 
     private isCloseTo(that: Knot): boolean {
@@ -180,6 +180,10 @@ describe('rope', () => {
 
     it('down, down', () => {
         expect(initialRope().down().down()).toEqual(rope(0, -2, 0, -1))
+    });
+
+    xit('right, up, up', () => {
+        expect(initialRope().right().up().up()).toEqual(rope(1, 2, 1, 1))
     });
 });
 
