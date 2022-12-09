@@ -30,7 +30,15 @@ class Command {
     }
 }
 
-interface Knot {x: number, y: number};
+class Knot {
+    public readonly x: number;
+    public readonly y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+}
 interface Rope {head: Knot, tail: Knot}
 interface State {now: Rope, history: Rope[]}
 
@@ -44,8 +52,8 @@ function print(state: State) {
 function positionsOfTail(commands: Command[]) {
     const initialState: State = {
         now: {
-            head: {x: 0, y: 0},
-            tail: {x: 0, y: 0},
+            head: new Knot(0,0),
+            tail: new Knot(0,0),
         },
         history: []
     };
