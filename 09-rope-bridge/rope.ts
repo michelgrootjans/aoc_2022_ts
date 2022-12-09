@@ -16,10 +16,6 @@ export class Rope {
         this.tail = this.knots[this.knots.length - 1]
     }
 
-    ends(): {head: Knot, tail: Knot} {
-        return {head: this.head, tail: this.tail};
-    }
-
     right(): Rope {
         return this.move(this.head.right());
     }
