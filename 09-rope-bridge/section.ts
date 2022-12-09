@@ -1,7 +1,6 @@
 import {Knot} from "./knot";
 
 export class Section {
-    private readonly _head: Knot;
     private readonly _tail: Knot;
     private knots: Knot[];
 
@@ -10,7 +9,6 @@ export class Section {
     }
 
     private constructor(head: Knot, tail: Knot = head) {
-        this._head = head;
         this._tail = tail;
         this.knots = [head, tail]
     }
