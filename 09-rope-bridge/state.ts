@@ -11,6 +11,6 @@ export class State {
     }
 
     next(section: Section): State {
-        return new State(section, [this.now.tail, ...this.history]);
+        return new State(section, [this.now.tail(), ...this.history]);
     }
 }
