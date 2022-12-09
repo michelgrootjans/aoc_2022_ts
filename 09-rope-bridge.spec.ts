@@ -196,7 +196,9 @@ describe('state', () => {
         [[left(1)], 1],
         [[left(2)], 2],
         [[up(1)], 1],
+        [[up(2)], 2],
         [[down(1)], 1],
+        [[down(2)], 2],
     ])('%p 1 => %d', (commands, expected) => {
         expect(positionsOfTail(commands)).toBe(expected);
     });
