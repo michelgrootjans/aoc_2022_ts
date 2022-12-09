@@ -66,6 +66,7 @@ class Knot {
     follow(that: Knot) {
         if (this.isCloseTo(that)) return this;
         if(that.x < this.x) return this.left();
+        if(that.x > this.x) return this.right();
         if(that.y > this.y) return this.up();
         if(that.y < this.y) return this.down();
         return this.right();
