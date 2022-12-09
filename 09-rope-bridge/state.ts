@@ -9,7 +9,7 @@ export class State {
         return new State(Rope.build(numberOfKnots));
     }
 
-    constructor(now: Rope, history: Knot[] = []) {
+    private constructor(now: Rope, history: Knot[] = []) {
         this.current = now;
         this._tailHistory = history;
     }
