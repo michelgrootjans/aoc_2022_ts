@@ -36,7 +36,8 @@ function positionsOfTail(commands: Command[]) {
             head: {x: 0, y: 0},
             tail: {x: 0, y: 0},
         },
-        past: []}
+        past: []
+    };
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     console.log(print(endState))
     return commands.reduce((sum, command) => sum + command.steps, 0) || 1;
