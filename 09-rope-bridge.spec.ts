@@ -7,18 +7,38 @@ class Command {
         this.steps = steps;
     }
 
+    move(state: State): State {
+        return {now: this.execute(state), past: [state.now, ...state.past]};
+    }
+
+    private execute(state: State): Rope {
+        return {
+            head: {x: 0, y: 0},
+            tail: {x: 0, y: 0}
+        };
+    }
 }
 
 interface Knot {x: number, y: number};
 interface Rope {head: Knot, tail: Knot}
 interface State {now: Rope, past: Rope[]}
 
+function print(state: State) {
+    const printKnot = (knot: Knot) => `(${knot.x},${knot.y})`;
+    const printHistory = (ropes: Rope[]) => ropes.map(rope => `{ head: ${printKnot(rope.head)}, tail: ${printKnot(rope.tail)} }`);
+
+    return printHistory([state.now, ...state.past])
+}
+
 function positionsOfTail(commands: Command[]) {
     const initialState: State = {
         now: {
             head: {x: 0, y: 0},
-            tail: {x: 0, y: 0}},
+            tail: {x: 0, y: 0}
+        },
         past: []}
+    const endState = commands.reduce((state, command) => command.move(state), initialState);
+    console.log(print(endState))
     return commands.reduce((sum, command) => sum + command.steps, 0) || 1;
 }
 
