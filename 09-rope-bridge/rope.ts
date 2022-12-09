@@ -17,31 +17,27 @@ export class Rope {
     }
 
     ends(): {head: Knot, tail: Knot} {
-        return {head: this.head(), tail: this.tail()};
+        return {head: this.headd, tail: this.tail()};
     }
-
-    private head(): Knot {
-        return this.headd;
-    }
-
+    
     tail(): Knot {
         return this.taill;
     }
 
     right(): Rope {
-        return this.move(this.head().right());
+        return this.move(this.headd.right());
     }
 
     left(): Rope {
-        return this.move(this.head().left());
+        return this.move(this.headd.left());
     }
 
     up(): Rope {
-        return this.move(this.head().up());
+        return this.move(this.headd.up());
     }
 
     down(): Rope {
-        return this.move(this.head().down());
+        return this.move(this.headd.down());
     }
 
     private move(head: Knot): Rope {
