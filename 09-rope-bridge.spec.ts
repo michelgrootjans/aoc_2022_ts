@@ -19,6 +19,7 @@ class Command {
             switch (direction) {
                 case 'R':return (rope: Rope) => rope.right();
                 case 'L':return (rope: Rope) => rope.left();
+                case 'U':return (rope: Rope) => rope.up();
                 case 'D':return (rope: Rope) => rope.down();
                 default: throw `unknown direction: ${direction}`
             }
@@ -187,6 +188,7 @@ describe('rope', () => {
 describe('state', () => {
     const right = (steps: number) => new Command('R', steps);
     const left = (steps: number) => new Command('L', steps);
+    const up = (steps: number) => new Command('U', steps);
     const down = (steps: number) => new Command('D', steps);
 
     test('no moves', function () {
@@ -198,6 +200,7 @@ describe('state', () => {
         [[right(2)], 2],
         [[left(1)], 1],
         [[left(2)], 2],
+        [[up(1)], 1],
         [[down(1)], 1],
     ])('%p 1 => %d', (commands, expected) => {
         expect(positionsOfTail(commands)).toBe(expected);
