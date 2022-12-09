@@ -42,6 +42,6 @@ export class Section {
     }
 
     private move(head: Knot): Section {
-        return new Section(head, this._tail.follow(head));
+        return new Section(head, this.tail().follow(head));
     }
 }
