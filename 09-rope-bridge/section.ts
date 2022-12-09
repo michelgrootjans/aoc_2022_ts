@@ -8,7 +8,7 @@ export class Section {
         return new Section(new Knot(0, 0), new Knot(0 , 0))
     }
 
-    constructor(head: Knot, tail: Knot = head) {
+    private constructor(head: Knot, tail: Knot = head) {
         this._head = head;
         this._tail = tail;
     }
