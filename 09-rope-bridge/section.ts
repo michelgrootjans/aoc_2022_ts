@@ -4,6 +4,10 @@ export class Section {
     public readonly head: Knot;
     public readonly tail: Knot;
 
+    static build(numberOfKnots = 2) {
+        return new Section(new Knot(0, 0), new Knot(0 , 0))
+    }
+
     constructor(head: Knot, tail: Knot = head) {
         this.head = head;
         this.tail = tail;
