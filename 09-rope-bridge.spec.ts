@@ -158,11 +158,15 @@ describe('rope state', () => {
         expect(positionsOfTail(input.map(toCommand), 2)).toBe(6236);
     });
 
-    it('example 1 - part 2', () => {
+    test('example 1 - part 2', () => {
         expect(positionsOfTail(example1.map(toCommand), 10)).toBe(1);
     });
 
-    fit('example 1 - part 2', () => {
+    test('example 1 - part 2', () => {
         expect(positionsOfTail(example2.map(toCommand), 10)).toBe(36);
+    });
+
+    test('input - part 2', () => { // SLOW !
+        expect(positionsOfTail(input.map(toCommand), 10)).toBe(2449);
     });
 });
