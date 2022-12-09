@@ -39,7 +39,18 @@ class Knot {
         this.y = y;
     }
 }
-interface Rope {head: Knot, tail: Knot}
+
+class Rope {
+    public readonly head: Knot;
+    public readonly tail: Knot;
+
+
+    constructor(head: Knot, tail: Knot) {
+        this.head = head;
+        this.tail = tail;
+    }
+}
+
 interface State {now: Rope, history: Rope[]}
 
 function print(state: State) {
@@ -51,10 +62,7 @@ function print(state: State) {
 
 function positionsOfTail(commands: Command[]) {
     const initialState: State = {
-        now: {
-            head: new Knot(0,0),
-            tail: new Knot(0,0),
-        },
+        now: new Rope(new Knot(0, 0), new Knot(0, 0)),
         history: []
     };
     const endState = commands.reduce((state, command) => command.move(state), initialState);
