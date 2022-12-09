@@ -3,6 +3,7 @@ import {Knot} from "./knot";
 export class Section {
     private readonly _head: Knot;
     private readonly _tail: Knot;
+    private knots: Knot[];
 
     static build(numberOfKnots = 2) {
         return new Section(new Knot(0, 0), new Knot(0 , 0))
@@ -11,6 +12,7 @@ export class Section {
     private constructor(head: Knot, tail: Knot = head) {
         this._head = head;
         this._tail = tail;
+        this.knots = [head, tail]
     }
 
     ends() {
