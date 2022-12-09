@@ -1,9 +1,6 @@
 import _ from 'lodash/fp'
 import {input} from "./09-input";
-import {Command} from "./09-rope-bridge/command";
-import {Knot} from "./09-rope-bridge/knot";
-import {Section} from "./09-rope-bridge/section";
-import {State} from "./09-rope-bridge/state";
+import {Command, Knot, Section, State} from "./09-rope-bridge";
 
 function positionsOfTail(commands: Command[]) {
     const initialState = new State(Section.build());
