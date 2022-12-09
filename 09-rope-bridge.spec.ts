@@ -30,6 +30,10 @@ test('R 2', function () {
     expect(positionsOfTail([right(2)])).toBe(2);
 });
 
+test('R 3', function () {
+    expect(positionsOfTail([right(3)])).toBe(3);
+});
+
 test('R 1, R1', function () {
     expect(positionsOfTail([
         right(1),
