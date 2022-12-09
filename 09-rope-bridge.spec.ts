@@ -64,10 +64,10 @@ class Knot {
         if (this.isCloseTo(that)) return this;
 
         let result: Knot = this;
-        if(that.x < this.x) result = result.left();
         if(that.x > this.x) result = result.right();
+        if(that.x < this.x) result = result.left();
         if(that.y > this.y) result = result.up();;
-        if(that.y < this.y) return this.down();
+        if(that.y < this.y) result = result.down();;
         return result;
     }
 
