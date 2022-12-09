@@ -235,7 +235,7 @@ describe('section state', () => {
         expect(positionsOfTail(example.map(toCommand))).toBe(13);
     });
 
-    xtest('input - part 1', () => {
+    xtest('input - part 1', () => { // SLOW !
         expect(positionsOfTail(input.map(toCommand))).toBe(6236);
     });
 });
