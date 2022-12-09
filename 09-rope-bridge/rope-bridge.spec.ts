@@ -9,10 +9,9 @@ function positionsOfTail(commands: Command[]) {
     const initialState = new State(new Section(new Knot(0, 0), new Knot(0, 0)));
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     return _.flow(
-        _.map('tail'),
         _.uniqWith(_.isEqual),
         _.size,
-    )([endState.now, ...endState.history]);
+    )([endState.now.tail, ...endState.history]);
 }
 
 describe('section', () => {
