@@ -57,6 +57,7 @@ class Knot {
 
     follow(that: Knot) {
         if (this.isCloseTo(that)) return this;
+        if(that.x < this.x) return this.left();
         return this.right();
     }
 
@@ -127,8 +128,16 @@ describe('rope', () => {
         expect(initialRope().right()).toEqual(rope(1, 0, 0, 0))
     });
 
+    it('right, right', () => {
+        expect(initialRope().right().right()).toEqual(rope(2, 0, 1, 0))
+    });
+
     it('left', () => {
         expect(initialRope().left()).toEqual(rope(-1, 0, 0, 0))
+    });
+
+    it('left, left', () => {
+        expect(initialRope().left().left()).toEqual(rope(-2, 0, -1, 0))
     });
 });
 
@@ -136,16 +145,16 @@ test('no moves', function () {
     expect(positionsOfTail([])).toBe(1);
 });
 
-test('1 R', function () {
-    expect(positionsOfTail([right(1)])).toBe(1);
-});
-
-test('R 2', function () {
-    expect(positionsOfTail([right(2)])).toBe(2);
-});
-
-test('R 3', function () {
-    expect(positionsOfTail([right(3)])).toBe(3);
+test.each([
+    [[right(1)], 1],
+    [[right(2)], 2],
+    [[right(3)], 3],
+    [[
+        right(1),
+        right(1),
+    ], 2],
+])('%p 1 => %d', (commands, expected) => {
+    expect(positionsOfTail(commands)).toBe(expected);
 });
 
 test('R 1, R1', function () {
