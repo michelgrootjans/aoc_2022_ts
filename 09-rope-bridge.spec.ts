@@ -62,7 +62,8 @@ describe('rope - 2', () => {
 
 describe('rope - 3', () => {
     const rope = Rope.build(2);
-    xit('right', () => {
+
+    it('right', () => {
         expect(rope.right().ends()).toEqual({head: new Knot(1, 0), tail: new Knot(0, 0)})
     });
 
