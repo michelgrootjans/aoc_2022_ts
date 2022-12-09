@@ -25,7 +25,7 @@ export class Rope {
     }
 
     tail(): Knot {
-        return this.knots[this.knots.length - 1];
+        return this.taill;
     }
 
     right(): Rope {
