@@ -71,7 +71,7 @@ describe('rope - 3', () => {
         expect(rope.right().right().ends()).toEqual({head: new Knot(2, 0), tail: new Knot(0, 0)})
     });
 
-    xit('left', () => {
+    it('left', () => {
         expect(rope.left().ends()).toEqual({head: new Knot(-1, 0), tail: new Knot(0, 0)})
     });
 
