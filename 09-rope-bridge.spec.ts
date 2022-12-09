@@ -71,37 +71,8 @@ describe('rope - 3', () => {
         expect(rope.right().right().ends()).toEqual({head: new Knot(2, 0), tail: new Knot(0, 0)})
     });
 
-    it('left', () => {
-        expect(rope.left().ends()).toEqual({head: new Knot(-1, 0), tail: new Knot(0, 0)})
-    });
-
-    xit('left, left', () => {
-        expect(rope.left().left().ends()).toEqual({head: new Knot(-2, 0), tail: new Knot(-1, 0)})
-    });
-
-    xit('right, left', () => {
-        expect(rope.right().left().ends()).toEqual({head: new Knot(0, 0), tail: new Knot(0, 0)})
-        expect(rope.left().right().ends()).toEqual({head: new Knot(0, 0), tail: new Knot(0, 0)})
-    });
-
-    xit('up', () => {
-        expect(rope.up().ends()).toEqual({head: new Knot(0, 1), tail: new Knot(0, 0)})
-    });
-
-    xit('up, up', () => {
-        expect(rope.up().up().ends()).toEqual({head: new Knot(0, 2), tail: new Knot(0, 1)})
-    });
-
-    xit('down', () => {
-        expect(rope.down().ends()).toEqual({head: new Knot(0, -1), tail: new Knot(0, 0)})
-    });
-
-    xit('down, down', () => {
-        expect(rope.down().down().ends()).toEqual({head: new Knot(0, -2), tail: new Knot(0, -1)})
-    });
-
-    xit('right, up, up', () => {
-        expect(rope.right().up().up().ends()).toEqual({head: new Knot(1, 2), tail: new Knot(1, 1)})
+    it('right, right', () => {
+        expect(rope.right().right().right().ends()).toEqual({head: new Knot(3, 0), tail: new Knot(1, 0)})
     });
 });
 
