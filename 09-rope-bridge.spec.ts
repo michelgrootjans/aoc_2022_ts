@@ -17,9 +17,12 @@ class Command {
 
         function createOperation(direction: string) {
             switch (direction) {
-                case 'R':return (rope: Rope) => rope.right();
-                case 'L':return (rope: Rope) => rope.left();
-                default: throw `unknown direction: ${direction}`
+                case 'R':
+                    return (rope: Rope) => rope.right();
+                case 'L':
+                    return (rope: Rope) => rope.left();
+                default:
+                    throw `unknown direction: ${direction}`
             }
         }
 
@@ -53,7 +56,7 @@ class Knot {
     }
 
     follow(that: Knot) {
-        if(this.isCloseTo(that)) return this;
+        if (this.isCloseTo(that)) return this;
         return this.right();
     }
 
@@ -65,7 +68,6 @@ class Knot {
 class Rope {
     public readonly head: Knot;
     public readonly tail: Knot;
-
 
     constructor(head: Knot, tail: Knot) {
         this.head = head;
@@ -97,27 +99,38 @@ class State {
     }
 }
 
-function print(state: State) {
-    const printKnot = (knot: Knot) => `(${knot.x},${knot.y})`;
-    const printHistory = (ropes: Rope[]) => ropes.map(rope => `{ head: ${printKnot(rope.head)}, tail: ${printKnot(rope.tail)} }`);
-
-    return printHistory([state.now, ...state.history]).join(',\n')
-}
-
 function positionsOfTail(commands: Command[]) {
     const initialState = new State(new Rope(new Knot(0, 0), new Knot(0, 0)));
     const endState = commands.reduce((state, command) => command.move(state), initialState);
-    const tailPositions = _.flow(
+    return _.flow(
         _.map('tail'),
         _.uniqWith(_.isEqual),
         _.size,
-    )([endState.now, ...endState.history])
-    console.log(print(endState), tailPositions)
-    return tailPositions;
+    )([endState.now, ...endState.history]);
 }
 
 const right = (steps: number) => new Command('R', steps);
 const left = (steps: number) => new Command('L', steps);
+
+describe('rope', () => {
+    const initialRope = () => rope(0, 0, 0, 0);
+
+    function rope(xHead: number, yHead: number, xTail: number, yTail: number) {
+        return new Rope(new Knot(xHead, yHead), new Knot(xTail, yTail));
+    }
+
+    it('same rope', () => {
+        expect(initialRope()).toEqual(rope(0, 0, 0, 0))
+    });
+
+    it('right', () => {
+        expect(initialRope().right()).toEqual(rope(1, 0, 0, 0))
+    });
+
+    it('left', () => {
+        expect(initialRope().left()).toEqual(rope(-1, 0, 0, 0))
+    });
+});
 
 test('no moves', function () {
     expect(positionsOfTail([])).toBe(1);
