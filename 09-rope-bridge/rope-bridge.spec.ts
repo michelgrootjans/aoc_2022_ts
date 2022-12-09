@@ -19,10 +19,6 @@ describe('section', () => {
         return {head: new Knot(xHead, yHead), tail: new Knot(xTail, yTail)};
     }
 
-    function section(xHead: number, yHead: number, xTail: number, yTail: number) {
-        return new Section(new Knot(xHead, yHead), new Knot(xTail, yTail));
-    }
-
     it('same section', () => {
         expect(Section.build().ends()).toEqual(section2(0, 0, 0, 0))
     });
