@@ -1,11 +1,11 @@
-import {Section} from "./section";
+import {Rope} from "./rope";
 import {State} from "./state";
 
 export class Command {
     public readonly direction: string;
     public readonly steps: number;
 
-    private readonly operation: (section: Section) => Section;
+    private readonly operation: (section: Rope) => Rope;
 
     constructor(direction: string, steps: number) {
         this.direction = direction;
@@ -13,10 +13,10 @@ export class Command {
 
         function createOperation(direction: string) {
             switch (direction) {
-                case 'R': return (section: Section) => section.right();
-                case 'L': return (section: Section) => section.left();
-                case 'U': return (section: Section) => section.up();
-                case 'D': return (section: Section) => section.down();
+                case 'R': return (section: Rope) => section.right();
+                case 'L': return (section: Rope) => section.left();
+                case 'U': return (section: Rope) => section.up();
+                case 'D': return (section: Rope) => section.down();
                 default:  throw `unknown direction: ${direction}`
             }
         }

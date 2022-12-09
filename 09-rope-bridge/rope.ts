@@ -1,11 +1,11 @@
 import _ from 'lodash'
 import {Knot} from "./knot";
 
-export class Section {
+export class Rope {
     private knots: Knot[];
 
     static build(numberOfKnots = 2) {
-        return new Section(_.range(numberOfKnots).map(_ => new Knot(0,0)))
+        return new Rope(_.range(numberOfKnots).map(_ => new Knot(0,0)))
     }
 
     private constructor(knots: Knot[]) {
@@ -24,23 +24,23 @@ export class Section {
         return this.knots[this.knots.length - 1];
     }
 
-    right(): Section {
+    right(): Rope {
         return this.move(this.head().right());
     }
 
-    left(): Section {
+    left(): Rope {
         return this.move(this.head().left());
     }
 
-    up(): Section {
+    up(): Rope {
         return this.move(this.head().up());
     }
 
-    down(): Section {
+    down(): Rope {
         return this.move(this.head().down());
     }
 
-    private move(head: Knot): Section {
-        return new Section([head, this.tail().follow(head)]);
+    private move(head: Knot): Rope {
+        return new Rope([head, this.tail().follow(head)]);
     }
 }

@@ -1,4 +1,4 @@
 export * from './knot';
 export * from './state';
-export * from './section';
+export * from './rope';
 export * from './command';
