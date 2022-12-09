@@ -27,7 +27,7 @@ export class Command {
     move(state: State): State {
         if (this.steps === 0) return state;
 
-        const section = this.operation(state.now);
+        const section = this.operation(state.current);
         return new Command(this.direction, this.steps - 1)
             .move(state.next(section))
     }

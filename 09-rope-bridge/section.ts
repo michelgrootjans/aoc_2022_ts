@@ -13,6 +13,10 @@ export class Section {
         this._tail = tail;
     }
 
+    ends() {
+        return {head: this._head, tail: this._tail};
+    }
+
     tail() {
         return this._tail;
     }
