@@ -181,7 +181,7 @@ describe('section', () => {
     });
 });
 
-describe('state', () => {
+describe('section state', () => {
     const right = (steps: number) => new Command('R', steps);
     const left = (steps: number) => new Command('L', steps);
     const up = (steps: number) => new Command('U', steps);
