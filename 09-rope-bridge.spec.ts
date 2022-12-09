@@ -4,6 +4,11 @@ class Command {
     public readonly direction: string;
     public readonly steps: number;
 
+    movements = {
+        'R': (rope: Rope) => rope.right(),
+        'L': (rope: Rope) => rope.left(),
+    }
+
     constructor(direction: string, steps: number) {
         this.direction = direction;
         this.steps = steps;
@@ -11,8 +16,10 @@ class Command {
 
     move(state: State): State {
         if (this.steps === 0) return state;
+        // @ts-ignore
+        const rope = this.movements[this.direction](state.now);
         return new Command(this.direction, this.steps - 1)
-            .move(state.next(state.now.right()))
+            .move(state.next(rope))
     }
 }
 
@@ -27,11 +34,14 @@ class Knot {
 
     isCloseTo(that: Knot): boolean {
         return Math.abs(this.x - that.x) <= 1 && Math.abs(this.y - that.y) <= 1;
-
     }
 
     right() {
         return new Knot(this.x + 1, this.y);
+    }
+
+    left() {
+        return new Knot(this.x - 1, this.y);
     }
 
     follow(that: Knot) {
@@ -52,6 +62,11 @@ class Rope {
 
     right() {
         const head = this.head.right();
+        return new Rope(head, this.tail.follow(head));
+    }
+
+    left() {
+        const head = this.head.left();
         return new Rope(head, this.tail.follow(head));
     }
 }
@@ -90,7 +105,7 @@ function positionsOfTail(commands: Command[]) {
 }
 
 const right = (steps: number) => new Command('R', steps);
-const left = (steps: number) => new Command('D', steps);
+const left = (steps: number) => new Command('L', steps);
 
 test('no moves', function () {
     expect(positionsOfTail([])).toBe(1);
@@ -108,14 +123,14 @@ test('R 3', function () {
     expect(positionsOfTail([right(3)])).toBe(3);
 });
 
-xtest('R 1, R1', function () {
+test('R 1, R1', function () {
     expect(positionsOfTail([
         right(1),
         right(1),
     ])).toBe(2);
 });
 
-xtest('R 1, L1', function () {
+test('R 1, L1', function () {
     expect(positionsOfTail([
         right(1),
         left(1),
