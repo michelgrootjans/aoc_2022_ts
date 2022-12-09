@@ -13,7 +13,7 @@ class Command {
 
 function positionsOfTail(commands: Command[]) {
     return _.flow(
-        _.map((c: Command) => c.steps),
+        _.map('steps'),
         _.sum
     )(commands) || 1;
 }
