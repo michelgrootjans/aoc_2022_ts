@@ -46,28 +46,28 @@ describe('section', () => {
     });
 
     it('right, left', () => {
-        expect(Section.build().right().left()).toEqual(section(0, 0, 0, 0))
-        expect(Section.build().left().right()).toEqual(section(0, 0, 0, 0))
+        expect(Section.build().right().left().ends()).toEqual(section2(0, 0, 0, 0))
+        expect(Section.build().left().right().ends()).toEqual(section2(0, 0, 0, 0))
     });
 
     it('up', () => {
-        expect(Section.build().up()).toEqual(section(0, 1, 0, 0))
+        expect(Section.build().up().ends()).toEqual(section2(0, 1, 0, 0))
     });
 
     it('up, up', () => {
-        expect(Section.build().up().up()).toEqual(section(0, 2, 0, 1))
+        expect(Section.build().up().up().ends()).toEqual(section2(0, 2, 0, 1))
     });
 
     it('down', () => {
-        expect(Section.build().down()).toEqual(section(0, -1, 0, 0))
+        expect(Section.build().down().ends()).toEqual(section2(0, -1, 0, 0))
     });
 
     it('down, down', () => {
-        expect(Section.build().down().down()).toEqual(section(0, -2, 0, -1))
+        expect(Section.build().down().down().ends()).toEqual(section2(0, -2, 0, -1))
     });
 
     it('right, up, up', () => {
-        expect(Section.build().right().up().up()).toEqual(section(1, 2, 1, 1))
+        expect(Section.build().right().up().up().ends()).toEqual(section2(1, 2, 1, 1))
     });
 });
 
