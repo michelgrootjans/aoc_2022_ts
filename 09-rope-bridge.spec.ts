@@ -19,11 +19,11 @@ it('no moves', function () {
     expect(positionsOfTail([])).toBe(1);
 });
 
-it('one move right', function () {
+it('1 R', function () {
     expect(positionsOfTail([right(1)])).toBe(1);
 });
 
-it('two moves right', function () {
+it('R 2', function () {
     expect(positionsOfTail([right(2)])).toBe(2);
 });
 
