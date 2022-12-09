@@ -127,7 +127,8 @@ describe('rope state', () => {
 
     // @ts-ignore
     const toCommand = command => new Command(command[0] as string, command[1] as number);
-    const example = [
+
+    const example1 = [
         ['R', 4],
         ['U', 4],
         ['L', 3],
@@ -138,8 +139,19 @@ describe('rope state', () => {
         ['R', 2],
     ]
 
+    const example2 = [
+        ['R', 5],
+        ['U', 8],
+        ['L', 8],
+        ['D', 3],
+        ['R',17],
+        ['D',10],
+        ['L',25],
+        ['U',20],
+    ]
+
     test('example - part 1', () => {
-        expect(positionsOfTail(example.map(toCommand), 2)).toBe(13);
+        expect(positionsOfTail(example1.map(toCommand), 2)).toBe(13);
     });
 
     xtest('input - part 1', () => { // SLOW !
@@ -147,6 +159,10 @@ describe('rope state', () => {
     });
 
     it('example 1 - part 2', () => {
-        expect(positionsOfTail(example.map(toCommand), 10)).toBe(1);
+        expect(positionsOfTail(example1.map(toCommand), 10)).toBe(1);
+    });
+
+    fit('example 1 - part 2', () => {
+        expect(positionsOfTail(example2.map(toCommand), 10)).toBe(36);
     });
 });
