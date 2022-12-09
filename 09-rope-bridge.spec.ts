@@ -194,11 +194,8 @@ describe('state', () => {
     test.each([
         [[right(1)], 1],
         [[right(2)], 2],
-        [[right(3)], 3],
-        [[
-            right(1),
-            right(1),
-        ], 2],
+        [[left(1)], 1],
+        [[left(2)], 2],
     ])('%p 1 => %d', (commands, expected) => {
         expect(positionsOfTail(commands)).toBe(expected);
     });
