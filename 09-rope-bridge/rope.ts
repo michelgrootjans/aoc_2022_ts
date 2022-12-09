@@ -3,6 +3,8 @@ import {Knot} from "./knot";
 
 export class Rope {
     private knots: Knot[];
+    private headd: Knot;
+    private taill: Knot;
 
     static build(numberOfKnots: number) {
         return new Rope(_.range(numberOfKnots).map(_ => new Knot(0,0)))
@@ -10,6 +12,8 @@ export class Rope {
 
     private constructor(knots: Knot[]) {
         this.knots = knots
+        this.headd = this.knots[0];
+        this.taill = this.knots[this.knots.length - 1]
     }
 
     ends(): {head: Knot, tail: Knot} {
