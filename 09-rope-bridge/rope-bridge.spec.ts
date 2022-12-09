@@ -11,7 +11,7 @@ function positionsOfTail(commands: Command[]) {
     return _.flow(
         _.uniqWith(_.isEqual),
         _.size,
-    )(endState.history());
+    )(endState.tailHistory());
 }
 
 describe('section', () => {
