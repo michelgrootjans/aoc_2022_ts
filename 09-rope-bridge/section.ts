@@ -24,7 +24,7 @@ export class Section {
     }
 
     tail() {
-        return this._tail;
+        return this.knots[this.knots.length - 1];
     }
 
     right() {
