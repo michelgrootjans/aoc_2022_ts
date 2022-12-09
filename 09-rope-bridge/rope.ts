@@ -46,7 +46,6 @@ export class Rope {
             return [head, ...abc([next.follow(head), ...rest])];
         }
 
-        const knots: Knot[] = abc([head, ..._.tail(this.knots)])
-        return new Rope(knots);
+        return new Rope(abc([head, ..._.tail(this.knots)]));
     }
 }
