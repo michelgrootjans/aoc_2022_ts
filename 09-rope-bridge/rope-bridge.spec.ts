@@ -15,8 +15,6 @@ function positionsOfTail(commands: Command[]) {
 }
 
 describe('section', () => {
-    const initialSection = () => section(0, 0, 0, 0);
-
     function section2(xHead: number, yHead: number, xTail: number, yTail: number) {
         return {head: new Knot(xHead, yHead), tail: new Knot(xTail, yTail)};
     }
