@@ -11,6 +11,7 @@ class Command {
 
 interface Position {x: number, y: number};
 interface State {head: Position, tail: Position}
+type History = State[]
 
 function positionsOfTail(commands: Command[]) {
     const initialState = {head: {x: 0, y: 0}, tail: {x: 0, y: 0}}
