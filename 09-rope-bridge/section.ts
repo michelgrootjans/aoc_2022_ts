@@ -14,7 +14,7 @@ export class Section {
     }
 
     ends() {
-        return {head: this.head(), tail: this._tail};
+        return {head: this.head(), tail: this.tail()};
     }
 
     private head() {
