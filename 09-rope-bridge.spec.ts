@@ -139,6 +139,10 @@ describe('rope', () => {
     it('left, left', () => {
         expect(initialRope().left().left()).toEqual(rope(-2, 0, -1, 0))
     });
+
+    it('right, left', () => {
+        expect(initialRope().right().left()).toEqual(rope(0, 0, 0, 0))
+    });
 });
 
 test('no moves', function () {
