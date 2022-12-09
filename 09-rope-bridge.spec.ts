@@ -63,8 +63,12 @@ describe('rope - 2', () => {
 describe('rope - 3', () => {
     const rope = Rope.build(3);
 
-    xit('right', () => {
-        expect(rope.right()).toMatchObject({knots: [new Knot(1, 0), new Knot(0, 0)]})
+    it('right', () => {
+        expect(rope.right()).toMatchObject({knots: [
+                new Knot(1, 0),
+                new Knot(0, 0),
+                new Knot(0, 0),
+            ]})
     });
 
     xit('right, right', () => {
