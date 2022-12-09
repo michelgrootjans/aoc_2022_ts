@@ -44,10 +44,6 @@ class Knot {
         this.y = y;
     }
 
-    isCloseTo(that: Knot): boolean {
-        return Math.abs(this.x - that.x) <= 1 && Math.abs(this.y - that.y) <= 1;
-    }
-
     right() {
         return new Knot(this.x + 1, this.y);
     }
@@ -59,6 +55,10 @@ class Knot {
     follow(that: Knot) {
         if(this.isCloseTo(that)) return this;
         return this.right();
+    }
+
+    private isCloseTo(that: Knot): boolean {
+        return Math.abs(this.x - that.x) <= 1 && Math.abs(this.y - that.y) <= 1;
     }
 }
 
