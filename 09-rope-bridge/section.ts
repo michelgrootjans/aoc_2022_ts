@@ -1,7 +1,6 @@
 import {Knot} from "./knot";
 
 export class Section {
-    private readonly _tail: Knot;
     private knots: Knot[];
 
     static build(numberOfKnots = 2) {
@@ -9,7 +8,6 @@ export class Section {
     }
 
     private constructor(head: Knot, tail: Knot = head) {
-        this._tail = tail;
         this.knots = [head, tail]
     }
 
