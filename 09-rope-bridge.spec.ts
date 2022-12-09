@@ -181,7 +181,7 @@ describe('rope', () => {
         expect(initialRope().down().down()).toEqual(rope(0, -2, 0, -1))
     });
 
-    xit('right, up, up', () => {
+    it('right, up, up', () => {
         expect(initialRope().right().up().up()).toEqual(rope(1, 2, 1, 1))
     });
 });
