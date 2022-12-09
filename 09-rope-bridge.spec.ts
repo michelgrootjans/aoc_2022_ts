@@ -1,3 +1,5 @@
+import _ from 'lodash/fp'
+
 class Command {
     public readonly direction: string;
     public readonly steps: number;
@@ -8,26 +10,35 @@ class Command {
     }
 
     move(state: State): State {
-        return {now: this.execute(state), past: [state.now, ...state.past]};
+        return {now: this.execute(state), history: [state.now, ...state.history]};
+    }
+
+    nextHead(head: Knot) {
+        return {x: head.x + this.steps, y: 0};
     }
 
     private execute(state: State): Rope {
-        return {
-            head: {x: 0, y: 0},
-            tail: {x: 0, y: 0}
-        };
+
+        function nextTail(nextHead: Knot, tail: Knot) {
+            return {x: 0, y: 0};
+        }
+
+        const head = this.nextHead(state.now.head);
+        const tail = nextTail(head, state.now.tail);
+
+        return {head, tail};
     }
 }
 
 interface Knot {x: number, y: number};
 interface Rope {head: Knot, tail: Knot}
-interface State {now: Rope, past: Rope[]}
+interface State {now: Rope, history: Rope[]}
 
 function print(state: State) {
     const printKnot = (knot: Knot) => `(${knot.x},${knot.y})`;
     const printHistory = (ropes: Rope[]) => ropes.map(rope => `{ head: ${printKnot(rope.head)}, tail: ${printKnot(rope.tail)} }`);
 
-    return printHistory([state.now, ...state.past])
+    return printHistory([state.now, ...state.history]).join(',\n')
 }
 
 function positionsOfTail(commands: Command[]) {
@@ -36,10 +47,15 @@ function positionsOfTail(commands: Command[]) {
             head: {x: 0, y: 0},
             tail: {x: 0, y: 0},
         },
-        past: []
+        history: []
     };
     const endState = commands.reduce((state, command) => command.move(state), initialState);
-    console.log(print(endState))
+    const tailPositions = _.flow(
+        _.map((rope: Rope) => rope.tail),
+        _.uniq,
+        _.size,
+    )([endState.now, ...endState.history])
+    console.log(print(endState), tailPositions)
     return commands.reduce((sum, command) => sum + command.steps, 0) || 1;
 }
 
