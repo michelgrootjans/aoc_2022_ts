@@ -146,7 +146,7 @@ describe('rope state', () => {
         expect(positionsOfTail(input.map(toCommand), 2)).toBe(6236);
     });
 
-    xtest('example - part 2', () => {
-        expect(positionsOfTail(example.map(toCommand), 10)).toBe(36);
+    it('example 1 - part 2', () => {
+        expect(positionsOfTail(example.map(toCommand), 10)).toBe(1);
     });
 });
