@@ -5,7 +5,7 @@ class Command {
     public readonly direction: string;
     public readonly steps: number;
 
-    private readonly operation: (rope: Rope) => Rope;
+    private readonly operation: (section: Section) => Section;
 
     constructor(direction: string, steps: number) {
         this.direction = direction;
@@ -13,10 +13,10 @@ class Command {
 
         function createOperation(direction: string) {
             switch (direction) {
-                case 'R':return (rope: Rope) => rope.right();
-                case 'L':return (rope: Rope) => rope.left();
-                case 'U':return (rope: Rope) => rope.up();
-                case 'D':return (rope: Rope) => rope.down();
+                case 'R':return (section: Section) => section.right();
+                case 'L':return (section: Section) => section.left();
+                case 'U':return (section: Section) => section.up();
+                case 'D':return (section: Section) => section.down();
                 default: throw `unknown direction: ${direction}`
             }
         }
@@ -27,9 +27,9 @@ class Command {
     move(state: State): State {
         if (this.steps === 0) return state;
 
-        const rope = this.operation(state.now);
+        const section = this.operation(state.now);
         return new Command(this.direction, this.steps - 1)
-            .move(state.next(rope))
+            .move(state.next(section))
     }
 }
 
@@ -74,7 +74,7 @@ class Knot {
     }
 }
 
-class Rope {
+class Section {
     public readonly head: Knot;
     public readonly tail: Knot;
 
@@ -100,26 +100,26 @@ class Rope {
     }
 
     private move(head: Knot) {
-        return new Rope(head, this.tail.follow(head));
+        return new Section(head, this.tail.follow(head));
     }
 }
 
 class State {
-    public readonly now: Rope;
-    public readonly history: Rope[]
+    public readonly now: Section;
+    public readonly history: Section[]
 
-    constructor(now: Rope, history: Rope[] = []) {
+    constructor(now: Section, history: Section[] = []) {
         this.now = now;
         this.history = history;
     }
 
-    next(rope: Rope) {
-        return new State(rope, [this.now, ...this.history]);
+    next(section: Section) {
+        return new State(section, [this.now, ...this.history]);
     }
 }
 
 function positionsOfTail(commands: Command[]) {
-    const initialState = new State(new Rope(new Knot(0, 0), new Knot(0, 0)));
+    const initialState = new State(new Section(new Knot(0, 0), new Knot(0, 0)));
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     return _.flow(
         _.map('tail'),
@@ -128,56 +128,56 @@ function positionsOfTail(commands: Command[]) {
     )([endState.now, ...endState.history]);
 }
 
-describe('rope', () => {
-    const initialRope = () => rope(0, 0, 0, 0);
+describe('section', () => {
+    const initialSection = () => section(0, 0, 0, 0);
 
-    function rope(xHead: number, yHead: number, xTail: number, yTail: number) {
-        return new Rope(new Knot(xHead, yHead), new Knot(xTail, yTail));
+    function section(xHead: number, yHead: number, xTail: number, yTail: number) {
+        return new Section(new Knot(xHead, yHead), new Knot(xTail, yTail));
     }
 
-    it('same rope', () => {
-        expect(initialRope()).toEqual(rope(0, 0, 0, 0))
+    it('same section', () => {
+        expect(initialSection()).toEqual(section(0, 0, 0, 0))
     });
 
     it('right', () => {
-        expect(initialRope().right()).toEqual(rope(1, 0, 0, 0))
+        expect(initialSection().right()).toEqual(section(1, 0, 0, 0))
     });
 
     it('right, right', () => {
-        expect(initialRope().right().right()).toEqual(rope(2, 0, 1, 0))
+        expect(initialSection().right().right()).toEqual(section(2, 0, 1, 0))
     });
 
     it('left', () => {
-        expect(initialRope().left()).toEqual(rope(-1, 0, 0, 0))
+        expect(initialSection().left()).toEqual(section(-1, 0, 0, 0))
     });
 
     it('left, left', () => {
-        expect(initialRope().left().left()).toEqual(rope(-2, 0, -1, 0))
+        expect(initialSection().left().left()).toEqual(section(-2, 0, -1, 0))
     });
 
     it('right, left', () => {
-        expect(initialRope().right().left()).toEqual(rope(0, 0, 0, 0))
-        expect(initialRope().left().right()).toEqual(rope(0, 0, 0, 0))
+        expect(initialSection().right().left()).toEqual(section(0, 0, 0, 0))
+        expect(initialSection().left().right()).toEqual(section(0, 0, 0, 0))
     });
 
     it('up', () => {
-        expect(initialRope().up()).toEqual(rope(0, 1, 0, 0))
+        expect(initialSection().up()).toEqual(section(0, 1, 0, 0))
     });
 
     it('up, up', () => {
-        expect(initialRope().up().up()).toEqual(rope(0, 2, 0, 1))
+        expect(initialSection().up().up()).toEqual(section(0, 2, 0, 1))
     });
 
     it('down', () => {
-        expect(initialRope().down()).toEqual(rope(0, -1, 0, 0))
+        expect(initialSection().down()).toEqual(section(0, -1, 0, 0))
     });
 
     it('down, down', () => {
-        expect(initialRope().down().down()).toEqual(rope(0, -2, 0, -1))
+        expect(initialSection().down().down()).toEqual(section(0, -2, 0, -1))
     });
 
     it('right, up, up', () => {
-        expect(initialRope().right().up().up()).toEqual(rope(1, 2, 1, 1))
+        expect(initialSection().right().up().up()).toEqual(section(1, 2, 1, 1))
     });
 });
 
