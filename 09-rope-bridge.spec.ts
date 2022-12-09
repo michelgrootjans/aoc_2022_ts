@@ -51,7 +51,7 @@ function positionsOfTail(commands: Command[]) {
     };
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     const tailPositions = _.flow(
-        _.map((rope: Rope) => rope.tail),
+        _.map('tail'),
         _.uniq,
         _.size,
     )([endState.now, ...endState.history])
