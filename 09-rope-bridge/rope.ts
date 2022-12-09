@@ -42,7 +42,7 @@ export class Rope {
 
     private move(head: Knot): Rope {
         function abc([head, next, ...rest]: Knot[]): Knot[] {
-            if(!next) return [];
+            if(!next) return [head];
             return [head, ...abc([next.follow(head), ...rest])];
         }
 
