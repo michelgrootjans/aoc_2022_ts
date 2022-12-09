@@ -187,32 +187,34 @@ describe('rope', () => {
     });
 });
 
-test('no moves', function () {
-    expect(positionsOfTail([])).toBe(1);
-});
+describe('state', () => {
+    test('no moves', function () {
+        expect(positionsOfTail([])).toBe(1);
+    });
 
-test.each([
-    [[right(1)], 1],
-    [[right(2)], 2],
-    [[right(3)], 3],
-    [[
-        right(1),
-        right(1),
-    ], 2],
-])('%p 1 => %d', (commands, expected) => {
-    expect(positionsOfTail(commands)).toBe(expected);
-});
+    test.each([
+        [[right(1)], 1],
+        [[right(2)], 2],
+        [[right(3)], 3],
+        [[
+            right(1),
+            right(1),
+        ], 2],
+    ])('%p 1 => %d', (commands, expected) => {
+        expect(positionsOfTail(commands)).toBe(expected);
+    });
 
-test('R 1, R1', function () {
-    expect(positionsOfTail([
-        right(1),
-        right(1),
-    ])).toBe(2);
-});
+    test('R 1, R1', function () {
+        expect(positionsOfTail([
+            right(1),
+            right(1),
+        ])).toBe(2);
+    });
 
-test('R 1, L1', function () {
-    expect(positionsOfTail([
-        right(1),
-        left(1),
-    ])).toBe(1);
+    test('R 1, L1', function () {
+        expect(positionsOfTail([
+            right(1),
+            left(1),
+        ])).toBe(1);
+    });
 });
