@@ -21,7 +21,7 @@ export class Rope {
     }
 
     private head(): Knot {
-        return this.knots[0];
+        return this.headd;
     }
 
     tail(): Knot {
