@@ -9,12 +9,12 @@ class Command {
 
 }
 
-interface Position {x: number, y: number};
-interface State {head: Position, tail: Position}
-type History = State[]
+interface Knot {x: number, y: number};
+interface Rope {head: Knot, tail: Knot}
+interface State {now: Rope, past: Rope[]}
 
 function positionsOfTail(commands: Command[]) {
-    const initialState = {head: {x: 0, y: 0}, tail: {x: 0, y: 0}}
+    const initialState: State = {now: {head: {x: 0, y: 0}, tail: {x: 0, y: 0}}, past: []}
     return commands.reduce((sum, command) => sum + command.steps, 0) || 1;
 }
 
