@@ -1,5 +1,5 @@
 import _ from 'lodash/fp'
-import {input} from "./09-rope-bridge/input";
+import {input} from "./09-input";
 import {Command} from "./09-rope-bridge/command";
 import {Knot} from "./09-rope-bridge/knot";
 import {Section} from "./09-rope-bridge/section";
