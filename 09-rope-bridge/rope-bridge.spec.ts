@@ -17,28 +17,32 @@ function positionsOfTail(commands: Command[]) {
 describe('section', () => {
     const initialSection = () => section(0, 0, 0, 0);
 
+    function section2(xHead: number, yHead: number, xTail: number, yTail: number) {
+        return {head: new Knot(xHead, yHead), tail: new Knot(xTail, yTail)};
+    }
+
     function section(xHead: number, yHead: number, xTail: number, yTail: number) {
         return new Section(new Knot(xHead, yHead), new Knot(xTail, yTail));
     }
 
     it('same section', () => {
-        expect(Section.build()).toEqual(section(0, 0, 0, 0))
+        expect(Section.build().ends()).toEqual(section2(0, 0, 0, 0))
     });
 
     it('right', () => {
-        expect(Section.build().right()).toEqual(section(1, 0, 0, 0))
+        expect(Section.build().right().ends()).toEqual(section2(1, 0, 0, 0))
     });
 
     it('right, right', () => {
-        expect(Section.build().right().right()).toEqual(section(2, 0, 1, 0))
+        expect(Section.build().right().right().ends()).toEqual(section2(2, 0, 1, 0))
     });
 
     it('left', () => {
-        expect(Section.build().left()).toEqual(section(-1, 0, 0, 0))
+        expect(Section.build().left().ends()).toEqual(section2(-1, 0, 0, 0))
     });
 
     it('left, left', () => {
-        expect(Section.build().left().left()).toEqual(section(-2, 0, -1, 0))
+        expect(Section.build().left().left().ends()).toEqual(section2(-2, 0, -1, 0))
     });
 
     it('right, left', () => {
