@@ -2,7 +2,7 @@ import _ from 'lodash'
 import {Knot} from "./knot";
 
 export class Rope {
-    private knots: Knot[];
+    public readonly knots: Knot[];
     public readonly head: Knot;
     public readonly tail: Knot;
 
