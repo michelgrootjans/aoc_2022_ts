@@ -10,7 +10,10 @@ class Command {
     }
 
     move(state: State): State {
-        return {now: this.execute(state), history: [state.now, ...state.history]};
+        const history = [state.now, ...state.history];
+        const now = this.execute(state);
+        console.log({now, history})
+        return {now, history};
     }
 
     nextHead(head: Knot) {
@@ -19,8 +22,8 @@ class Command {
 
     private execute(state: State): Rope {
 
-        function nextTail(nextHead: Knot, tail: Knot) {
-            return {x: 0, y: 0};
+        function nextTail(nextHead: Knot, tail: Knot): Knot {
+            return new Knot(0, 0);
         }
 
         const head = this.nextHead(state.now.head);
@@ -73,7 +76,7 @@ function positionsOfTail(commands: Command[]) {
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     const tailPositions = _.flow(
         _.map('tail'),
-        _.uniq,
+        _.uniqWith(_.isEqual),
         _.size,
     )([endState.now, ...endState.history])
     console.log(print(endState), tailPositions)
