@@ -4,6 +4,8 @@ class Command {
     public readonly direction: string;
     public readonly steps: number;
 
+    private readonly operation: (rope: Rope) => Rope;
+
     movements = {
         'R': (rope: Rope) => rope.right(),
         'L': (rope: Rope) => rope.left(),
@@ -12,6 +14,16 @@ class Command {
     constructor(direction: string, steps: number) {
         this.direction = direction;
         this.steps = steps;
+
+        function createOperation(direction: string) {
+            switch (direction) {
+                case 'R':return (rope: Rope) => rope.right();
+                case 'L':return (rope: Rope) => rope.left();
+                default: throw `unknown direction: ${direction}`
+            }
+        }
+
+        this.operation = createOperation(this.direction);
     }
 
     move(state: State): State {
