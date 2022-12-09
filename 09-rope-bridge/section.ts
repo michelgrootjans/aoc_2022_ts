@@ -1,10 +1,11 @@
+import _ from 'lodash'
 import {Knot} from "./knot";
 
 export class Section {
     private knots: Knot[];
 
     static build(numberOfKnots = 2) {
-        return new Section([new Knot(0, 0), new Knot(0 , 0)])
+        return new Section(_.range(2).map(_ => new Knot(0,0)))
     }
 
     private constructor(knots: Knot[]) {
