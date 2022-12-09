@@ -11,8 +11,8 @@ function positionsOfTail(commands: Command[]) {
     )(endState.tailHistory());
 }
 
-describe('section', () => {
-    it('same section', () => {
+describe('rope', () => {
+    it('same rope', () => {
         expect(Rope.build().ends()).toEqual({head: new Knot(0, 0), tail: new Knot(0, 0)})
     });
 
@@ -58,7 +58,7 @@ describe('section', () => {
     });
 });
 
-describe('section state', () => {
+describe('rope state', () => {
     const right = (steps: number) => new Command('R', steps);
     const left = (steps: number) => new Command('L', steps);
     const up = (steps: number) => new Command('U', steps);

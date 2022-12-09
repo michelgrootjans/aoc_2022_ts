@@ -10,8 +10,8 @@ export class State {
         this._tailHistory = history;
     }
 
-    next(section: Rope): State {
-        return new State(section, this.tailHistory());
+    next(rope: Rope): State {
+        return new State(rope, this.tailHistory());
     }
 
     tailHistory() {
