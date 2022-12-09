@@ -59,6 +59,10 @@ class Knot {
         return new Knot(this.x, this.y + 1);
     }
 
+    down() {
+        return new Knot(this.x, this.y - 1);
+    }
+
     follow(that: Knot) {
         if (this.isCloseTo(that)) return this;
         if(that.x < this.x) return this.left();
@@ -90,6 +94,10 @@ class Rope {
 
     up() {
         return this.move(this.head.up());
+    }
+
+    down() {
+        return this.move(this.head.down());
     }
 
     private move(head: Knot) {
@@ -162,6 +170,14 @@ describe('rope', () => {
 
     it('up, up', () => {
         expect(initialRope().up().up()).toEqual(rope(0, 2, 0, 1))
+    });
+
+    it('down', () => {
+        expect(initialRope().down()).toEqual(rope(0, -1, 0, 0))
+    });
+
+    xit('down, down', () => {
+        expect(initialRope().down().down()).toEqual(rope(0, -2, 0, -1))
     });
 });
 
