@@ -1,4 +1,5 @@
-import {Section, State} from "./rope-bridge.spec";
+import {State} from "./rope-bridge.spec";
+import {Section} from "./section";
 
 export class Command {
     public readonly direction: string;
