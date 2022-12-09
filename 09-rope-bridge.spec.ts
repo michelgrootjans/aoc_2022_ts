@@ -216,4 +216,19 @@ describe('state', () => {
             left(1),
         ])).toBe(1);
     });
+
+    const example = [
+        ['R', 4],
+        ['U', 4],
+        ['L', 3],
+        ['D', 1],
+        ['R', 4],
+        ['D', 1],
+        ['L', 5],
+        ['R', 2],
+    ].map(command => new Command(command[0] as string, command[1] as number))
+
+    test('example - part 1', () => {
+        expect(positionsOfTail(example)).toBe(13);
+    });
 });
