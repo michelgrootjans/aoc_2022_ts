@@ -19,6 +19,7 @@ class Command {
             switch (direction) {
                 case 'R':return (rope: Rope) => rope.right();
                 case 'L':return (rope: Rope) => rope.left();
+                case 'D':return (rope: Rope) => rope.down();
                 default: throw `unknown direction: ${direction}`
             }
         }
@@ -29,7 +30,7 @@ class Command {
     move(state: State): State {
         if (this.steps === 0) return state;
         // @ts-ignore
-        const rope = this.movements[this.direction](state.now);
+        const rope = this.operation(state.now);
         return new Command(this.direction, this.steps - 1)
             .move(state.next(rope))
     }
@@ -130,9 +131,6 @@ function positionsOfTail(commands: Command[]) {
     )([endState.now, ...endState.history]);
 }
 
-const right = (steps: number) => new Command('R', steps);
-const left = (steps: number) => new Command('L', steps);
-
 describe('rope', () => {
     const initialRope = () => rope(0, 0, 0, 0);
 
@@ -187,6 +185,10 @@ describe('rope', () => {
 });
 
 describe('state', () => {
+    const right = (steps: number) => new Command('R', steps);
+    const left = (steps: number) => new Command('L', steps);
+    const down = (steps: number) => new Command('D', steps);
+
     test('no moves', function () {
         expect(positionsOfTail([])).toBe(1);
     });
@@ -196,6 +198,7 @@ describe('state', () => {
         [[right(2)], 2],
         [[left(1)], 1],
         [[left(2)], 2],
+        [[down(1)], 1],
     ])('%p 1 => %d', (commands, expected) => {
         expect(positionsOfTail(commands)).toBe(expected);
     });
