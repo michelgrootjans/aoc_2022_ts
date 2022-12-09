@@ -17,12 +17,9 @@ class Command {
 
         function createOperation(direction: string) {
             switch (direction) {
-                case 'R':
-                    return (rope: Rope) => rope.right();
-                case 'L':
-                    return (rope: Rope) => rope.left();
-                default:
-                    throw `unknown direction: ${direction}`
+                case 'R':return (rope: Rope) => rope.right();
+                case 'L':return (rope: Rope) => rope.left();
+                default: throw `unknown direction: ${direction}`
             }
         }
 
@@ -65,11 +62,13 @@ class Knot {
 
     follow(that: Knot) {
         if (this.isCloseTo(that)) return this;
+
+        let result: Knot = this;
         if(that.x < this.x) return this.left();
         if(that.x > this.x) return this.right();
         if(that.y > this.y) return this.up();
         if(that.y < this.y) return this.down();
-        throw 'illegal state';
+        return result;
     }
 
     private isCloseTo(that: Knot): boolean {
