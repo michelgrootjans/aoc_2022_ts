@@ -61,14 +61,14 @@ describe('rope - 2', () => {
 });
 
 describe('rope - 3', () => {
-    const rope = Rope.build(2);
+    const rope = Rope.build(3);
 
     it('right', () => {
         expect(rope.right().ends()).toEqual({head: new Knot(1, 0), tail: new Knot(0, 0)})
     });
 
-    xit('right, right', () => {
-        expect(rope.right().right().ends()).toEqual({head: new Knot(2, 0), tail: new Knot(1, 0)})
+    it('right, right', () => {
+        expect(rope.right().right().ends()).toEqual({head: new Knot(2, 0), tail: new Knot(0, 0)})
     });
 
     xit('left', () => {
