@@ -19,6 +19,6 @@ export class State {
     }
 
     tailHistory() {
-        return [this.current.tail(), ...this._tailHistory];
+        return [this.current.tail, ...this._tailHistory];
     }
 }
