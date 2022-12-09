@@ -15,35 +15,35 @@ export class Section {
         this.knots = [head, tail]
     }
 
-    ends() {
+    ends(): {head: Knot, tail: Knot} {
         return {head: this.head(), tail: this.tail()};
     }
 
-    private head() {
+    private head(): Knot {
         return this.knots[0];
     }
 
-    tail() {
+    tail(): Knot {
         return this.knots[this.knots.length - 1];
     }
 
-    right() {
+    right(): Section {
         return this.move(this.head().right());
     }
 
-    left() {
+    left(): Section {
         return this.move(this.head().left());
     }
 
-    up() {
+    up(): Section {
         return this.move(this.head().up());
     }
 
-    down() {
+    down(): Section {
         return this.move(this.head().down());
     }
 
-    private move(head: Knot) {
+    private move(head: Knot): Section {
         return new Section(head, this._tail.follow(head));
     }
 }
