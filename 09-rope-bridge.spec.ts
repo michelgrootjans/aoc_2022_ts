@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import {input} from "./09-input";
 
 class Command {
     public readonly direction: string;
@@ -217,6 +218,8 @@ describe('state', () => {
         ])).toBe(1);
     });
 
+    // @ts-ignore
+    const toCommand = command => new Command(command[0] as string, command[1] as number);
     const example = [
         ['R', 4],
         ['U', 4],
@@ -226,9 +229,13 @@ describe('state', () => {
         ['D', 1],
         ['L', 5],
         ['R', 2],
-    ].map(command => new Command(command[0] as string, command[1] as number))
+    ]
 
     test('example - part 1', () => {
-        expect(positionsOfTail(example)).toBe(13);
+        expect(positionsOfTail(example.map(toCommand))).toBe(13);
+    });
+
+    test('input - part 1', () => {
+        expect(positionsOfTail(input.map(toCommand))).toBe(6236);
     });
 });
