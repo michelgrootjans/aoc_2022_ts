@@ -67,6 +67,7 @@ class Knot {
         if (this.isCloseTo(that)) return this;
         if(that.x < this.x) return this.left();
         if(that.y > this.y) return this.up();
+        if(that.y < this.y) return this.down();
         return this.right();
     }
 
@@ -176,7 +177,7 @@ describe('rope', () => {
         expect(initialRope().down()).toEqual(rope(0, -1, 0, 0))
     });
 
-    xit('down, down', () => {
+    it('down, down', () => {
         expect(initialRope().down().down()).toEqual(rope(0, -2, 0, -1))
     });
 });
