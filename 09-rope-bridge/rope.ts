@@ -4,8 +4,8 @@ import {Knot} from "./knot";
 export class Rope {
     private knots: Knot[];
 
-    static build() {
-        return new Rope(_.range(2).map(_ => new Knot(0,0)))
+    static build(numberOfKnots: number) {
+        return new Rope(_.range(numberOfKnots).map(_ => new Knot(0,0)))
     }
 
     private constructor(knots: Knot[]) {
