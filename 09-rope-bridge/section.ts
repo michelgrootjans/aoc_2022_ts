@@ -20,7 +20,7 @@ export class Section {
     }
 
     private head() {
-        return this._head;
+        return this.knots[0];
     }
 
     tail() {
