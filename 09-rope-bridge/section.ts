@@ -4,11 +4,11 @@ export class Section {
     private knots: Knot[];
 
     static build(numberOfKnots = 2) {
-        return new Section(new Knot(0, 0), new Knot(0 , 0))
+        return new Section([new Knot(0, 0), new Knot(0 , 0)])
     }
 
-    private constructor(head: Knot, tail: Knot = head) {
-        this.knots = [head, tail]
+    private constructor(knots: Knot[]) {
+        this.knots = knots
     }
 
     ends(): {head: Knot, tail: Knot} {
@@ -40,6 +40,6 @@ export class Section {
     }
 
     private move(head: Knot): Section {
-        return new Section(head, this.tail().follow(head));
+        return new Section([head, this.tail().follow(head)]);
     }
 }
