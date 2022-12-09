@@ -51,7 +51,15 @@ class Rope {
     }
 }
 
-interface State {now: Rope, history: Rope[]}
+class State {
+    public readonly now: Rope;
+    public readonly history: Rope[]
+
+    constructor(now: Rope, history: Rope[] = []) {
+        this.now = now;
+        this.history = history;
+    }
+}
 
 function print(state: State) {
     const printKnot = (knot: Knot) => `(${knot.x},${knot.y})`;
@@ -61,10 +69,7 @@ function print(state: State) {
 }
 
 function positionsOfTail(commands: Command[]) {
-    const initialState: State = {
-        now: new Rope(new Knot(0, 0), new Knot(0, 0)),
-        history: []
-    };
+    const initialState = new State(new Rope(new Knot(0, 0), new Knot(0, 0)));
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     const tailPositions = _.flow(
         _.map('tail'),
