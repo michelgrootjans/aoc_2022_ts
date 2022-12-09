@@ -2,8 +2,8 @@ import _ from 'lodash/fp'
 import {input} from "./09-input";
 import {Command, Knot, Rope, State} from "./09-rope-bridge";
 
-function positionsOfTail(commands: Command[]) {
-    const initialState = State.build(2);
+function positionsOfTail(commands: Command[], numberOfKnots: number) {
+    const initialState = State.build(numberOfKnots);
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     return _.flow(
         _.uniqWith(_.isEqual),
@@ -65,7 +65,7 @@ describe('rope state', () => {
     const down = (steps: number) => new Command('D', steps);
 
     test('no moves', function () {
-        expect(positionsOfTail([])).toBe(1);
+        expect(positionsOfTail([], 2)).toBe(1);
     });
 
     test.each([
@@ -78,21 +78,21 @@ describe('rope state', () => {
         [[down(1)], 1],
         [[down(2)], 2],
     ])('%p 1 => %d', (commands, expected) => {
-        expect(positionsOfTail(commands)).toBe(expected);
+        expect(positionsOfTail(commands, 2)).toBe(expected);
     });
 
     test('R 1, R1', function () {
         expect(positionsOfTail([
             right(1),
             right(1),
-        ])).toBe(2);
+        ], 2)).toBe(2);
     });
 
     test('R 1, L1', function () {
         expect(positionsOfTail([
             right(1),
             left(1),
-        ])).toBe(1);
+        ], 2)).toBe(1);
     });
 
     // @ts-ignore
@@ -109,10 +109,10 @@ describe('rope state', () => {
     ]
 
     test('example - part 1', () => {
-        expect(positionsOfTail(example.map(toCommand))).toBe(13);
+        expect(positionsOfTail(example.map(toCommand), 2)).toBe(13);
     });
 
     xtest('input - part 1', () => { // SLOW !
-        expect(positionsOfTail(input.map(toCommand))).toBe(6236);
+        expect(positionsOfTail(input.map(toCommand), 2)).toBe(6236);
     });
 });
