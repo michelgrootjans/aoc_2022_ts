@@ -15,53 +15,49 @@ function positionsOfTail(commands: Command[]) {
 }
 
 describe('section', () => {
-    function section2(xHead: number, yHead: number, xTail: number, yTail: number) {
-        return {head: new Knot(xHead, yHead), tail: new Knot(xTail, yTail)};
-    }
-
     it('same section', () => {
-        expect(Section.build().ends()).toEqual(section2(0, 0, 0, 0))
+        expect(Section.build().ends()).toEqual({head: new Knot(0, 0), tail: new Knot(0, 0)})
     });
 
     it('right', () => {
-        expect(Section.build().right().ends()).toEqual(section2(1, 0, 0, 0))
+        expect(Section.build().right().ends()).toEqual({head: new Knot(1, 0), tail: new Knot(0, 0)})
     });
 
     it('right, right', () => {
-        expect(Section.build().right().right().ends()).toEqual(section2(2, 0, 1, 0))
+        expect(Section.build().right().right().ends()).toEqual({head: new Knot(2, 0), tail: new Knot(1, 0)})
     });
 
     it('left', () => {
-        expect(Section.build().left().ends()).toEqual(section2(-1, 0, 0, 0))
+        expect(Section.build().left().ends()).toEqual({head: new Knot(-1, 0), tail: new Knot(0, 0)})
     });
 
     it('left, left', () => {
-        expect(Section.build().left().left().ends()).toEqual(section2(-2, 0, -1, 0))
+        expect(Section.build().left().left().ends()).toEqual({head: new Knot(-2, 0), tail: new Knot(-1, 0)})
     });
 
     it('right, left', () => {
-        expect(Section.build().right().left().ends()).toEqual(section2(0, 0, 0, 0))
-        expect(Section.build().left().right().ends()).toEqual(section2(0, 0, 0, 0))
+        expect(Section.build().right().left().ends()).toEqual({head: new Knot(0, 0), tail: new Knot(0, 0)})
+        expect(Section.build().left().right().ends()).toEqual({head: new Knot(0, 0), tail: new Knot(0, 0)})
     });
 
     it('up', () => {
-        expect(Section.build().up().ends()).toEqual(section2(0, 1, 0, 0))
+        expect(Section.build().up().ends()).toEqual({head: new Knot(0, 1), tail: new Knot(0, 0)})
     });
 
     it('up, up', () => {
-        expect(Section.build().up().up().ends()).toEqual(section2(0, 2, 0, 1))
+        expect(Section.build().up().up().ends()).toEqual({head: new Knot(0, 2), tail: new Knot(0, 1)})
     });
 
     it('down', () => {
-        expect(Section.build().down().ends()).toEqual(section2(0, -1, 0, 0))
+        expect(Section.build().down().ends()).toEqual({head: new Knot(0, -1), tail: new Knot(0, 0)})
     });
 
     it('down, down', () => {
-        expect(Section.build().down().down().ends()).toEqual(section2(0, -2, 0, -1))
+        expect(Section.build().down().down().ends()).toEqual({head: new Knot(0, -2), tail: new Knot(0, -1)})
     });
 
     it('right, up, up', () => {
-        expect(Section.build().right().up().up().ends()).toEqual(section2(1, 2, 1, 1))
+        expect(Section.build().right().up().up().ends()).toEqual({head: new Knot(1, 2), tail: new Knot(1, 1)})
     });
 });
 

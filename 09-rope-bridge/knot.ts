@@ -30,9 +30,7 @@ export class Knot {
         if (that.x > result.x) result = result.right();
         if (that.x < result.x) result = result.left();
         if (that.y > result.y) result = result.up();
-        ;
         if (that.y < result.y) result = result.down();
-        ;
         return result;
     }
 
