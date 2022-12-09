@@ -14,7 +14,11 @@ export class Section {
     }
 
     ends() {
-        return {head: this._head, tail: this._tail};
+        return {head: this.head(), tail: this._tail};
+    }
+
+    private head() {
+        return this._head;
     }
 
     tail() {
@@ -22,19 +26,19 @@ export class Section {
     }
 
     right() {
-        return this.move(this._head.right());
+        return this.move(this.head().right());
     }
 
     left() {
-        return this.move(this._head.left());
+        return this.move(this.head().left());
     }
 
     up() {
-        return this.move(this._head.up());
+        return this.move(this.head().up());
     }
 
     down() {
-        return this.move(this._head.down());
+        return this.move(this.head().down());
     }
 
     private move(head: Knot) {
