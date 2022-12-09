@@ -29,7 +29,7 @@ class Command {
 
     move(state: State): State {
         if (this.steps === 0) return state;
-        // @ts-ignore
+
         const rope = this.operation(state.now);
         return new Command(this.direction, this.steps - 1)
             .move(state.next(rope))
