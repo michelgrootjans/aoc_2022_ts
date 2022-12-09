@@ -6,7 +6,7 @@ import {Section} from "./section";
 import {State} from "./state";
 
 function positionsOfTail(commands: Command[]) {
-    const initialState = new State(Section.build(2));
+    const initialState = new State(Section.build());
     const endState = commands.reduce((state, command) => command.move(state), initialState);
     return _.flow(
         _.uniqWith(_.isEqual),
