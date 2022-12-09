@@ -22,48 +22,48 @@ describe('section', () => {
     }
 
     it('same section', () => {
-        expect(initialSection()).toEqual(section(0, 0, 0, 0))
+        expect(Section.build()).toEqual(section(0, 0, 0, 0))
     });
 
     it('right', () => {
-        expect(initialSection().right()).toEqual(section(1, 0, 0, 0))
+        expect(Section.build().right()).toEqual(section(1, 0, 0, 0))
     });
 
     it('right, right', () => {
-        expect(initialSection().right().right()).toEqual(section(2, 0, 1, 0))
+        expect(Section.build().right().right()).toEqual(section(2, 0, 1, 0))
     });
 
     it('left', () => {
-        expect(initialSection().left()).toEqual(section(-1, 0, 0, 0))
+        expect(Section.build().left()).toEqual(section(-1, 0, 0, 0))
     });
 
     it('left, left', () => {
-        expect(initialSection().left().left()).toEqual(section(-2, 0, -1, 0))
+        expect(Section.build().left().left()).toEqual(section(-2, 0, -1, 0))
     });
 
     it('right, left', () => {
-        expect(initialSection().right().left()).toEqual(section(0, 0, 0, 0))
-        expect(initialSection().left().right()).toEqual(section(0, 0, 0, 0))
+        expect(Section.build().right().left()).toEqual(section(0, 0, 0, 0))
+        expect(Section.build().left().right()).toEqual(section(0, 0, 0, 0))
     });
 
     it('up', () => {
-        expect(initialSection().up()).toEqual(section(0, 1, 0, 0))
+        expect(Section.build().up()).toEqual(section(0, 1, 0, 0))
     });
 
     it('up, up', () => {
-        expect(initialSection().up().up()).toEqual(section(0, 2, 0, 1))
+        expect(Section.build().up().up()).toEqual(section(0, 2, 0, 1))
     });
 
     it('down', () => {
-        expect(initialSection().down()).toEqual(section(0, -1, 0, 0))
+        expect(Section.build().down()).toEqual(section(0, -1, 0, 0))
     });
 
     it('down, down', () => {
-        expect(initialSection().down().down()).toEqual(section(0, -2, 0, -1))
+        expect(Section.build().down().down()).toEqual(section(0, -2, 0, -1))
     });
 
     it('right, up, up', () => {
-        expect(initialSection().right().up().up()).toEqual(section(1, 2, 1, 1))
+        expect(Section.build().right().up().up()).toEqual(section(1, 2, 1, 1))
     });
 });
 
