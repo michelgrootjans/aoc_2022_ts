@@ -3,20 +3,7 @@ import {input} from "./input";
 import {Command} from "./command";
 import {Knot} from "./knot";
 import {Section} from "./section";
-
-export class State {
-    public readonly now: Section;
-    public readonly history: Section[]
-
-    constructor(now: Section, history: Section[] = []) {
-        this.now = now;
-        this.history = history;
-    }
-
-    next(section: Section) {
-        return new State(section, [this.now, ...this.history]);
-    }
-}
+import {State} from "./state";
 
 function positionsOfTail(commands: Command[]) {
     const initialState = new State(new Section(new Knot(0, 0), new Knot(0, 0)));
