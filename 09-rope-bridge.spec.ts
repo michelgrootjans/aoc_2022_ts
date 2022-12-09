@@ -12,19 +12,29 @@ class Command {
 }
 
 function positionsOfTail(commands: Command[]) {
-    return commands[0]?.steps || 1;
+    return _.flow(
+        _.map((c: Command) => c.steps),
+        _.sum
+    )(commands) || 1;
 }
 
-it('no moves', function () {
+test('no moves', function () {
     expect(positionsOfTail([])).toBe(1);
 });
 
-it('1 R', function () {
+test('1 R', function () {
     expect(positionsOfTail([right(1)])).toBe(1);
 });
 
-it('R 2', function () {
+test('R 2', function () {
     expect(positionsOfTail([right(2)])).toBe(2);
+});
+
+test('R 1, R1', function () {
+    expect(positionsOfTail([
+        right(1),
+        right(1),
+    ])).toBe(2);
 });
 
 function right(steps: number) {
