@@ -3,18 +3,18 @@ import {Knot} from "./knot";
 
 export class State {
     public readonly current: Section;
-    private readonly history: Knot[]
+    private readonly _history: Knot[]
 
     constructor(now: Section, history: Knot[] = []) {
         this.current = now;
-        this.history = history;
+        this._history = history;
     }
 
     next(section: Section): State {
-        return new State(section, this.getHistory());
+        return new State(section, this.history());
     }
 
-    getHistory() {
-        return [this.current.ends().tail, ...this.history];
+    history() {
+        return [this.current.ends().tail, ...this._history];
     }
 }
