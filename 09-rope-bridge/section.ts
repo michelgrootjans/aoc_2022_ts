@@ -4,7 +4,7 @@ export class Section {
     public readonly head: Knot;
     public readonly tail: Knot;
 
-    constructor(head: Knot, tail: Knot) {
+    constructor(head: Knot, tail: Knot = head) {
         this.head = head;
         this.tail = tail;
     }

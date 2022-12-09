@@ -10,7 +10,7 @@ export class State {
         this.history = history;
     }
 
-    next(section: Section) {
+    next(section: Section): State {
         return new State(section, [this.now.tail, ...this.history]);
     }
 }

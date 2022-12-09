@@ -13,16 +13,11 @@ export class Command {
 
         function createOperation(direction: string) {
             switch (direction) {
-                case 'R':
-                    return (section: Section) => section.right();
-                case 'L':
-                    return (section: Section) => section.left();
-                case 'U':
-                    return (section: Section) => section.up();
-                case 'D':
-                    return (section: Section) => section.down();
-                default:
-                    throw `unknown direction: ${direction}`
+                case 'R': return (section: Section) => section.right();
+                case 'L': return (section: Section) => section.left();
+                case 'U': return (section: Section) => section.up();
+                case 'D': return (section: Section) => section.down();
+                default:  throw `unknown direction: ${direction}`
             }
         }
 
