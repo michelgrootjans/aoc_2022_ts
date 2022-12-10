@@ -20,7 +20,7 @@ describe('simple example ', () => {
         device = new Device(input);
     });
 
-    it('cycle 1', function () {
+    test('cycle 1', function () {
         expect(device.duringCycle(1)).toBe(1)
     });
 });
