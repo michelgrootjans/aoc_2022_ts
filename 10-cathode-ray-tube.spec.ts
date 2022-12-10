@@ -45,6 +45,7 @@ describe('simple example ', () => {
 
     test('cycle 3', function () {
         expect(device.duringCycle(3)).toBe(1);
+        expect(device.signalDuring(3)).toBe(3 * 1)
         expect(device.afterCycle(3)).toBe(1 + 4);
     });
 
