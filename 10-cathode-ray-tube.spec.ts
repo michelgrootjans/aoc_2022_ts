@@ -91,4 +91,28 @@ describe('example', () => {
         expect(device.signalDuring(20)).toBe(20 * 21)
     });
 
+    test('cycle 60', function () {
+        expect(device.duringCycle(60)).toBe(19);
+        expect(device.signalDuring(60)).toBe(60 * 19)
+    });
+
+    test('cycle 100', function () {
+        expect(device.duringCycle(100)).toBe(18);
+        expect(device.signalDuring(100)).toBe(100 * 18)
+    });
+
+    test('cycle 140', function () {
+        expect(device.duringCycle(140)).toBe(21);
+        expect(device.signalDuring(140)).toBe(140 * 21)
+    });
+
+    test('cycle 180', function () {
+        expect(device.duringCycle(180)).toBe(16);
+        expect(device.signalDuring(180)).toBe(180 * 16)
+    });
+
+    test('cycle 220', function () {
+        expect(device.duringCycle(220)).toBe(18);
+        expect(device.signalDuring(220)).toBe(220 * 18)
+    });
 });
