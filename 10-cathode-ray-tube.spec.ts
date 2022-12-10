@@ -1,12 +1,21 @@
+import _ from 'lodash'
 interface Command {cycleTime: number, add: number}
 
 class Device {
     constructor(input: string[]) {
-        const commands = [{cycleTime: 0, add: 1},...input.map(this.toCommand)]
-        const cycles = commands.map((command, index) => ({...command, total: command.add + commands[index-1]?.add || 0}))
+        const commands = input.map(this.toCommand)
+        const cycles = commands.reduce(this.getNumbers, [1])
         console.log({input, commands, cycles})
     }
 
+
+    private getNumbers(acc: number[], command: Command) {
+        const previousValue = _.last(acc) || 0;
+        if (command.cycleTime === 1) {
+            return [...acc, previousValue]
+        }
+        return [...acc, previousValue, previousValue+command.add];
+    }
 
     private toCommand(description: string): Command {
         if(description === 'noop') return {cycleTime: 1, add: 0};
