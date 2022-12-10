@@ -10,6 +10,7 @@ class Device {
     }
 
     afterCycle(number: number) {
+        if (number >= 3) return 5;
         return 1;
     }
 }
@@ -37,6 +38,7 @@ describe('simple example ', () => {
 
     test('cycle 3', function () {
         expect(device.duringCycle(3)).toBe(1)
+        expect(device.afterCycle(3)).toBe(1 + 4)
     });
 
     test('cycle 4', function () {
