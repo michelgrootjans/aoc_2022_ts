@@ -27,8 +27,7 @@ class Device {
     }
 
     duringCycle(number: number): number {
-        if (number >= 4) return 4;
-        return 1;
+        return this.cycles[number - 1]
     }
 
     afterCycle(number: number) {
