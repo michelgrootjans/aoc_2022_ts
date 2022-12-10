@@ -7,7 +7,7 @@ class Device {
     constructor(input: string[]) {
         const commands = input.map(this.toCommand)
         this.cycles = commands.reduce(this.getNumbers, [1])
-        console.log({input, commands, cycles: this.cycles})
+        // console.log({input, commands, cycles: this.cycles})
     }
 
 
