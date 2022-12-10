@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import {example} from "./10-example";
+import {input} from "./10-input";
 
 interface Command {cycleTime: number, add: number}
 
@@ -114,5 +115,20 @@ describe('example', () => {
     test('cycle 220', function () {
         expect(device.duringCycle(220)).toBe(18);
         expect(device.signalDuring(220)).toBe(220 * 18)
+    });
+});
+
+describe('example', () => {
+    let device = new Device(input);
+
+    test('total of cycles', function () {
+        const sum = device.signalDuring(20)
+        + device.signalDuring(60)
+        + device.signalDuring(100)
+        + device.signalDuring(140)
+        + device.signalDuring(180)
+        + device.signalDuring(220)
+        ;
+        expect(sum).toBe(15260)
     });
 });
