@@ -16,7 +16,7 @@ class Device {
     }
 
     signalDuring(number: number) {
-        return number;
+        return number * this.duringCycle(number);
     }
 }
 
@@ -51,6 +51,7 @@ describe('simple example ', () => {
 
     test('cycle 4', function () {
         expect(device.duringCycle(4)).toBe(1 + 4);
+        expect(device.signalDuring(4)).toBe(4 * (1 + 4))
         expect(device.afterCycle(4)).toBe(1 + 4);
     });
 
