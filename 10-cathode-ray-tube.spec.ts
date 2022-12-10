@@ -23,4 +23,8 @@ describe('simple example ', () => {
     test('cycle 1', function () {
         expect(device.duringCycle(1)).toBe(1)
     });
+
+    test('cycle 2', function () {
+        expect(device.duringCycle(2)).toBe(1)
+    });
 });
