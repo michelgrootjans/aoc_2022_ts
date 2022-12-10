@@ -2,7 +2,10 @@ import _ from 'lodash'
 import {example} from "./10-example";
 import {input} from "./10-input";
 
-interface Command {cycleTime: number, add: number}
+interface Command {
+    cycleTime: number,
+    add: number
+}
 
 class Device {
     private readonly cycles: number[];
@@ -19,11 +22,11 @@ class Device {
         if (command.cycleTime === 1) {
             return [...acc, previousValue]
         }
-        return [...acc, previousValue, previousValue+command.add];
+        return [...acc, previousValue, previousValue + command.add];
     }
 
     private toCommand(description: string): Command {
-        if(description === 'noop') return {cycleTime: 1, add: 0};
+        if (description === 'noop') return {cycleTime: 1, add: 0};
         const split = description.split(' ');
         const add = parseInt(split[1]);
         return {cycleTime: 2, add}
@@ -39,6 +42,22 @@ class Device {
 
     signalDuring(number: number) {
         return number * this.duringCycle(number);
+    }
+
+    pixelAt(cycle: number, x: number) {
+        const spriteX = this.duringCycle(cycle);
+        const sprite = [spriteX - 1, spriteX, spriteX + 1];
+        if (sprite.includes(x)) {
+            return '#';
+        } else {
+            return '.';
+        }
+    }
+
+    row(rowNumber: number) {
+        return _.range(0, 40)
+            .map(index => this.pixelAt((rowNumber*40) + index + 1, index))
+            .join('');
     }
 }
 
@@ -84,7 +103,7 @@ describe('simple example ', () => {
     });
 });
 
-describe('example', () => {
+describe('example - part 1', () => {
     let device = new Device(example);
 
     test('cycle 20', function () {
@@ -118,17 +137,60 @@ describe('example', () => {
     });
 });
 
-describe('example', () => {
+describe('input - part 1', () => {
     let device = new Device(input);
 
     test('total of cycles', function () {
         const sum = device.signalDuring(20)
-        + device.signalDuring(60)
-        + device.signalDuring(100)
-        + device.signalDuring(140)
-        + device.signalDuring(180)
-        + device.signalDuring(220)
+            + device.signalDuring(60)
+            + device.signalDuring(100)
+            + device.signalDuring(140)
+            + device.signalDuring(180)
+            + device.signalDuring(220)
         ;
         expect(sum).toBe(15260)
+    });
+});
+
+describe('example - part 2', () => {
+    let device = new Device(example);
+
+    test('pixel 10', () => {
+        expect(device.pixelAt(10, 9)).toBe('#');
+    });
+
+    test('row 0', () => {
+        expect(device.row(0)).toBe('##..##..##..##..##..##..##..##..##..##..')
+    });
+
+    test('row 1', () => {
+        expect(device.row(1)).toBe('###...###...###...###...###...###...###.')
+    });
+
+
+    test('whole cycle', function () {
+        let screen = '';
+        for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+            screen += device.row(rowIndex) + '\n'
+        }
+        expect(screen).toEqual('' +
+            '##..##..##..##..##..##..##..##..##..##..\n' +
+            '###...###...###...###...###...###...###.\n' +
+            '####....####....####....####....####....\n' +
+            '#####.....#####.....#####.....#####.....\n' +
+            '######......######......######......####\n' +
+            '#######.......#######.......#######.....\n')
+    });
+});
+
+describe('input - part 2', () => {
+    let device = new Device(input);
+
+    test('total of cycles', function () {
+        let screen = '';
+        for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+            screen += device.row(rowIndex) + '\n'
+        }
+        // console.log(screen)
     });
 });
