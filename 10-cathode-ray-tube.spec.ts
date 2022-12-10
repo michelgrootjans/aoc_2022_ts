@@ -2,10 +2,12 @@ import _ from 'lodash'
 interface Command {cycleTime: number, add: number}
 
 class Device {
+    private readonly cycles: number[];
+
     constructor(input: string[]) {
         const commands = input.map(this.toCommand)
-        const cycles = commands.reduce(this.getNumbers, [1])
-        console.log({input, commands, cycles})
+        this.cycles = commands.reduce(this.getNumbers, [1])
+        console.log({input, commands, cycles: this.cycles})
     }
 
 
