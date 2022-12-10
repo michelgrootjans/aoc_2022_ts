@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import {example} from "./10-example";
+
 interface Command {cycleTime: number, add: number}
 
 class Device {
@@ -79,4 +81,14 @@ describe('simple example ', () => {
         expect(device.signalDuring(5)).toBe(5 * (1 + 3))
         expect(device.afterCycle(5)).toBe(1 + 3 - 5);
     });
+});
+
+describe('example', () => {
+    let device = new Device(example);
+
+    test('cycle 20', function () {
+        expect(device.duringCycle(20)).toBe(21);
+        expect(device.signalDuring(20)).toBe(20 * 21)
+    });
+
 });
