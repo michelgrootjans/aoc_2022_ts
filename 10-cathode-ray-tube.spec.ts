@@ -31,9 +31,7 @@ class Device {
     }
 
     afterCycle(number: number) {
-        if (number >= 5) return 0;
-        if (number >= 3) return 4;
-        return 1;
+        return this.cycles[number]
     }
 
     signalDuring(number: number) {
@@ -79,6 +77,6 @@ describe('simple example ', () => {
     test('cycle 5', function () {
         expect(device.duringCycle(5)).toBe(1 + 3);
         expect(device.signalDuring(5)).toBe(5 * (1 + 3))
-        expect(device.afterCycle(5)).toBe(1 + 4 - 5);
+        expect(device.afterCycle(5)).toBe(1 + 3 - 5);
     });
 });
