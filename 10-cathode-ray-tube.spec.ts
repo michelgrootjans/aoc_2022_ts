@@ -57,6 +57,7 @@ describe('simple example ', () => {
 
     test('cycle 5', function () {
         expect(device.duringCycle(5)).toBe(1 + 4);
+        expect(device.signalDuring(5)).toBe(5 * (1 + 4))
         expect(device.afterCycle(5)).toBe(1 + 4 - 5);
     });
 });
