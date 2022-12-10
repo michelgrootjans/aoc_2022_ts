@@ -13,9 +13,7 @@ class Device {
     constructor(input: string[]) {
         const commands = input.map(this.toCommand)
         this.cycles = commands.reduce(this.getNumbers, [1])
-        // console.log({input, commands, cycles: this.cycles})
     }
-
 
     private getNumbers(acc: number[], command: Command) {
         const previousValue = _.last(acc) || 0;
@@ -34,10 +32,6 @@ class Device {
 
     duringCycle(number: number): number {
         return this.cycles[number - 1]
-    }
-
-    afterCycle(number: number) {
-        return this.cycles[number]
     }
 
     signalDuring(number: number) {
@@ -59,6 +53,14 @@ class Device {
             .map(index => this.pixelAt((rowNumber*40) + index + 1, index))
             .join('');
     }
+
+    screen() {
+        let screen = '';
+        for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+            screen += this.row(rowIndex) + '\n'
+        }
+        return screen;
+    }
 }
 
 describe('simple example ', () => {
@@ -75,31 +77,26 @@ describe('simple example ', () => {
     test('cycle 1', function () {
         expect(device.duringCycle(1)).toBe(1);
         expect(device.signalDuring(1)).toBe(1 * 1)
-        expect(device.afterCycle(1)).toBe(1);
     });
 
     test('cycle 2', function () {
         expect(device.duringCycle(2)).toBe(1);
         expect(device.signalDuring(2)).toBe(2 * 1)
-        expect(device.afterCycle(2)).toBe(1);
     });
 
     test('cycle 3', function () {
         expect(device.duringCycle(3)).toBe(1);
         expect(device.signalDuring(3)).toBe(3 * 1)
-        expect(device.afterCycle(3)).toBe(1 + 3);
     });
 
     test('cycle 4', function () {
         expect(device.duringCycle(4)).toBe(1 + 3);
         expect(device.signalDuring(4)).toBe(4 * (1 + 3))
-        expect(device.afterCycle(4)).toBe(1 + 3);
     });
 
     test('cycle 5', function () {
         expect(device.duringCycle(5)).toBe(1 + 3);
         expect(device.signalDuring(5)).toBe(5 * (1 + 3))
-        expect(device.afterCycle(5)).toBe(1 + 3 - 5);
     });
 });
 
@@ -152,6 +149,14 @@ describe('input - part 1', () => {
     });
 });
 
+function extracted(device: Device) {
+    let screen = '';
+    for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
+        screen += device.row(rowIndex) + '\n'
+    }
+    return screen;
+}
+
 describe('example - part 2', () => {
     let device = new Device(example);
 
@@ -169,11 +174,7 @@ describe('example - part 2', () => {
 
 
     test('whole cycle', function () {
-        let screen = '';
-        for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
-            screen += device.row(rowIndex) + '\n'
-        }
-        expect(screen).toEqual('' +
+        expect(device.screen()).toEqual('' +
             '##..##..##..##..##..##..##..##..##..##..\n' +
             '###...###...###...###...###...###...###.\n' +
             '####....####....####....####....####....\n' +
