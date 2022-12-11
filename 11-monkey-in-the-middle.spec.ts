@@ -73,8 +73,8 @@ const parseMonkeys = (monkeyDescriptions: string): Monkeys => new Monkeys(splitM
 
 const exampleMonkeys = parseMonkeys(exampleDescription);
 
-describe('parse', function () {
-    test('one monkey', function () {
+describe('parse', () => {
+    test('one monkey', () => {
         const description = "" +
             "Monkey 0:\n" +
             "  Starting items: 79, 98\n" +
@@ -85,7 +85,7 @@ describe('parse', function () {
         expect(parseMonkeys(description)).toMatchObject({monkeys: [{items: [79, 98]}]})
     });
 
-    test('two monkeys', function () {
+    test('two monkeys', () => {
         const description = "" +
             "Monkey 0:\n" +
             "  Starting items: 79, 98\n" +
@@ -121,7 +121,7 @@ describe('parse', function () {
 });
 
 describe('inspect', () => {
-    test('one inspection', function () {
+    test('one inspection', () => {
         expect(exampleMonkeys.inspect()).toMatchObject({
             monkeys: [
                 {items: [98], inspections: 1},
@@ -131,7 +131,7 @@ describe('inspect', () => {
             ]
         })
     });
-    test('two inspections', function () {
+    test('two inspections', () => {
         expect(exampleMonkeys.inspect().inspect()).toMatchObject({
             monkeys: [
                 {items: [], inspections: 2},
