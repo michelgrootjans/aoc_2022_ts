@@ -18,13 +18,21 @@ class Monkey {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
         const newValue = Math.floor(this.operation(itemToThrow) / 3);
-        const receiver = this.reveiverOf(newValue);
+        const receiver = monkeys[this.reveiverOf(newValue)];
 
         return monkeys.map((monkey, index) => {
-            if (monkey === this) return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, this.inspections + 1);
-            if (index === receiver) return new Monkey([...monkey.items, newValue], this.operation, this.reveiverOf, monkey.inspections);
+            if (monkey === this) return this.afterThrow();
+            if (monkey === receiver) return monkey.receive(newValue);
             return monkey;
         });
+    }
+
+    private afterThrow() {
+        return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, this.inspections + 1);
+    }
+
+    private receive(newValue: number) {
+        return new Monkey([...this.items, newValue], this.operation, this.reveiverOf, this.inspections);
     }
 }
 
