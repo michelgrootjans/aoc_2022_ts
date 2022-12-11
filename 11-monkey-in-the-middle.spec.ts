@@ -144,6 +144,8 @@ describe('parse', () => {
 });
 
 describe('inspect', () => {
+    const inspect = (times: number, monkeys: Monkeys) => _.range(times).reduce((acc) => acc.inspect(), monkeys);
+
     test('one inspection', () => {
         expect(exampleMonkeys.inspect()).toMatchObject({
             monkeys: [
@@ -164,17 +166,23 @@ describe('inspect', () => {
             ]
         })
     });
-
-    function inspect(times: number, monkeys: Monkeys) {
-        return _.range(times).reduce((acc) => acc.inspect(), monkeys);
-    }
-
     test('three inspections', () => {
         const actual = inspect(3, exampleMonkeys);
         expect(actual).toMatchObject({
             monkeys: [
                 {items: [20], inspections: 2},
                 {items: [65, 75, 74], inspections: 1},
+                {items: [79, 60, 97], inspections: 0},
+                {items: [74, 500, 620], inspections: 0},
+            ]
+        })
+    });
+    test('four inspections', () => {
+        const actual = inspect(4, exampleMonkeys);
+        expect(actual).toMatchObject({
+            monkeys: [
+                {items: [20, 23], inspections: 2},
+                {items: [75, 74], inspections: 2},
                 {items: [79, 60, 97], inspections: 0},
                 {items: [74, 500, 620], inspections: 0},
             ]
