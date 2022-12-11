@@ -14,9 +14,9 @@ function parseMonkey(monkeyDescription: string): Monkey {
         .map((text: string): number => parseInt(text));
     return new Monkey(items);
 }
-function parseMonkeys(monkeyDescriptions: string): Monkey[] {
-    return monkeyDescriptions.split('\n\n').map(parseMonkey);
-}
+
+const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
+const parseMonkeys = (monkeyDescriptions: string): Monkey[] => splitMonkeys(monkeyDescriptions).map(parseMonkey);
 
 const exampleDescription = '' +
     "Monkey 0:\n" +
