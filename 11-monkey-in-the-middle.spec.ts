@@ -205,7 +205,7 @@ describe('inspect', () => {
 })
 
 describe('turn (all inspections of a single monkey)', () => {
-    test('one turn', function () {
+    test('one turn', () => {
         expect(exampleMonkeys.turn()).toMatchObject({
             monkeys: [
                 {items: [], inspections: 2},
@@ -215,7 +215,7 @@ describe('turn (all inspections of a single monkey)', () => {
             ]
         })
     });
-    test('two turns', function () {
+    test('two turns', () => {
         expect(exampleMonkeys.turn(2)).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27, 26], inspections: 2},
@@ -225,7 +225,7 @@ describe('turn (all inspections of a single monkey)', () => {
             ]
         })
     });
-    test('three turns', function () {
+    test('three turns', () => {
         expect(exampleMonkeys.turn(3)).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27, 26], inspections: 2},
@@ -235,7 +235,7 @@ describe('turn (all inspections of a single monkey)', () => {
             ]
         })
     });
-    test('four turns', function () {
+    test('four turns', () => {
         expect(exampleMonkeys.turn(4)).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27, 26], inspections: 2},
@@ -248,7 +248,7 @@ describe('turn (all inspections of a single monkey)', () => {
 })
 
 describe('round (all turns of all monkeys)', () => {
-    test('four turns', function () {
+    test('four turns', () => {
         expect(exampleMonkeys.round()).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27, 26], inspections: 2},
