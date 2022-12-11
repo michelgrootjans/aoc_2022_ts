@@ -102,7 +102,7 @@ function parseMonkey(monkeyDescription: string): Monkey {
     let ifFalse = parseInt(lines[5].split('monkey ')[1]);
     const receiverOf = (value: number) => ((value % divisibleBy === 0) ? ifTrue : ifFalse);
 
-    return new Monkey(items, operation, receiverOf);
+    return new Monkey(items, operation, receiverOf, 3);
 }
 
 const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
