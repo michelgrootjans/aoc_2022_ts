@@ -47,6 +47,8 @@ const exampleDescription = '' +
     "    If true: throw to monkey 0\n" +
     "    If false: throw to monkey 1";
 
+const exampleMonkeys = parseMonkeys(exampleDescription);
+
 describe('parse', function () {
     it('one monkey', function () {
         const description = "" +
@@ -81,7 +83,7 @@ describe('parse', function () {
     });
 
     it('example description', function () {
-        expect(parseMonkeys(exampleDescription)).toMatchObject([
+        expect(exampleMonkeys).toMatchObject([
             {items: [79, 98]},
             {items: [54, 65, 75, 74]},
             {items: [79, 60, 97]},
