@@ -48,8 +48,9 @@ class Monkeys {
         this.monkeys = monkeys;
         this.pointer = pointer;
     }
-    
+
     inspect(): Monkeys {
+        if(this.currentMonkey().isDone()) this.pointer += 1;
         return new Monkeys(this.currentMonkey().inspect(this.monkeys), this.pointer);
     }
 
@@ -58,7 +59,6 @@ class Monkeys {
         while (!monkeys.turnDone()) {
             monkeys = monkeys.inspect();
         }
-        this.pointer += 1;
         return monkeys;
     }
 
@@ -159,6 +159,16 @@ describe('inspect', () => {
             monkeys: [
                 {items: [], inspections: 2},
                 {items: [54, 65, 75, 74], inspections: 0},
+                {items: [79, 60, 97], inspections: 0},
+                {items: [74, 500, 620], inspections: 0},
+            ]
+        })
+    });
+    test('three inspections', () => {
+        expect(exampleMonkeys.inspect().inspect().inspect()).toMatchObject({
+            monkeys: [
+                {items: [20], inspections: 2},
+                {items: [65, 75, 74], inspections: 1},
                 {items: [79, 60, 97], inspections: 0},
                 {items: [74, 500, 620], inspections: 0},
             ]
