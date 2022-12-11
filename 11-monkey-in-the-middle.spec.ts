@@ -103,7 +103,7 @@ describe('move', () => {
     test('example description', function () {
         expect(exampleMonkeys.move()).toMatchObject({
             monkeys: [
-                {items: [98]},
+                {items: [98], inspections: 0},
                 {items: [54, 65, 75, 74]},
                 {items: [79, 60, 97, 500]},
                 {items: [74]},
