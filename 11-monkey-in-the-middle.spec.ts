@@ -12,14 +12,13 @@ class Monkey {
 
     inspect(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
-        this.inspections++;
         const itemToThrow = this.items[0];
         const operation = (item: number) => item * 19;
         const newValue = Math.floor(operation(itemToThrow) / 3);
         const receiver = 2;
 
         return monkeys.map((monkey, index) => {
-            if (monkey === this) return new Monkey(_.tail(this.items), this.inspections);
+            if (monkey === this) return new Monkey(_.tail(this.items), this.inspections+1);
             if (index === receiver) return new Monkey([...monkey.items, newValue], monkey.inspections);
             return monkey;
         });
