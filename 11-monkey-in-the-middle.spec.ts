@@ -6,14 +6,14 @@ class Monkey {
     }
 
     move(monkeys: Monkey[]): Monkey[] {
-        if(this.items.length === 0) return monkeys;
+        if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
-            return [
-                new Monkey([this.items[1]]),
-                monkeys[1],
-                new Monkey([...monkeys[2].items, 500]),
-                monkeys[3],
-            ];
+        return [
+            new Monkey([this.items[1]]),
+            monkeys[1],
+            new Monkey([...monkeys[2].items, 500]),
+            monkeys[3],
+        ];
     }
 }
 
@@ -100,30 +100,36 @@ describe('parse', function () {
             "  Test: divisible by 19\n" +
             "    If true: throw to monkey 2\n" +
             "    If false: throw to monkey 0";
-        expect(parseMonkeys(description)).toMatchObject({monkeys: [
+        expect(parseMonkeys(description)).toMatchObject({
+            monkeys: [
                 {items: [79, 98]},
                 {items: [54, 65, 75, 74]},
-        ]})
+            ]
+        })
     });
 
     test('example description', function () {
-        expect(exampleMonkeys).toMatchObject({monkeys: [
-            {items: [79, 98]},
-            {items: [54, 65, 75, 74]},
-            {items: [79, 60, 97]},
-            {items: [74]},
-        ]})
+        expect(exampleMonkeys).toMatchObject({
+            monkeys: [
+                {items: [79, 98]},
+                {items: [54, 65, 75, 74]},
+                {items: [79, 60, 97]},
+                {items: [74]},
+            ]
+        })
     });
 });
 
 describe('move', () => {
     test('example description', function () {
-        expect(exampleMonkeys.move()).toMatchObject({monkeys: [
+        expect(exampleMonkeys.move()).toMatchObject({
+            monkeys: [
                 {items: [98]},
                 {items: [54, 65, 75, 74]},
                 {items: [79, 60, 97, 500]},
                 {items: [74]},
-            ]})
+            ]
+        })
     });
 })
 
