@@ -6,16 +6,15 @@ class Monkey {
     }
 }
 
+function parseMonkey(monkeyDescription: string): Monkey {
+    const items = monkeyDescription.split('\n')[1]
+        .split(':')[1]
+        .split(',')
+        .map(worry => worry.trim())
+        .map((text: string): number => parseInt(text));
+    return new Monkey(items);
+}
 function parseMonkeys(monkeyDescriptions: string): Monkey[] {
-    function parseMonkey(monkeyDescription: string): Monkey {
-        const items = monkeyDescription.split('\n')[1]
-            .split(':')[1]
-            .split(',')
-            .map(worry => worry.trim())
-            .map((text: string): number => parseInt(text));
-        return new Monkey(items);
-    }
-
     return monkeyDescriptions.split('\n\n').map(parseMonkey);
 }
 
