@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {exampleDescription} from "./11-example";
 
 class Monkey {
@@ -13,8 +14,9 @@ class Monkey {
         const operation = (item: number) => item * 19;
         const newValue = Math.floor(operation(itemToThrow)/3);
         const receiver = 2;
+
         return [
-            new Monkey([this.items[1]]),
+            new Monkey(_.tail(this.items)),
             monkeys[1],
             new Monkey([...monkeys[2].items, newValue]),
             monkeys[3],
