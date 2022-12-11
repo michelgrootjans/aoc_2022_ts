@@ -160,8 +160,7 @@ describe('inspect', () => {
         })
     });
     test('three inspections', () => {
-        const actual = inspect(3, exampleMonkeys);
-        expect(actual).toMatchObject({
+        expect(exampleMonkeys.inspect(3)).toMatchObject({
             monkeys: [
                 {items: [20], inspections: 2},
                 {items: [65, 75, 74], inspections: 1},
