@@ -50,7 +50,9 @@ class Monkeys {
     }
 
     inspect(): Monkeys {
-        if(this.currentMonkey().isDone()) this.pointer += 1;
+        if(this.currentMonkey().isDone()) {
+            this.pointer += 1;
+        }
         return new Monkeys(this.currentMonkey().inspect(this.monkeys), this.pointer);
     }
 
