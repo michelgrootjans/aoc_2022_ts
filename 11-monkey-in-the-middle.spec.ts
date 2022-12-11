@@ -199,6 +199,17 @@ describe('inspect', () => {
             ]
         })
     });
+    test('six inspections', () => {
+        const actual = inspect(6, exampleMonkeys);
+        expect(actual).toMatchObject({
+            monkeys: [
+                {items: [20, 23, 27, 26], inspections: 2},
+                {items: [], inspections: 4},
+                {items: [79, 60, 97], inspections: 0},
+                {items: [74, 500, 620], inspections: 0},
+            ]
+        })
+    });
 })
 
 describe('turn (all inspections of a single monkey)', () => {
