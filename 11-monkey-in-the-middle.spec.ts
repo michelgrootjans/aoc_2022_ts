@@ -51,25 +51,21 @@ class Monkeys {
 
     inspect(): Monkeys {
         if(this.currentMonkey().isDone()) {
-            this.pointer += 1;
+            this.pointer = (this.pointer + 1) % this.monkeys.length;
         }
         return new Monkeys(this.currentMonkey().inspect(this.monkeys), this.pointer);
     }
 
     turn(): Monkeys {
-        let monkeys: Monkeys = this;
-        while (!monkeys.turnDone()) {
-            monkeys = monkeys.inspect();
+        let result: Monkeys = this;
+        for (let i = 0; i < this.currentMonkey().items.length; i++) {
+            result = result.inspect();
         }
-        return monkeys;
+        return result;
     }
 
     private currentMonkey() {
         return this.monkeys[this.pointer];
-    }
-
-    private turnDone() {
-        return this.currentMonkey().isDone();
     }
 }
 
