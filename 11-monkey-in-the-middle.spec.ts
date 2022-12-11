@@ -6,6 +6,14 @@ class Monkey {
     }
 }
 
+class Monkeys {
+    public readonly monkeys: Monkey[];
+
+    constructor(monkeys: Monkey[]) {
+        this.monkeys = monkeys;
+    }
+}
+
 function parseMonkey(monkeyDescription: string): Monkey {
     const items = monkeyDescription.split('\n')[1]
         .split(':')[1]
@@ -16,7 +24,8 @@ function parseMonkey(monkeyDescription: string): Monkey {
 }
 
 const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
-const parseMonkeys = (monkeyDescriptions: string): Monkey[] => splitMonkeys(monkeyDescriptions).map(parseMonkey);
+
+const parseMonkeys = (monkeyDescriptions: string): Monkeys => new Monkeys(splitMonkeys(monkeyDescriptions).map(parseMonkey));
 
 const exampleDescription = '' +
     "Monkey 0:\n" +
@@ -50,7 +59,7 @@ const exampleDescription = '' +
 const exampleMonkeys = parseMonkeys(exampleDescription);
 
 describe('parse', function () {
-    it('one monkey', function () {
+    test('one monkey', function () {
         const description = "" +
             "Monkey 0:\n" +
             "  Starting items: 79, 98\n" +
@@ -58,10 +67,10 @@ describe('parse', function () {
             "  Test: divisible by 23\n" +
             "    If true: throw to monkey 2\n" +
             "    If false: throw to monkey 3"
-        expect(parseMonkeys(description)).toMatchObject([{items: [79, 98]}])
+        expect(parseMonkeys(description)).toMatchObject({monkeys: [{items: [79, 98]}]})
     });
 
-    it('two monkeys', function () {
+    test('two monkeys', function () {
         const description = "" +
             "Monkey 0:\n" +
             "  Starting items: 79, 98\n" +
@@ -76,19 +85,19 @@ describe('parse', function () {
             "  Test: divisible by 19\n" +
             "    If true: throw to monkey 2\n" +
             "    If false: throw to monkey 0";
-        expect(parseMonkeys(description)).toMatchObject([
-            {items: [79, 98]},
-            {items: [54, 65, 75, 74]}
-        ])
+        expect(parseMonkeys(description)).toMatchObject({monkeys: [
+                {items: [79, 98]},
+                {items: [54, 65, 75, 74]},
+        ]})
     });
 
-    it('example description', function () {
-        expect(exampleMonkeys).toMatchObject([
+    test('example description', function () {
+        expect(exampleMonkeys).toMatchObject({monkeys: [
             {items: [79, 98]},
             {items: [54, 65, 75, 74]},
             {items: [79, 60, 97]},
             {items: [74]},
-        ])
+        ]})
     });
 });
 
