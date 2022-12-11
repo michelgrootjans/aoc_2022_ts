@@ -12,6 +12,7 @@ class Monkey {
         const itemToThrow = this.items[0];
         const operation = (item: number) => item * 19;
         const newValue = Math.floor(operation(itemToThrow)/3);
+        const receiver = 2;
         return [
             new Monkey([this.items[1]]),
             monkeys[1],
