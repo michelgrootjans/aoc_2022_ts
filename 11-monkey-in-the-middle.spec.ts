@@ -268,4 +268,24 @@ describe('round (all turns of all monkeys)', () => {
             ]
         })
     });
+    test('three rounds', () => {
+        expect(exampleMonkeys.round(2).inspect(2)).toMatchObject({
+            monkeys: [
+                {items: [71, 135, 350], inspections: 8},
+                {items: [43, 49, 58, 55, 362], inspections: 10},
+                {items: [], inspections: 4},
+                {items: [4401, 63], inspections: 10},
+            ]
+        })
+    });
+    xtest('three rounds', () => {
+        expect(exampleMonkeys.round(3)).toMatchObject({
+            monkeys: [
+                {items: [16, 18, 21, 20, 122]},
+                {items: [1468, 22, 150, 286, 739]},
+                {items: []},
+                {items: []},
+            ]
+        })
+    });
 })
