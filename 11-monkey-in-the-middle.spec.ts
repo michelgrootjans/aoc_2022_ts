@@ -33,7 +33,7 @@ class Monkeys {
         this.monkeys = monkeys;
     }
 
-    move(): Monkeys {
+    inspect(): Monkeys {
         return new Monkeys(this.monkeys[0].inspect(this.monkeys));
     }
 }
@@ -103,9 +103,9 @@ describe('parse', function () {
     });
 });
 
-describe('move', () => {
-    test('one move', function () {
-        expect(exampleMonkeys.move()).toMatchObject({
+describe('inspect', () => {
+    test('one inspection', function () {
+        expect(exampleMonkeys.inspect()).toMatchObject({
             monkeys: [
                 {items: [98], inspections: 1},
                 {items: [54, 65, 75, 74], inspections: 0},
@@ -114,8 +114,8 @@ describe('move', () => {
             ]
         })
     });
-    xtest('two moves', function () {
-        expect(exampleMonkeys.move().move()).toMatchObject({
+    xtest('two inspections', function () {
+        expect(exampleMonkeys.inspect().inspect()).toMatchObject({
             monkeys: [
                 {items: [], inspections: 2},
                 {items: [54, 65, 75, 74], inspections: 0},
@@ -126,7 +126,7 @@ describe('move', () => {
     });
 })
 
-describe('turn (all moves of a single monkey)', () => {
+describe('turn (all inspections of a single monkey)', () => {
 
 })
 
