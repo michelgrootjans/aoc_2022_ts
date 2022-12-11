@@ -318,12 +318,21 @@ describe('round (all turns of all monkeys)', () => {
 
 describe('part 2', () => {
     const exampleMonkeys = parseMonkeys(exampleDescription, 1);
+
     test('after round 1', () => {
         expect(exampleMonkeys.round(1)).toMatchObject({monkeys: [
                 {inspections: 2},
                 {inspections: 4},
                 {inspections: 3},
                 {inspections: 6},
+            ]});
+    });
+    test('after round 20', () => {
+        expect(exampleMonkeys.round(20)).toMatchObject({monkeys: [
+                {inspections: 99},
+                {inspections: 97},
+                {inspections: 10},
+                {inspections: 103},
             ]});
     });
 });
