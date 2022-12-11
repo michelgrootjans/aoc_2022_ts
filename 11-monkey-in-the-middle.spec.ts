@@ -6,6 +6,8 @@ class Monkey {
     public readonly items: number[];
     public readonly inspections: number;
     private readonly operation: (item: number) => number;
+    private readonly worryDivider;
+
     private readonly reveiverOf: (value: number) => (number);
 
     constructor(items: number[], operation: (item: number) => number, reveiverOf: (value: number) => number, inspections = 0) {
@@ -13,6 +15,7 @@ class Monkey {
         this.operation = operation;
         this.reveiverOf = reveiverOf;
         this.inspections = inspections;
+        this.worryDivider = 3;
     }
 
     isDone() {
@@ -22,7 +25,7 @@ class Monkey {
     inspect(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
-        const newValue = Math.floor(this.operation(itemToThrow) / 3);
+        const newValue = Math.floor(this.operation(itemToThrow) / this.worryDivider);
         const receiver = monkeys[this.reveiverOf(newValue)];
 
         return monkeys.map((monkey) => {
