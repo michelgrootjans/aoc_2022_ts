@@ -10,7 +10,7 @@ class Monkey {
 
     private readonly reveiverOf: (value: number) => (number);
 
-    constructor(items: number[], operation: (item: number) => number, reveiverOf: (value: number) => number, inspections = 0, worryDivider: number = 3) {
+    constructor(items: number[], operation: (item: number) => number, reveiverOf: (value: number) => number, worryDivider: number = 3, inspections = 0) {
         this.items = items;
         this.operation = operation;
         this.reveiverOf = reveiverOf;
@@ -36,11 +36,11 @@ class Monkey {
     }
 
     private afterThrow() {
-        return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, this.inspections + 1, 3);
+        return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, 3, this.inspections + 1);
     }
 
     private receive(newValue: number) {
-        return new Monkey([...this.items, newValue], this.operation, this.reveiverOf, this.inspections, 3);
+        return new Monkey([...this.items, newValue], this.operation, this.reveiverOf, 3, this.inspections);
     }
 }
 
