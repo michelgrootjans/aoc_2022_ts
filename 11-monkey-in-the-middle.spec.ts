@@ -20,7 +20,7 @@ class Monkey {
         const newValue = Math.floor(this.operation(itemToThrow) / 3);
         const receiver = monkeys[this.reveiverOf(newValue)];
 
-        return monkeys.map((monkey, index) => {
+        return monkeys.map((monkey) => {
             if (monkey === this) return this.afterThrow();
             if (monkey === receiver) return monkey.receive(newValue);
             return monkey;
