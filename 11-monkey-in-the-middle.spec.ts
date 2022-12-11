@@ -18,7 +18,7 @@ class Monkey {
         return [
             new Monkey(_.tail(this.items)),
             monkeys[1],
-            new Monkey([...monkeys[2].items, newValue]),
+            new Monkey([...monkeys[receiver].items, newValue]),
             monkeys[3],
         ];
     }
