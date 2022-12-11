@@ -72,7 +72,7 @@ class Monkeys {
     }
 
     monkeyBusiness(): number {
-        const a = this.monkeys;
+        const a = _.orderBy(this.monkeys, ['inspections'], ['desc']);
         console.log({a})
         return 101 * 105;
     }
