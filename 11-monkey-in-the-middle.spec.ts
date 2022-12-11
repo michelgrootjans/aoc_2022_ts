@@ -55,9 +55,9 @@ class Monkeys {
             .reduce((m: Monkeys) => new Monkeys(m.currentMonkey().inspect(m.monkeys), m.pointer), this);
     }
 
-    turn(): Monkeys {
-        const newVar = (m: Monkeys) => m.inspect(m.currentMonkey().items.length);
-        return _.range(1).reduce(newVar, this)
+    turn(times: number = 1): Monkeys {
+        return _.range(times)
+            .reduce((m: Monkeys) => m.inspect(m.currentMonkey().items.length), this)
     }
 
     private currentMonkey() {
@@ -212,7 +212,7 @@ describe('turn (all inspections of a single monkey)', () => {
         })
     });
     test('two turns', function () {
-        expect(exampleMonkeys.turn().turn()).toMatchObject({
+        expect(exampleMonkeys.turn(2)).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27, 26], inspections: 2},
                 {items: [], inspections: 4},
