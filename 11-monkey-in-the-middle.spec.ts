@@ -56,7 +56,8 @@ class Monkeys {
     }
 
     turn(): Monkeys {
-        return ((m) => m.inspect(m.currentMonkey().items.length))(this)
+        const newVar = (m: Monkeys) => m.inspect(m.currentMonkey().items.length);
+        return newVar(this)
     }
 
     private currentMonkey() {
