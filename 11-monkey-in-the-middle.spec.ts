@@ -60,8 +60,8 @@ class Monkeys {
             .reduce((m: Monkeys) => m.inspect(m.currentMonkey().items.length), this)
     }
 
-    round() {
-        return _.range(1).reduce((m: Monkeys) => m.turn(m.monkeys.length), this);
+    round(times: number = 1) {
+        return _.range(times).reduce((m: Monkeys) => m.turn(m.monkeys.length), this);
     }
 
     private currentMonkey() {
