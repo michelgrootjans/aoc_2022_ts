@@ -225,6 +225,16 @@ describe('turn (all inspections of a single monkey)', () => {
             ]
         })
     });
+    test('three turns', function () {
+        expect(exampleMonkeys.turn().turn().inspect()).toMatchObject({
+            monkeys: [
+                {items: [20, 23, 27, 26], inspections: 2},
+                {items: [2080], inspections: 4},
+                {items: [60, 97], inspections: 1},
+                {items: [74, 500, 620], inspections: 0},
+            ]
+        })
+    });
 })
 
 describe('round (all turns of all monkeys)', () => {
