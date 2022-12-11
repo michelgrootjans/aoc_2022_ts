@@ -269,12 +269,12 @@ describe('round (all turns of all monkeys)', () => {
         })
     });
     test('three rounds', () => {
-        expect(exampleMonkeys.round(2).inspect(3)).toMatchObject({
+        expect(exampleMonkeys.round(2).inspect(4)).toMatchObject({
             monkeys: [
-                {items: [135, 350], inspections: 9},
+                {items: [350], inspections: 10},
                 {items: [43, 49, 58, 55, 362], inspections: 10},
                 {items: [], inspections: 4},
-                {items: [4401, 63, 449], inspections: 10},
+                {items: [4401, 63, 449, 855], inspections: 10},
             ]
         })
     });
