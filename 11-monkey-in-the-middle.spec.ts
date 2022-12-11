@@ -187,6 +187,16 @@ describe('turn (all inspections of a single monkey)', () => {
             ]
         })
     });
+    xtest('two turns', function () {
+        expect(exampleMonkeys.turn().turn()).toMatchObject({
+            monkeys: [
+                {items: [20, 23, 27, 26], inspections: 2},
+                {items: [], inspections: 4},
+                {items: [79, 60, 97], inspections: 0},
+                {items: [74, 500, 620], inspections: 0},
+            ]
+        })
+    });
 })
 
 describe('round (all turns of all monkeys)', () => {
