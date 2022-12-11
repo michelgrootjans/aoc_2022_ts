@@ -90,4 +90,14 @@ describe('parse', function () {
     });
 });
 
+describe('move', () => {
 
+})
+
+describe('turn (all moves of a single monkey)', () => {
+
+})
+
+describe('round (all turns of all monkeys)', () => {
+
+})
