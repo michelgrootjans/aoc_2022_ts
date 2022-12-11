@@ -15,12 +15,17 @@ class Monkey {
         const newValue = Math.floor(operation(itemToThrow)/3);
         const receiver = 2;
 
-        return [
-            new Monkey(_.tail(this.items)),
-            monkeys[1],
-            new Monkey([...monkeys[receiver].items, newValue]),
-            monkeys[3],
-        ];
+        return monkeys.map((monkey, index) => {
+            if(monkey === this) return new Monkey(_.tail(this.items));
+            if(index === receiver) return new Monkey([...monkey.items, newValue]);
+            return monkey;
+        });
+        // return [
+        //     new Monkey(_.tail(this.items)),
+        //     monkeys[1],
+        //     new Monkey([...monkeys[receiver].items, newValue]),
+        //     monkeys[3],
+        // ];
     }
 }
 
