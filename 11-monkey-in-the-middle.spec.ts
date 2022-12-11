@@ -4,22 +4,23 @@ import {exampleDescription} from "./11-example";
 class Monkey {
     public readonly items: number[];
     public inspections: number;
+    private operation: (item: number) => number;
 
-    constructor(items: number[], inspections = 0) {
+    constructor(items: number[], inspections = 0, operation: (item: number) => number = (item: number) => item * 19) {
         this.items = items;
         this.inspections = inspections;
+        this.operation = operation;
     }
 
     inspect(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
-        const operation = (item: number) => item * 19;
-        const newValue = Math.floor(operation(itemToThrow) / 3);
+        const newValue = Math.floor(this.operation(itemToThrow) / 3);
         const receiver = 2;
 
         return monkeys.map((monkey, index) => {
-            if (monkey === this) return new Monkey(_.tail(this.items), this.inspections+1);
-            if (index === receiver) return new Monkey([...monkey.items, newValue], monkey.inspections);
+            if (monkey === this) return new Monkey(_.tail(this.items), this.inspections + 1, (item: number) => item * 19);
+            if (index === receiver) return new Monkey([...monkey.items, newValue], monkey.inspections, (item: number) => item * 19);
             return monkey;
         });
     }
@@ -38,11 +39,13 @@ class Monkeys {
 }
 
 function parseMonkey(monkeyDescription: string): Monkey {
-    const items = monkeyDescription.split('\n')[1]
+    const lines = monkeyDescription.split('\n');
+    const items = lines[1]
         .split(':')[1]
         .split(',')
         .map(worry => worry.trim())
         .map((text: string): number => parseInt(text));
+
     return new Monkey(items);
 }
 
@@ -100,13 +103,23 @@ describe('parse', function () {
 });
 
 describe('move', () => {
-    test('example description', function () {
+    test('one move', function () {
         expect(exampleMonkeys.move()).toMatchObject({
             monkeys: [
                 {items: [98], inspections: 1},
                 {items: [54, 65, 75, 74], inspections: 0},
                 {items: [79, 60, 97, 500], inspections: 0},
                 {items: [74], inspections: 0},
+            ]
+        })
+    });
+    xtest('two moves', function () {
+        expect(exampleMonkeys.move().move()).toMatchObject({
+            monkeys: [
+                {items: [], inspections: 2},
+                {items: [54, 65, 75, 74], inspections: 0},
+                {items: [79, 60, 97, 500], inspections: 0},
+                {items: [74, 620], inspections: 0},
             ]
         })
     });
