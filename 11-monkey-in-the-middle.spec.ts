@@ -49,10 +49,10 @@ class Monkeys {
         if(monkeys[pointer].isDone()) this.pointer = pointer + 1;
         else this.pointer = pointer
     }
-    
+
     inspect(times = 1): Monkeys {
-        const newVar = (monkeys: Monkeys) => new Monkeys(monkeys.currentMonkey().inspect(monkeys.monkeys), monkeys.pointer);
-        return _.range(times).reduce(newVar, this);
+        return _.range(times)
+            .reduce((m: Monkeys) => new Monkeys(m.currentMonkey().inspect(m.monkeys), m.pointer), this);
     }
 
     turn(): Monkeys {
@@ -150,7 +150,7 @@ describe('inspect', () => {
         })
     });
     test('two inspections', () => {
-        expect(exampleMonkeys.inspect().inspect()).toMatchObject({
+        expect(exampleMonkeys.inspect(2)).toMatchObject({
             monkeys: [
                 {items: [], inspections: 2},
                 {items: [54, 65, 75, 74], inspections: 0},
