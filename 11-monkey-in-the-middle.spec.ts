@@ -101,7 +101,9 @@ function parseMonkey(monkeyDescription: string, worryDivider: number): Monkey {
 
     const monkey = (description: string) => parseInt(description.split('monkey ')[1]);
 
-    const receiverOf = (value: number) => ((value % divisibleBy === 0) ? monkey(lines[4]) : monkey(lines[5]));
+    const trueMonkey = monkey(lines[4]);
+    const falseMonkey = monkey(lines[5]);
+    const receiverOf = (value: number) => ((value % divisibleBy === 0) ? trueMonkey : falseMonkey);
 
     return new Monkey(items, operation, receiverOf, worryDivider);
 }
