@@ -14,8 +14,8 @@ class Monkey {
         this.inspections = inspections;
     }
 
-    hasItems() {
-        return this.items.length > 0;
+    isDone() {
+        return this.items.length === 0;
     }
 
     inspect(monkeys: Monkey[]): Monkey[] {
@@ -56,7 +56,7 @@ class Monkeys {
 
     turn(): Monkeys {
         let monkeys: Monkeys = this;
-        while (!monkeys.movesDone()) {
+        while (!monkeys.turnDone()) {
             monkeys = monkeys.inspect();
         }
         return monkeys;
@@ -66,8 +66,8 @@ class Monkeys {
         return this.monkeys[this.pointer];
     }
 
-    private movesDone() {
-        return !this.currentMonkey().hasItems();
+    private turnDone() {
+        return this.currentMonkey().isDone();
     }
 }
 
