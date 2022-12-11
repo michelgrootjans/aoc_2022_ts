@@ -56,7 +56,7 @@ class Monkeys {
 
     turn(): Monkeys {
         let monkeys: Monkeys = this;
-        while (monkeys.currentMonkey().hasItems()) {
+        while (!monkeys.movesDone()) {
             monkeys = monkeys.inspect();
         }
         return monkeys;
@@ -64,6 +64,10 @@ class Monkeys {
 
     private currentMonkey() {
         return this.monkeys[this.pointer];
+    }
+
+    private movesDone() {
+        return !this.currentMonkey().hasItems();
     }
 }
 
