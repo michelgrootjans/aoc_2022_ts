@@ -86,7 +86,7 @@ class Monkeys {
     }
 }
 
-function parseMonkey(monkeyDescription: string): Monkey {
+function parseMonkey(monkeyDescription: string, worryDivider: number): Monkey {
     const lines = monkeyDescription.split('\n');
     const items = lines[1]
         .split(':')[1]
@@ -102,12 +102,12 @@ function parseMonkey(monkeyDescription: string): Monkey {
     let ifFalse = parseInt(lines[5].split('monkey ')[1]);
     const receiverOf = (value: number) => ((value % divisibleBy === 0) ? ifTrue : ifFalse);
 
-    return new Monkey(items, operation, receiverOf, 3);
+    return new Monkey(items, operation, receiverOf, worryDivider);
 }
 
 const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
 
-const parseMonkeys = (monkeyDescriptions: string): Monkeys => new Monkeys(splitMonkeys(monkeyDescriptions).map(parseMonkey));
+const parseMonkeys = (monkeyDescriptions: string): Monkeys => new Monkeys(splitMonkeys(monkeyDescriptions).map(m => parseMonkey(m, 3)));
 
 const exampleMonkeys = parseMonkeys(exampleDescription);
 
