@@ -72,7 +72,7 @@ class Monkeys {
     }
 
     monkeyBusiness(): number {
-        return 10605;
+        return 101 * 105;
     }
 }
 
