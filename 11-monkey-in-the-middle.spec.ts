@@ -9,9 +9,9 @@ class Monkey {
 
     constructor(items: number[], operation: (item: number) => number, inspections = 0) {
         this.items = items;
-        this.inspections = inspections;
         this.operation = operation;
         this.reveiverOf = (value: number) => ((value % 23 === 0) ? 2 : 3);
+        this.inspections = inspections;
     }
 
     inspect(monkeys: Monkey[]): Monkey[] {
