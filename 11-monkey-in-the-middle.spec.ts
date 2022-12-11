@@ -16,7 +16,7 @@ class Monkey {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
         const newValue = Math.floor(this.operation(itemToThrow) / 3);
-        const receiver = (newValue % 23 === 0) ? 2 : 2;
+        const receiver = (newValue % 23 === 0) ? 3 : 3;
 
         return monkeys.map((monkey, index) => {
             if (monkey === this) return new Monkey(_.tail(this.items), (item: number) => item * 19, this.inspections + 1);
@@ -109,18 +109,18 @@ describe('inspect', () => {
             monkeys: [
                 {items: [98], inspections: 1},
                 {items: [54, 65, 75, 74], inspections: 0},
-                {items: [79, 60, 97, 500], inspections: 0},
-                {items: [74], inspections: 0},
+                {items: [79, 60, 97], inspections: 0},
+                {items: [74, 500], inspections: 0},
             ]
         })
     });
-    xtest('two inspections', function () {
+    test('two inspections', function () {
         expect(exampleMonkeys.inspect().inspect()).toMatchObject({
             monkeys: [
                 {items: [], inspections: 2},
                 {items: [54, 65, 75, 74], inspections: 0},
-                {items: [79, 60, 97, 500], inspections: 0},
-                {items: [74, 620], inspections: 0},
+                {items: [79, 60, 97], inspections: 0},
+                {items: [74, 500, 620], inspections: 0},
             ]
         })
     });
