@@ -72,14 +72,13 @@ class Monkeys {
     }
 
     monkeyBusiness(): number {
-        const a = _.flow(
+        const topInspections = _.flow(
             _.map((m: Monkey) => m.inspections),
             _.orderBy(_.identity, 'desc'),
-            _.take(2),
         )(this.monkeys);
-        console.log({a})
+
         // @ts-ignore
-        return a[0] * a[1];
+        return topInspections[0] * topInspections[1];
     }
 }
 
