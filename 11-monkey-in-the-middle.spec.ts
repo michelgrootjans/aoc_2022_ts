@@ -60,6 +60,10 @@ class Monkeys {
             .reduce((m: Monkeys) => m.inspect(m.currentMonkey().items.length), this)
     }
 
+    round() {
+        return this.turn(this.monkeys.length);
+    }
+
     private currentMonkey() {
         return this.monkeys[this.pointer];
     }
@@ -244,5 +248,14 @@ describe('turn (all inspections of a single monkey)', () => {
 })
 
 describe('round (all turns of all monkeys)', () => {
-
+    test('four turns', function () {
+        expect(exampleMonkeys.round()).toMatchObject({
+            monkeys: [
+                {items: [20, 23, 27, 26], inspections: 2},
+                {items: [2080, 25, 167, 207, 401, 1046], inspections: 4},
+                {items: [], inspections: 3},
+                {items: [], inspections: 5},
+            ]
+        })
+    });
 })
