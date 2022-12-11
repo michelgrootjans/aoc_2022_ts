@@ -57,13 +57,7 @@ class Monkeys {
     }
 
     turn(): Monkeys {
-        return this.currentMonkey().items.reduce((acc: Monkeys, item) => acc.inspect(), this)
-
-        // let result: Monkeys = this;
-        // for (let i = 0; i < this.currentMonkey().items.length; i++) {
-        //     result = result.inspect();
-        // }
-        // return result;
+        return this.currentMonkey().items.reduce((acc: Monkeys) => acc.inspect(), this)
     }
 
     private currentMonkey() {
