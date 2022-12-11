@@ -10,10 +10,11 @@ class Monkey {
     move(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
+        const newValue = 500;
         return [
             new Monkey([this.items[1]]),
             monkeys[1],
-            new Monkey([...monkeys[2].items, 500]),
+            new Monkey([...monkeys[2].items, newValue]),
             monkeys[3],
         ];
     }
