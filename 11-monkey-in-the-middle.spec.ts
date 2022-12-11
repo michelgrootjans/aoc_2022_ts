@@ -49,9 +49,10 @@ class Monkeys {
         if(monkeys[pointer].isDone()) this.pointer = pointer + 1;
         else this.pointer = pointer
     }
-    inspect(): Monkeys {
+    
+    inspect(times = 1): Monkeys {
         const newVar = (monkeys: Monkeys) => new Monkeys(monkeys.currentMonkey().inspect(monkeys.monkeys), monkeys.pointer);
-        return _.range(1).reduce(newVar, this);
+        return _.range(times).reduce(newVar, this);
     }
 
     turn(): Monkeys {
