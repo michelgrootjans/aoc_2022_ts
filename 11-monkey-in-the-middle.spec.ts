@@ -61,7 +61,7 @@ class Monkeys {
     }
 
     round() {
-        return ((m) => m.turn(m.monkeys.length))(this);
+        return ((m: Monkeys) => m.turn(m.monkeys.length))(this);
     }
 
     private currentMonkey() {
