@@ -76,6 +76,7 @@ class Monkeys {
             _.map((m: Monkey) => m.inspections),
             _.orderBy(_.identity, 'desc'),
             _.take(2),
+            _.multiply,
         )(this.monkeys);
         console.log({a})
         return 101 * 105;
