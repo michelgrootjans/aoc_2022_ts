@@ -60,7 +60,9 @@ function parseMonkey(monkeyDescription: string): Monkey {
     const operation = (old: number): number => eval(operationDescription);
 
     const divisibleBy = parseInt(lines[3].split('by ')[1]);
-    const reveiverOf = (value: number) => ((value % divisibleBy === 0) ? 2 : 3);
+    let ifTrue = parseInt(lines[4].split('monkey ')[1]);
+    let ifFalse = parseInt(lines[5].split('monkey ')[1]);
+    const reveiverOf = (value: number) => ((value % divisibleBy === 0) ? ifTrue : ifFalse);
 
     return new Monkey(items, operation, reveiverOf);
 }
