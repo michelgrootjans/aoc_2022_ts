@@ -5,19 +5,20 @@ class Monkey {
     public readonly items: number[];
     public inspections: number;
     private operation: (item: number) => number;
+    private reveiverOf: (value: number) => (number);
 
     constructor(items: number[], operation: (item: number) => number, inspections = 0) {
         this.items = items;
         this.inspections = inspections;
         this.operation = operation;
+        this.reveiverOf = (value: number) => ((value % 23 === 0) ? 2 : 3);
     }
 
     inspect(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
         const newValue = Math.floor(this.operation(itemToThrow) / 3);
-        const reveiverOf = (value: number) => ((newValue % 23 === 0) ? 2 : 3);
-        const receiver = reveiverOf(newValue);
+        const receiver = this.reveiverOf(newValue);
 
         return monkeys.map((monkey, index) => {
             if (monkey === this) return new Monkey(_.tail(this.items), (item: number) => item * 19, this.inspections + 1);
