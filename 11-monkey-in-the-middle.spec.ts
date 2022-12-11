@@ -16,7 +16,8 @@ class Monkey {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
         const newValue = Math.floor(this.operation(itemToThrow) / 3);
-        const receiver = ((value) => ((newValue % 23 === 0) ? 3 : 3))(newValue);
+        const reveiverOf = (value: number) => ((newValue % 23 === 0) ? 2 : 3);
+        const receiver = reveiverOf(newValue);
 
         return monkeys.map((monkey, index) => {
             if (monkey === this) return new Monkey(_.tail(this.items), (item: number) => item * 19, this.inspections + 1);
