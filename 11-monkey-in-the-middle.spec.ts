@@ -79,7 +79,7 @@ class Monkeys {
         )(this.monkeys);
         console.log({a})
         // @ts-ignore
-        return a[0] * 101;
+        return a[0] * a[1];
     }
 }
 
