@@ -74,7 +74,7 @@ class Monkeys {
     monkeyBusiness(): number {
         const a = _.flow(
             _.map((m: Monkey) => m.inspections),
-            _.sortBy(_.identity),
+            _.orderBy(_.identity, 'desc'),
             // _.take(2),
         )(this.monkeys);
         console.log({a})
