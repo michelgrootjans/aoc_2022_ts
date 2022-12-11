@@ -6,7 +6,7 @@ class Monkey {
     public inspections: number;
     private operation: (item: number) => number;
 
-    constructor(items: number[], inspections = 0, operation: (item: number) => number = (item: number) => item * 19) {
+    constructor(items: number[], operation: (item: number) => number, inspections = 0) {
         this.items = items;
         this.inspections = inspections;
         this.operation = operation;
@@ -19,8 +19,8 @@ class Monkey {
         const receiver = 2;
 
         return monkeys.map((monkey, index) => {
-            if (monkey === this) return new Monkey(_.tail(this.items), this.inspections + 1, (item: number) => item * 19);
-            if (index === receiver) return new Monkey([...monkey.items, newValue], monkey.inspections, (item: number) => item * 19);
+            if (monkey === this) return new Monkey(_.tail(this.items), (item: number) => item * 19, this.inspections + 1);
+            if (index === receiver) return new Monkey([...monkey.items, newValue], (item: number) => item * 19, monkey.inspections);
             return monkey;
         });
     }
@@ -47,15 +47,7 @@ function parseMonkey(monkeyDescription: string): Monkey {
         .map((text: string): number => parseInt(text));
 
     const operation = lines[2].split('new = ')[1];
-    function blahh(old: number): number {
-        return eval(operation)
-    }
-
-    const result = blahh(3)
-
-    console.log({operation, result})
-
-    return new Monkey(items);
+    return new Monkey(items, (old: number): number => eval(operation));
 }
 
 const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
