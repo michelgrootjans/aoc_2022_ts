@@ -7,10 +7,10 @@ class Monkey {
     private operation: (item: number) => number;
     private reveiverOf: (value: number) => (number);
 
-    constructor(items: number[], operation: (item: number) => number, inspections = 0) {
+    constructor(items: number[], operation: (item: number) => number, reveiverOf: (value: number) => number, inspections = 0) {
         this.items = items;
         this.operation = operation;
-        this.reveiverOf = (value: number) => ((value % 23 === 0) ? 2 : 3);
+        this.reveiverOf = reveiverOf;
         this.inspections = inspections;
     }
 
@@ -21,8 +21,8 @@ class Monkey {
         const receiver = this.reveiverOf(newValue);
 
         return monkeys.map((monkey, index) => {
-            if (monkey === this) return new Monkey(_.tail(this.items), (item: number) => item * 19, this.inspections + 1);
-            if (index === receiver) return new Monkey([...monkey.items, newValue], (item: number) => item * 19, monkey.inspections);
+            if (monkey === this) return new Monkey(_.tail(this.items), (item: number) => item * 19, (value: number) => ((value % 23 === 0) ? 2 : 3), this.inspections + 1);
+            if (index === receiver) return new Monkey([...monkey.items, newValue], (item: number) => item * 19, (value: number) => ((value % 23 === 0) ? 2 : 3), monkey.inspections);
             return monkey;
         });
     }
@@ -49,7 +49,7 @@ function parseMonkey(monkeyDescription: string): Monkey {
         .map((text: string): number => parseInt(text));
 
     const operation = lines[2].split('new = ')[1];
-    return new Monkey(items, (old: number): number => eval(operation));
+    return new Monkey(items, (old: number): number => eval(operation), (value: number) => ((value % 23 === 0) ? 2 : 3));
 }
 
 const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
