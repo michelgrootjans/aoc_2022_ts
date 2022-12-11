@@ -3,21 +3,23 @@ import {exampleDescription} from "./11-example";
 
 class Monkey {
     public readonly items: number[];
+    public inspections = 0;
 
     constructor(items: number[]) {
         this.items = items;
     }
 
-    move(monkeys: Monkey[]): Monkey[] {
+    inspect(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
+        this.inspections++;
         const itemToThrow = this.items[0];
         const operation = (item: number) => item * 19;
-        const newValue = Math.floor(operation(itemToThrow)/3);
+        const newValue = Math.floor(operation(itemToThrow) / 3);
         const receiver = 2;
 
         return monkeys.map((monkey, index) => {
-            if(monkey === this) return new Monkey(_.tail(this.items));
-            if(index === receiver) return new Monkey([...monkey.items, newValue]);
+            if (monkey === this) return new Monkey(_.tail(this.items));
+            if (index === receiver) return new Monkey([...monkey.items, newValue]);
             return monkey;
         });
     }
@@ -31,7 +33,7 @@ class Monkeys {
     }
 
     move(): Monkeys {
-        return new Monkeys(this.monkeys[0].move(this.monkeys));
+        return new Monkeys(this.monkeys[0].inspect(this.monkeys));
     }
 }
 
