@@ -10,7 +10,7 @@ class Monkey {
 
     private readonly receiverOf: (value: number) => (number);
 
-    constructor(items: number[], operation: (item: number) => number, receiverOf: (value: number) => number, worryDivider: number = 3, inspections = 0) {
+    constructor(items: number[], operation: (item: number) => number, receiverOf: (value: number) => number, worryDivider: number, inspections = 0) {
         this.items = items;
         this.operation = operation;
         this.receiverOf = receiverOf;
