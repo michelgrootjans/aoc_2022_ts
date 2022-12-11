@@ -110,9 +110,9 @@ function parseMonkey(monkeyDescription: string, worryDivider: number): Monkey {
 
 const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
 
-const parseMonkeys = (monkeyDescriptions: string): Monkeys => new Monkeys(splitMonkeys(monkeyDescriptions).map(m => parseMonkey(m, 3)));
+const parseMonkeys = (monkeyDescriptions: string, worryDivider: number): Monkeys => new Monkeys(splitMonkeys(monkeyDescriptions).map(m => parseMonkey(m, worryDivider)));
 
-const exampleMonkeys = parseMonkeys(exampleDescription);
+const exampleMonkeys = parseMonkeys(exampleDescription, 3);
 
 describe('parse', () => {
     test('one monkey', () => {
@@ -123,7 +123,7 @@ describe('parse', () => {
             "  Test: divisible by 23\n" +
             "    If true: throw to monkey 2\n" +
             "    If false: throw to monkey 3"
-        expect(parseMonkeys(description)).toMatchObject({monkeys: [{items: [79, 98]}]})
+        expect(parseMonkeys(description, 3)).toMatchObject({monkeys: [{items: [79, 98]}]})
     });
 
     test('two monkeys', () => {
@@ -141,7 +141,7 @@ describe('parse', () => {
             "  Test: divisible by 19\n" +
             "    If true: throw to monkey 2\n" +
             "    If false: throw to monkey 0";
-        expect(parseMonkeys(description)).toMatchObject({
+        expect(parseMonkeys(description, 3)).toMatchObject({
             monkeys: [
                 {items: [79, 98]},
                 {items: [54, 65, 75, 74]},
@@ -311,6 +311,6 @@ describe('round (all turns of all monkeys)', () => {
         expect(result.monkeyBusiness()).toBe(10605);
     });
     test('input 20 rounds', () => {
-        expect(parseMonkeys(input).round(20).monkeyBusiness()).toBe(66124);
+        expect(parseMonkeys(input, 3).round(20).monkeyBusiness()).toBe(66124);
     });
 })
