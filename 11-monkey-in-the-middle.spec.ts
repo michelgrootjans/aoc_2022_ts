@@ -56,7 +56,7 @@ class Monkeys {
     }
 
     turn(): Monkeys {
-        return this.currentMonkey().items.reduce((acc: Monkeys) => acc.inspect(), this)
+        return this.inspect(this.currentMonkey().items.length)
     }
 
     private currentMonkey() {
@@ -137,8 +137,6 @@ describe('parse', () => {
 });
 
 describe('inspect', () => {
-    const inspect = (times: number, monkeys: Monkeys) => monkeys.inspect(times);
-
     test('one inspection', () => {
         expect(exampleMonkeys.inspect()).toMatchObject({
             monkeys: [
@@ -170,8 +168,7 @@ describe('inspect', () => {
         })
     });
     test('four inspections', () => {
-        const actual = inspect(4, exampleMonkeys);
-        expect(actual).toMatchObject({
+        expect(exampleMonkeys.inspect(4)).toMatchObject({
             monkeys: [
                 {items: [20, 23], inspections: 2},
                 {items: [75, 74], inspections: 2},
@@ -181,8 +178,7 @@ describe('inspect', () => {
         })
     });
     test('five inspections', () => {
-        const actual = inspect(5, exampleMonkeys);
-        expect(actual).toMatchObject({
+        expect(exampleMonkeys.inspect(5)).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27], inspections: 2},
                 {items: [74], inspections: 3},
@@ -192,8 +188,7 @@ describe('inspect', () => {
         })
     });
     test('six inspections', () => {
-        const actual = inspect(6, exampleMonkeys);
-        expect(actual).toMatchObject({
+        expect(exampleMonkeys.inspect(6)).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27, 26], inspections: 2},
                 {items: [], inspections: 4},
