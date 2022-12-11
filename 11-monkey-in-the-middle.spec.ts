@@ -42,14 +42,13 @@ class Monkey {
 
 class Monkeys {
     public readonly monkeys: Monkey[];
-    private readonly pointer;
+    private pointer;
 
     constructor(monkeys: Monkey[], pointer = 0) {
         this.monkeys = monkeys;
         this.pointer = pointer;
     }
-
-
+    
     inspect(): Monkeys {
         return new Monkeys(this.currentMonkey().inspect(this.monkeys), this.pointer);
     }
@@ -59,6 +58,7 @@ class Monkeys {
         while (!monkeys.turnDone()) {
             monkeys = monkeys.inspect();
         }
+        this.pointer += 1;
         return monkeys;
     }
 
