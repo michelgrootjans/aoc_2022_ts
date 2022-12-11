@@ -20,12 +20,6 @@ class Monkey {
             if(index === receiver) return new Monkey([...monkey.items, newValue]);
             return monkey;
         });
-        // return [
-        //     new Monkey(_.tail(this.items)),
-        //     monkeys[1],
-        //     new Monkey([...monkeys[receiver].items, newValue]),
-        //     monkeys[3],
-        // ];
     }
 }
 
