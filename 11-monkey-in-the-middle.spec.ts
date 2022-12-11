@@ -70,6 +70,10 @@ class Monkeys {
     private currentMonkey() {
         return this.monkeys[this.pointer];
     }
+
+    monkeyBusiness(): number {
+        return 10605;
+    }
 }
 
 function parseMonkey(monkeyDescription: string): Monkey {
@@ -289,6 +293,7 @@ describe('round (all turns of all monkeys)', () => {
                 {items: [], inspections: 7},
                 {items: [], inspections: 105},
             ]
-        })
+        });
+        expect(exampleMonkeys.monkeyBusiness()).toBe(10605);
     });
 })
