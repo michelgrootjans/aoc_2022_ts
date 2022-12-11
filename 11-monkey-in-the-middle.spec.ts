@@ -36,11 +36,11 @@ class Monkey {
     }
 
     private afterThrow() {
-        return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, 3, this.inspections + 1);
+        return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, this.worryDivider, this.inspections + 1);
     }
 
     private receive(newValue: number) {
-        return new Monkey([...this.items, newValue], this.operation, this.reveiverOf, 3, this.inspections);
+        return new Monkey([...this.items, newValue], this.operation, this.reveiverOf, this.worryDivider, this.inspections);
     }
 }
 
