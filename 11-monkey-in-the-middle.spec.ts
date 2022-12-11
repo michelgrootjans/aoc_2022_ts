@@ -61,7 +61,8 @@ class Monkeys {
     }
 
     round() {
-        return ((m: Monkeys) => m.turn(m.monkeys.length))(this);
+        const newVar = (m: Monkeys) => m.turn(m.monkeys.length);
+        return newVar(this);
     }
 
     private currentMonkey() {
