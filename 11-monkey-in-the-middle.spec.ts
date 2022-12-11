@@ -56,7 +56,7 @@ class Monkeys {
     }
 
     turn(): Monkeys {
-        return this.inspect(this.currentMonkey().items.length)
+        return ((m) => m.inspect(m.currentMonkey().items.length))(this)
     }
 
     private currentMonkey() {
