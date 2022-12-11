@@ -104,9 +104,9 @@ describe('move', () => {
         expect(exampleMonkeys.move()).toMatchObject({
             monkeys: [
                 {items: [98], inspections: 0},
-                {items: [54, 65, 75, 74]},
-                {items: [79, 60, 97, 500]},
-                {items: [74]},
+                {items: [54, 65, 75, 74], inspections: 0},
+                {items: [79, 60, 97, 500], inspections: 0},
+                {items: [74], inspections: 0},
             ]
         })
     });
