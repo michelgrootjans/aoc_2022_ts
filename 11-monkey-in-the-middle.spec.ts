@@ -10,7 +10,8 @@ class Monkey {
     move(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
-        const newValue = Math.floor((itemToThrow*19)/3);
+        const operation = (item: number) => item * 19;
+        const newValue = Math.floor(operation(itemToThrow)/3);
         return [
             new Monkey([this.items[1]]),
             monkeys[1],
