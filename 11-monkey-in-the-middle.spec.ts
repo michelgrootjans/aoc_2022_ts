@@ -46,7 +46,7 @@ class Monkeys {
 
     constructor(monkeys: Monkey[], pointer = 0) {
         this.monkeys = monkeys;
-        if(monkeys[pointer].isDone()) this.pointer = pointer + 1;
+        if(monkeys[pointer].isDone()) this.pointer = (pointer + 1) % monkeys.length;
         else this.pointer = pointer
     }
 
@@ -255,6 +255,16 @@ describe('round (all turns of all monkeys)', () => {
                 {items: [2080, 25, 167, 207, 401, 1046], inspections: 4},
                 {items: [], inspections: 3},
                 {items: [], inspections: 5},
+            ]
+        })
+    });
+    test('two rounds', () => {
+        expect(exampleMonkeys.round(2)).toMatchObject({
+            monkeys: [
+                {items: [695, 10, 71, 135, 350], inspections: 6},
+                {items: [43, 49, 58, 55, 362], inspections: 10},
+                {items: [], inspections: 4},
+                {items: [], inspections: 10},
             ]
         })
     });
