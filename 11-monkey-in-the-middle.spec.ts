@@ -50,7 +50,8 @@ class Monkeys {
         else this.pointer = pointer
     }
     inspect(): Monkeys {
-        return ((monkeys) => new Monkeys(monkeys.currentMonkey().inspect(monkeys.monkeys), monkeys.pointer))(this);
+        const newVar = (monkeys: Monkeys) => new Monkeys(monkeys.currentMonkey().inspect(monkeys.monkeys), monkeys.pointer);
+        return newVar(this);
     }
 
     turn(): Monkeys {
