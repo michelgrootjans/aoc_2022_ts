@@ -3,10 +3,11 @@ import {exampleDescription} from "./11-example";
 
 class Monkey {
     public readonly items: number[];
-    public inspections = 0;
+    public inspections: number;
 
-    constructor(items: number[]) {
+    constructor(items: number[], inspections = 0) {
         this.items = items;
+        this.inspections = inspections;
     }
 
     inspect(monkeys: Monkey[]): Monkey[] {
@@ -18,8 +19,8 @@ class Monkey {
         const receiver = 2;
 
         return monkeys.map((monkey, index) => {
-            if (monkey === this) return new Monkey(_.tail(this.items));
-            if (index === receiver) return new Monkey([...monkey.items, newValue]);
+            if (monkey === this) return new Monkey(_.tail(this.items), this.inspections);
+            if (index === receiver) return new Monkey([...monkey.items, newValue], monkey.inspections);
             return monkey;
         });
     }
@@ -103,7 +104,7 @@ describe('move', () => {
     test('example description', function () {
         expect(exampleMonkeys.move()).toMatchObject({
             monkeys: [
-                {items: [98], inspections: 0},
+                {items: [98], inspections: 1},
                 {items: [54, 65, 75, 74], inspections: 0},
                 {items: [79, 60, 97, 500], inspections: 0},
                 {items: [74], inspections: 0},
