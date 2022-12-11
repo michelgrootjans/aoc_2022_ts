@@ -1,6 +1,7 @@
 import _ from 'lodash/fp'
 import {exampleDescription} from "./11-example";
 import {input} from "./11-input";
+import exp from "constants";
 
 class Monkey {
     public readonly items: number[];
@@ -314,3 +315,15 @@ describe('round (all turns of all monkeys)', () => {
         expect(parseMonkeys(input, 3).round(20).monkeyBusiness()).toBe(66124);
     });
 })
+
+describe('part 2', () => {
+    const exampleMonkeys = parseMonkeys(exampleDescription, 1);
+    test('after round 1', () => {
+        expect(exampleMonkeys.round(1)).toMatchObject({monkeys: [
+                {inspections: 2},
+                {inspections: 4},
+                {inspections: 3},
+                {inspections: 6},
+            ]});
+    });
+});
