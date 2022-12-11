@@ -72,6 +72,8 @@ class Monkeys {
     }
 
     monkeyBusiness(): number {
+        const a = this.monkeys;
+        console.log({a})
         return 101 * 105;
     }
 }
