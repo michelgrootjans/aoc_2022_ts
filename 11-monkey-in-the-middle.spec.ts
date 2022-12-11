@@ -73,7 +73,8 @@ class Monkeys {
 
     monkeyBusiness(): number {
         const a = _.flow(
-            _.orderBy(['inspections'], ['desc'])
+            _.orderBy(['inspections'], ['desc']),
+            _.take(2),
         )(this.monkeys);
         console.log({a})
         return 101 * 105;
