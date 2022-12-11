@@ -8,12 +8,12 @@ class Monkey {
     private readonly operation: (item: number) => number;
     private readonly worryDivider;
 
-    private readonly reveiverOf: (value: number) => (number);
+    private readonly receiverOf: (value: number) => (number);
 
-    constructor(items: number[], operation: (item: number) => number, reveiverOf: (value: number) => number, worryDivider: number = 3, inspections = 0) {
+    constructor(items: number[], operation: (item: number) => number, receiverOf: (value: number) => number, worryDivider: number = 3, inspections = 0) {
         this.items = items;
         this.operation = operation;
-        this.reveiverOf = reveiverOf;
+        this.receiverOf = receiverOf;
         this.inspections = inspections;
         this.worryDivider = worryDivider;
     }
@@ -26,7 +26,7 @@ class Monkey {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
         const newValue = Math.floor(this.operation(itemToThrow) / this.worryDivider);
-        const receiver = monkeys[this.reveiverOf(newValue)];
+        const receiver = monkeys[this.receiverOf(newValue)];
 
         return monkeys.map((monkey) => {
             if (monkey === this) return this.afterThrow();
@@ -36,11 +36,11 @@ class Monkey {
     }
 
     private afterThrow() {
-        return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, this.worryDivider, this.inspections + 1);
+        return new Monkey(_.tail(this.items), this.operation, this.receiverOf, this.worryDivider, this.inspections + 1);
     }
 
     private receive(newValue: number) {
-        return new Monkey([...this.items, newValue], this.operation, this.reveiverOf, this.worryDivider, this.inspections);
+        return new Monkey([...this.items, newValue], this.operation, this.receiverOf, this.worryDivider, this.inspections);
     }
 }
 
