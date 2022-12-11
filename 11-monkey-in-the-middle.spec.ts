@@ -21,8 +21,8 @@ class Monkey {
         const receiver = this.reveiverOf(newValue);
 
         return monkeys.map((monkey, index) => {
-            if (monkey === this) return new Monkey(_.tail(this.items), (item: number) => item * 19, (value: number) => ((value % 23 === 0) ? 2 : 3), this.inspections + 1);
-            if (index === receiver) return new Monkey([...monkey.items, newValue], (item: number) => item * 19, (value: number) => ((value % 23 === 0) ? 2 : 3), monkey.inspections);
+            if (monkey === this) return new Monkey(_.tail(this.items), this.operation, this.reveiverOf, this.inspections + 1);
+            if (index === receiver) return new Monkey([...monkey.items, newValue], this.operation, this.reveiverOf, monkey.inspections);
             return monkey;
         });
     }
