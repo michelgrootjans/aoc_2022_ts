@@ -51,7 +51,7 @@ class Monkeys {
     }
     inspect(): Monkeys {
         const newVar = (monkeys: Monkeys) => new Monkeys(monkeys.currentMonkey().inspect(monkeys.monkeys), monkeys.pointer);
-        return newVar(this);
+        return _.range(1).reduce(newVar, this);
     }
 
     turn(): Monkeys {
