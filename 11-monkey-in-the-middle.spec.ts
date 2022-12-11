@@ -14,6 +14,10 @@ class Monkey {
         this.inspections = inspections;
     }
 
+    hasItems() {
+        return this.items.length > 0;
+    }
+
     inspect(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
@@ -50,8 +54,12 @@ class Monkeys {
         return new Monkeys(this.currentMonkey().inspect(this.monkeys), this.pointer);
     }
 
-    turn() {
-        return this.inspect().inspect();
+    turn(): Monkeys {
+        let monkeys: Monkeys = this;
+        while (monkeys.currentMonkey().hasItems()) {
+            monkeys = monkeys.inspect();
+        }
+        return monkeys;
     }
 
     private currentMonkey() {
