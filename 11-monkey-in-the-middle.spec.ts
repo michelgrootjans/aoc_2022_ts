@@ -46,13 +46,11 @@ class Monkeys {
 
     constructor(monkeys: Monkey[], pointer = 0) {
         this.monkeys = monkeys;
-        this.pointer = pointer;
+        if(monkeys[pointer].isDone()) this.pointer = pointer + 1;
+        else this.pointer = pointer
     }
 
     inspect(): Monkeys {
-        if(this.currentMonkey().isDone()) {
-            this.pointer = (this.pointer + 1) % this.monkeys.length;
-        }
         return new Monkeys(this.currentMonkey().inspect(this.monkeys), this.pointer);
     }
 
@@ -217,7 +215,7 @@ describe('turn (all inspections of a single monkey)', () => {
             ]
         })
     });
-    xtest('two turns', function () {
+    test('two turns', function () {
         expect(exampleMonkeys.turn().turn()).toMatchObject({
             monkeys: [
                 {items: [20, 23, 27, 26], inspections: 2},
