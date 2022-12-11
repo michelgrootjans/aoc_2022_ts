@@ -75,7 +75,7 @@ class Monkeys {
         const a = _.flow(
             _.map((m: Monkey) => m.inspections),
             _.orderBy(_.identity, 'desc'),
-            // _.take(2),
+            _.take(2),
         )(this.monkeys);
         console.log({a})
         return 101 * 105;
