@@ -3,9 +3,9 @@ import {exampleDescription} from "./11-example";
 
 class Monkey {
     public readonly items: number[];
-    public inspections: number;
-    private operation: (item: number) => number;
-    private reveiverOf: (value: number) => (number);
+    public readonly inspections: number;
+    private readonly operation: (item: number) => number;
+    private readonly reveiverOf: (value: number) => (number);
 
     constructor(items: number[], operation: (item: number) => number, reveiverOf: (value: number) => number, inspections = 0) {
         this.items = items;
