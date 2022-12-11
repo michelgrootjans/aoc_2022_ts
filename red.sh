@@ -1,0 +1,1 @@
+git-gamble -r -m 'red' -- npm test

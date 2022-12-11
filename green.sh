@@ -1,0 +1,1 @@
+git-gamble -g -m 'green' -- npm test

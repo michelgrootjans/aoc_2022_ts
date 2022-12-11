@@ -4,6 +4,17 @@ class Monkey {
     constructor(items: number[]) {
         this.items = items;
     }
+
+    move(monkeys: Monkey[]): Monkey[] {
+        if(this.items.length === 0) return monkeys;
+        const itemToThrow = this.items[0];
+            return [
+                new Monkey([this.items[1]]),
+                monkeys[1],
+                new Monkey([...monkeys[2].items, 500]),
+                monkeys[3],
+            ];
+    }
 }
 
 class Monkeys {
@@ -11,6 +22,10 @@ class Monkeys {
 
     constructor(monkeys: Monkey[]) {
         this.monkeys = monkeys;
+    }
+
+    move(): Monkeys {
+        return new Monkeys(this.monkeys[0].move(this.monkeys));
     }
 }
 
@@ -102,7 +117,14 @@ describe('parse', function () {
 });
 
 describe('move', () => {
-
+    test('example description', function () {
+        expect(exampleMonkeys.move()).toMatchObject({monkeys: [
+                {items: [98]},
+                {items: [54, 65, 75, 74]},
+                {items: [79, 60, 97, 500]},
+                {items: [74]},
+            ]})
+    });
 })
 
 describe('turn (all moves of a single monkey)', () => {
