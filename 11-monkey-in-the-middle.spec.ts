@@ -137,7 +137,7 @@ describe('parse', () => {
 });
 
 describe('inspect', () => {
-    const inspect = (times: number, monkeys: Monkeys) => _.range(times).reduce((acc) => acc.inspect(), monkeys);
+    const inspect = (times: number, monkeys: Monkeys) => monkeys.inspect(times);
 
     test('one inspection', () => {
         expect(exampleMonkeys.inspect()).toMatchObject({
