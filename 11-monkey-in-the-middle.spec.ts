@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash/fp'
 import {exampleDescription} from "./11-example";
 
 class Monkey {
@@ -54,17 +54,17 @@ class Monkeys {
     }
 
     inspect(times = 1): Monkeys {
-        return _.range(times)
+        return _.range(0, times)
             .reduce((m: Monkeys) => new Monkeys(m.currentMonkey().inspect(m.monkeys), m.pointer), this);
     }
 
     turn(times: number = 1): Monkeys {
-        return _.range(times)
+        return _.range(0, times)
             .reduce((m: Monkeys) => m.inspect(m.currentMonkey().items.length || 1), this)
     }
 
     round(times: number = 1) {
-        return _.range(times).reduce((m: Monkeys) => m.turn(m.monkeys.length), this);
+        return _.range(0, times).reduce((m: Monkeys) => m.turn(m.monkeys.length), this);
     }
 
     private currentMonkey() {
@@ -72,7 +72,7 @@ class Monkeys {
     }
 
     monkeyBusiness(): number {
-        const a = _.orderBy(this.monkeys, ['inspections'], ['desc']);
+        const a = _.orderBy(['inspections'], ['desc'])(this.monkeys);
         console.log({a})
         return 101 * 105;
     }
