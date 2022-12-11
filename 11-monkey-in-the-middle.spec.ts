@@ -98,8 +98,11 @@ function parseMonkey(monkeyDescription: string, worryDivider: number): Monkey {
     const operation = (old: number): number => eval(operationDescription);
 
     const divisibleBy = parseInt(lines[3].split('by ')[1]);
-    let ifTrue = parseInt(lines[4].split('monkey ')[1]);
-    let ifFalse = parseInt(lines[5].split('monkey ')[1]);
+
+    const sdf = (description: string) => parseInt(description.split('monkey ')[1]);
+
+    let ifTrue = sdf(lines[4]);
+    let ifFalse = sdf(lines[5]);
     const receiverOf = (value: number) => ((value % divisibleBy === 0) ? ifTrue : ifFalse);
 
     return new Monkey(items, operation, receiverOf, worryDivider);
