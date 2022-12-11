@@ -46,8 +46,11 @@ class Monkeys {
 
     constructor(monkeys: Monkey[], pointer = 0) {
         this.monkeys = monkeys;
-        if(monkeys[pointer].isDone()) this.pointer = (pointer + 1) % monkeys.length;
-        else this.pointer = pointer
+        if (monkeys[pointer].isDone()) {
+            this.pointer = (pointer + 1) % monkeys.length;
+        } else {
+            this.pointer = pointer
+        }
     }
 
     inspect(times = 1): Monkeys {
@@ -57,7 +60,7 @@ class Monkeys {
 
     turn(times: number = 1): Monkeys {
         return _.range(times)
-            .reduce((m: Monkeys) => m.inspect(m.currentMonkey().items.length), this)
+            .reduce((m: Monkeys) => m.inspect(m.currentMonkey().items.length || 1), this)
     }
 
     round(times: number = 1) {
@@ -269,22 +272,12 @@ describe('round (all turns of all monkeys)', () => {
         })
     });
     test('three rounds', () => {
-        expect(exampleMonkeys.round(2).turn(2)).toMatchObject({
-            monkeys: [
-                {items: [16, 18, 21, 20, 122], inspections: 11},
-                {items: [], inspections: 15},
-                {items: [], inspections: 4},
-                {items: [4401, 63, 449, 855, 2216], inspections: 10},
-            ]
-        })
-    });
-    xtest('three rounds', () => {
         expect(exampleMonkeys.round(3)).toMatchObject({
             monkeys: [
-                {items: [16, 18, 21, 20, 122]},
-                {items: [1468, 22, 150, 286, 739]},
-                {items: []},
-                {items: []},
+                {items: [16, 18, 21, 20, 122], inspections: 11},
+                {items: [1468, 22, 150, 286, 739], inspections: 15},
+                {items: [], inspections: 4},
+                {items: [], inspections: 15},
             ]
         })
     });
