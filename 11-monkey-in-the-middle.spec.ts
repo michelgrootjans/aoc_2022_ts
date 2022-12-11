@@ -56,8 +56,11 @@ function parseMonkey(monkeyDescription: string): Monkey {
         .map(worry => worry.trim())
         .map((text: string): number => parseInt(text));
 
-    const operation = lines[2].split('new = ')[1];
-    return new Monkey(items, (old: number): number => eval(operation), (value: number) => ((value % 23 === 0) ? 2 : 3));
+    const operationDescription = lines[2].split('new = ')[1];
+    const operation = (old: number): number => eval(operationDescription);
+    const reveiverOf = (value: number) => ((value % 23 === 0) ? 2 : 3);
+    
+    return new Monkey(items, operation, reveiverOf);
 }
 
 const splitMonkeys = (monkeyDescriptions: string) => monkeyDescriptions.split('\n\n');
