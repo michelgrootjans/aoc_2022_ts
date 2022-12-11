@@ -38,19 +38,24 @@ class Monkey {
 
 class Monkeys {
     public readonly monkeys: Monkey[];
-    private pointer = 0;
+    private readonly pointer;
 
-    constructor(monkeys: Monkey[]) {
+    constructor(monkeys: Monkey[], pointer = 0) {
         this.monkeys = monkeys;
+        this.pointer = pointer;
     }
 
 
     inspect(): Monkeys {
-        return new Monkeys(this.monkeys[this.pointer].inspect(this.monkeys));
+        return new Monkeys(this.currentMonkey().inspect(this.monkeys), this.pointer);
     }
 
     turn() {
         return this.inspect().inspect();
+    }
+
+    private currentMonkey() {
+        return this.monkeys[this.pointer];
     }
 }
 
