@@ -19,10 +19,10 @@ class Monkey {
         return this.items.length === 0;
     }
 
-    inspect(monkeys: Monkey[], worryDivider: number): Monkey[] {
+    inspect(monkeys: Monkey[]): Monkey[] {
         if (this.items.length === 0) return monkeys;
         const itemToThrow = this.items[0];
-        const newValue = Math.floor(this.operation(itemToThrow) / worryDivider);
+        const newValue = Math.floor(this.operation(itemToThrow) / 3);
         const receiver = monkeys[this.reveiverOf(newValue)];
 
         return monkeys.map((monkey) => {
@@ -56,7 +56,7 @@ class Monkeys {
 
     inspect(times = 1): Monkeys {
         return _.range(0, times)
-            .reduce((m: Monkeys) => new Monkeys(m.currentMonkey().inspect(m.monkeys, 3), m.pointer), this);
+            .reduce((m: Monkeys) => new Monkeys(m.currentMonkey().inspect(m.monkeys), m.pointer), this);
     }
 
     turn(times: number = 1): Monkeys {
