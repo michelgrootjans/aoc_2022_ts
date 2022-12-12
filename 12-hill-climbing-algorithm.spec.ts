@@ -1,7 +1,7 @@
 it('a straight line', () => {
-    function climb() {
+    function climb(map: string) {
         return 26;
     }
 
-    expect(climb()).toBe(26)
+    expect(climb('SbcdefghijklmnopqrstuvwxyE')).toBe(26)
 });
