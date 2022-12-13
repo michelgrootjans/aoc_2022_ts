@@ -38,17 +38,21 @@ class Pair {
     }
 }
 
-function parse(description: string): Pair[] {
+function parse(description: string) {
     return description.split('/n/n')
         .map(pair => _.flow(
             _.split('/n'),
             _.map(eval),
-        )(pair))
-        .map((pair: any[], index: number): Pair => new Pair(new Value(pair[0]), new Value(pair[1]), index));
+        )(pair));
+}
+
+function toPair(description: string): Pair[] {
+    return parse(description)
+        .map((pair: any[], index: number): Pair => new Pair(new Value(pair[0]), new Value(pair[1]), index+1));
 }
 
 function orderedIndexes(description: string) {
-    return parse(description)
+    return toPair(description)
         .filter(pair => pair.isOrdered())
         .map(pair => pair.index);
 }
@@ -60,26 +64,38 @@ function sumOfOrderedIndexes(description: string): number {
     )(description);
 }
 
-test('[1] vs [2]', function () {
-    expect(orderedIndexes('[1]/n[2]')).toEqual([0]);
-    expect(sumOfOrderedIndexes('[1]/n[2]')).toEqual(0);
+describe('parse', () => {
+    test.each([
+        ['[1]/n[2]', [[[1], [2]],]],
+        ['[1, 2]/n[2, 3]', [[[1, 2], [2, 3]],]],
+        ['[1, [2]]/n[[2], 3]', [[[1, [2]], [[2], 3]],]],
+        ['[1]/n[2]/n/n[3]/n[4]', [[[1], [2]], [[3], [4]]]],
+        ['[1,1,3,1,1]/n[1,1,5,1,1]', [[[1,1,3,1,1],[1,1,5,1,1]]],]
+    ])('%s => %o', (input: string, output: any[]) => {
+        expect(parse(input)).toEqual(output)
+    });
 });
 
-test('[1] vs [1, 1]', function () {
-    expect(orderedIndexes('[1]/n[1, 1]')).toEqual([0]);
-    expect(sumOfOrderedIndexes('[1]/n[1, 1]')).toEqual(0);
+test('[1] vs [2]', () => {
+    expect(orderedIndexes('[1]/n[2]')).toEqual([1]);
+    expect(sumOfOrderedIndexes('[1]/n[2]')).toEqual(1);
 });
 
-test('[1, 1] vs [1]', function () {
+test('[1] vs [1, 1]', () => {
+    expect(orderedIndexes('[1]/n[1, 1]')).toEqual([1]);
+    expect(sumOfOrderedIndexes('[1]/n[1, 1]')).toEqual(1);
+});
+
+test('[1, 1] vs [1]', () => {
     expect(orderedIndexes('[1, 1]/n[1]')).toEqual([]);
 });
 
-test('[2] vs [1]', function () {
+test('[2] vs [1]', () => {
     expect(orderedIndexes('[2]/n[1]')).toEqual([]);
 });
 
 const example = '' +
-    '[1,1,3,1,1]\n[1,1,5,1,1]\n\n' + // 0: NOT ordered
+    '[1,1,3,1,1]\n[1,1,5,1,1]/n/n' + // 0: NOT ordered
     '[[1],[2,3,4]]\n[[1],4]\n\n' + // 1: ordered
     '[9]\n[[8,7,6]]\n\n' + // 2: ordered
     '[[4,4],4,4]\n[[4,4],4,4,4]\n\n' + // 3: NOT ordered
@@ -89,7 +105,18 @@ const example = '' +
     '[1,[2,[3,[4,[5,6,7]]]],8,9]\n[1,[2,[3,[4,[5,6,0]]]],8,9]' // 7: NOT ordered
 
 xtest('example part 1', function () {
-    expect(orderedIndexes(example)).toEqual([1, 2, 4, 6]);
+    expect(parse(example)).toEqual([
+            [[1,1,3,1,1],[1,1,5,1,1]],
+            [[[1],[2,3,4]],[[1],4]],
+            [[9],[[8,7,6]]],
+            [[[4,4],4,4],[[4,4],4,4,4]],
+            [[7,7,7,7],[7,7,7]],
+            [[],[3]],
+            [[[[]]],[[]]],
+            [[1,[2,[3,[4,[5,6,7]]]],8,9],[1,[2,[3,[4,[5,6,0]]]],8,9]],
+    ])
+
+    // expect(orderedIndexes(example)).toEqual([1, 2, 4, 6]);
 });
 
 
