@@ -1,7 +1,23 @@
 import _ from 'lodash/fp'
 
 type Value = number | Value[]
-type Pair = {left: [Value], right: [Value], index: number}
+// type Pair = {left: [Value], right: [Value], index: number}
+class Pair {
+    public readonly left: Value;
+    public readonly right: Value;
+    public readonly index: number;
+
+    constructor(left: Value, right: Value, index: number) {
+        this.left = left;
+        this.right = right;
+        this.index = index;
+    }
+
+    isOrdered() {
+        return _.isEqual(this.right, []);
+    }
+
+}
 
 function parse(description: string): Pair[] {
     return description.split('/n/n')
@@ -9,16 +25,12 @@ function parse(description: string): Pair[] {
         _.split('/n'),
         _.map(eval),
         )(pair))
-    .map((pair: any[], index: number): Pair => ({left: pair[0], right: pair[1], index}));
-}
-
-function isOrdered(p: Pair) {
-    return _.isEqual(p.right, []);
+    .map((pair: any[], index: number): Pair => new Pair(pair[0], pair[1], index));
 }
 
 function orderedIndexes(description: string) {
     return parse(description)
-        .filter(pair => isOrdered(pair))
+        .filter(pair => pair.isOrdered())
         .map(pair => pair.index);
 }
 
