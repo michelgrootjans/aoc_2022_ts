@@ -7,7 +7,6 @@ class Value {
         this.v = value;
     }
 
-
     isSmallerThan(that: Value) {
         return _.isEqual(that, new Value([]))
     }
@@ -25,11 +24,7 @@ class Pair {
     }
 
     isOrdered() {
-        return this.isInOrder(this.left, this.right);
-    }
-
-    private isInOrder(left: Value, right: Value) {
-        return left.isSmallerThan(right);
+        return this.left.isSmallerThan(this.right);
     }
 }
 
