@@ -23,7 +23,10 @@ function orderedIndexes(description: string) {
 }
 
 function sumOfOrderedIndexes(description: string): number {
-    return _.flow(_.sum)(orderedIndexes(description));
+    return _.flow(
+        orderedIndexes,
+        _.sum,
+    )(description);
 }
 
 test('[] vs []', function () {
