@@ -4,12 +4,14 @@ type Value = number | Value[]
 type Pair = {left: [Value], right: [Value], index: number}
 
 function parse(description: string): Pair[] {
-    return _.flow()(description.split('/n/n')
+    return _.flow()(
+        description.split('/n/n')
         .map(pair => _.flow(
             _.split('/n'),
             _.map(eval),
             )(pair))
-        .map((pair: any[], index: number): Pair => ({left: pair[0], right: pair[1], index})));
+        .map((pair: any[], index: number): Pair => ({left: pair[0], right: pair[1], index}))
+    );
 }
 
 function isOrdered(p: Pair) {
