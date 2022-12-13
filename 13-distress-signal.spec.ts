@@ -33,6 +33,7 @@ test('[] vs []', function () {
 
 test('[1] vs []', function () {
     expect(orderedIndexes('[1]/n[]')).toEqual([0]);
+    expect(sumOfOrderedIndexes('[1]/n[]')).toEqual(0);
 });
 
 test('[] vs [1]', function () {
