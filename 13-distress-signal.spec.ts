@@ -14,9 +14,12 @@ class Pair {
     }
 
     isOrdered() {
-        return _.isEqual(this.right, []);
+        return this.isInOrder(this.left, this.right);
     }
 
+    private isInOrder(left: Value, right: Value) {
+        return _.isEqual(right, []);
+    }
 }
 
 function parse(description: string): Pair[] {
