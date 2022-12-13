@@ -5,7 +5,7 @@ type Pair = {left: [Value], right: [Value], index: number}
 
 function parse(description: string): Pair[] {
     return description.split('/n/n')
-        .map(pair => _.flow(_.split('/n'))(pair).map(eval))
+        .map(pair => _.flow(_.split('/n'), _.map(eval))(pair))
         .map((pair: any[], index: number): Pair => ({left: pair[0], right: pair[1], index}));
 }
 
