@@ -5,25 +5,62 @@ type Pair = {left: [Value], right: [Value], index: number}
 
 function parse(description: string): Pair[] {
     return description.split('/n/n')
-        .map(pair => pair.split('/n').map(line => eval(line)))
+        .map(pair => pair.split('/n').map(line => {
+            console.log({line})
+            return eval(line);
+        }))
         .map((pair: any[], index: number): Pair => ({left: pair[0], right: pair[1], index}));
 }
 
-function sumOfIndices(description: string) {
-    const pairs = parse(description);
+function isOrdered(p: Pair) {
+    return _.isEqual(p.right, []);
+}
 
-    if(_.isEqual(pairs[0].right, [1]) ) return []
-    return [0];
+function orderedIndexes(description: string) {
+    return parse(description)
+        .filter(pair => isOrdered(pair))
+        .map(pair => pair.index);
 }
 
 test('[] vs []', function () {
-    expect(sumOfIndices('[]/n[]')).toEqual([0]);
+    expect(orderedIndexes('[]/n[]')).toEqual([0]);
 });
 
 test('[1] vs []', function () {
-    expect(sumOfIndices('[1]/n[]')).toEqual([0]);
+    expect(orderedIndexes('[1]/n[]')).toEqual([0]);
 });
 
 test('[] vs [1]', function () {
-    expect(sumOfIndices('[]/n[1]')).toEqual([]);
+    expect(orderedIndexes('[]/n[1]')).toEqual([]);
 });
+
+const example = '' +
+    '[1,1,3,1,1]\n' +
+    '[1,1,5,1,1]\n' +
+    '\n' +
+    '[[1],[2,3,4]]\n' +
+    '[[1],4]\n' +
+    '\n' +
+    '[9]\n' +
+    '[[8,7,6]]\n' +
+    '\n' +
+    '[[4,4],4,4]\n' +
+    '[[4,4],4,4,4]\n' +
+    '\n' +
+    '[7,7,7,7]\n' +
+    '[7,7,7]\n' +
+    '\n' +
+    '[]\n' +
+    '[3]\n' +
+    '\n' +
+    '[[[]]]\n' +
+    '[[]]\n' +
+    '\n' +
+    '[1,[2,[3,[4,[5,6,7]]]],8,9]\n' +
+    '[1,[2,[3,[4,[5,6,0]]]],8,9]'
+
+xtest('example part 1', function () {
+    expect(orderedIndexes(example)).toEqual([1,2,4,6]);
+});
+
+
