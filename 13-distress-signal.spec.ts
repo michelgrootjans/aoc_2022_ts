@@ -1,5 +1,18 @@
+import _ from 'lodash/fp'
+
+type Value = number | Value[]
+type Pair = {left: [Value], right: [Value], index: number}
+
+function parse(description: string): Pair[] {
+    return description.split('/n/n')
+        .map(pair => pair.split('/n').map(line => eval(line)))
+        .map((pair: any[], index: number): Pair => ({left: pair[0], right: pair[1], index}));
+}
+
 function sumOfIndices(description: string) {
-    if(description === '[]/n[1]') return []
+    const pairs = parse(description);
+
+    if(_.isEqual(pairs[0].right, [1]) ) return []
     return [0];
 }
 
