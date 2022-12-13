@@ -10,13 +10,15 @@ class Value {
     isSmallerThan(that: Value) {
         if (this.v instanceof Array && that.v instanceof Array) {
             for (let i = 0; i < this.v.length; i++) {
-                const thisValue = this.v[i];
-                const thatValue = that.v[i];
-                if (thisValue > thatValue) return false;
+                if (this.isBigger(this.v[i], that.v[i])) return false;
             }
-            return this.v.length <= that.v.length;
+            // return this.v.length <= that.v.length;
         }
         return this.v <= that.v;
+    }
+
+    private isBigger<T>(left: T, right: T) {
+        return left > right;
     }
 }
 
