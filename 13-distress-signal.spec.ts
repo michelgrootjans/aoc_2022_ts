@@ -8,7 +8,15 @@ class Value {
     }
 
     isSmallerThan(that: Value) {
-        return _.isEqual(that, new Value([]))
+        if (this.v instanceof Array && that.v instanceof Array) {
+            for (let i = 0; i < this.v.length; i++) {
+                const thisValue = this.v[i];
+                const thatValue = that.v[i];
+                if (thisValue > thatValue) return false;
+            }
+            return this.v.length <= that.v.length;
+        }
+        return this.v <= that.v;
     }
 }
 
@@ -30,11 +38,11 @@ class Pair {
 
 function parse(description: string): Pair[] {
     return description.split('/n/n')
-    .map(pair => _.flow(
-        _.split('/n'),
-        _.map(eval),
+        .map(pair => _.flow(
+            _.split('/n'),
+            _.map(eval),
         )(pair))
-    .map((pair: any[], index: number): Pair => new Pair(new Value(pair[0]), new Value(pair[1]), index));
+        .map((pair: any[], index: number): Pair => new Pair(new Value(pair[0]), new Value(pair[1]), index));
 }
 
 function orderedIndexes(description: string) {
@@ -50,18 +58,13 @@ function sumOfOrderedIndexes(description: string): number {
     )(description);
 }
 
-test('[] vs []', function () {
-    expect(orderedIndexes('[]/n[]')).toEqual([0]);
-    expect(sumOfOrderedIndexes('[]/n[]')).toEqual(0);
+test('[1] vs [2]', function () {
+    expect(orderedIndexes('[1]/n[2]')).toEqual([0]);
+    expect(sumOfOrderedIndexes('[1]/n[2]')).toEqual(0);
 });
 
-test('[1] vs []', function () {
-    expect(orderedIndexes('[1]/n[]')).toEqual([0]);
-    expect(sumOfOrderedIndexes('[1]/n[]')).toEqual(0);
-});
-
-test('[] vs [1]', function () {
-    expect(orderedIndexes('[]/n[1]')).toEqual([]);
+test('[2] vs [1]', function () {
+    expect(orderedIndexes('[2]/n[1]')).toEqual([]);
 });
 
 const example = '' +
@@ -75,7 +78,7 @@ const example = '' +
     '[1,[2,[3,[4,[5,6,7]]]],8,9]\n[1,[2,[3,[4,[5,6,0]]]],8,9]' // 7: NOT ordered
 
 xtest('example part 1', function () {
-    expect(orderedIndexes(example)).toEqual([1,2,4,6]);
+    expect(orderedIndexes(example)).toEqual([1, 2, 4, 6]);
 });
 
 
