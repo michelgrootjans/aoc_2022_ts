@@ -66,8 +66,12 @@ test('[1] vs [2]', function () {
 });
 
 test('[1] vs [1, 1]', function () {
-    expect(orderedIndexes('[1]/n[1, 2]')).toEqual([0]);
-    expect(sumOfOrderedIndexes('[1]/n[1, 2]')).toEqual(0);
+    expect(orderedIndexes('[1]/n[1, 1]')).toEqual([0]);
+    expect(sumOfOrderedIndexes('[1]/n[1, 1]')).toEqual(0);
+});
+
+test('[1, 1] vs [1]', function () {
+    expect(orderedIndexes('[1, 1]/n[1]')).toEqual([]);
 });
 
 test('[2] vs [1]', function () {
