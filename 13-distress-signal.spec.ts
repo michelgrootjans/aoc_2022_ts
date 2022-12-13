@@ -1,3 +1,7 @@
+function sumOfIndices() {
+    return 0;
+}
+
 it('should work', function () {
-    expect(0).toBe(0);
+    expect(sumOfIndices()).toBe(0);
 });
