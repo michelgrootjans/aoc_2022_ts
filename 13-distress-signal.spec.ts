@@ -1,7 +1,11 @@
 import _ from 'lodash/fp'
 
-type Value = number | Value[]
-// type Pair = {left: [Value], right: [Value], index: number}
+// type Value = number | Value[]
+
+class Value {
+
+}
+
 class Pair {
     public readonly left: Value;
     public readonly right: Value;
