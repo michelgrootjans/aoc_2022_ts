@@ -1,7 +1,7 @@
-function sumOfIndices() {
+function sumOfIndices(description: string) {
     return 0;
 }
 
 it('should work', function () {
-    expect(sumOfIndices()).toBe(0);
+    expect(sumOfIndices('[]/n[]')).toBe(0);
 });
