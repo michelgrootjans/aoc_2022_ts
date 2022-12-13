@@ -1,9 +1,16 @@
 import _ from 'lodash/fp'
 
-// type Value = number | Value[]
-
 class Value {
+    public readonly v: number | Value[];
 
+    constructor(value: number | Value[]) {
+        this.v = value;
+    }
+
+
+    isSmallerThan(that: Value) {
+        return _.isEqual(that, new Value([]))
+    }
 }
 
 class Pair {
@@ -22,7 +29,7 @@ class Pair {
     }
 
     private isInOrder(left: Value, right: Value) {
-        return _.isEqual(right, []);
+        return left.isSmallerThan(right);
     }
 }
 
@@ -32,7 +39,7 @@ function parse(description: string): Pair[] {
         _.split('/n'),
         _.map(eval),
         )(pair))
-    .map((pair: any[], index: number): Pair => new Pair(pair[0], pair[1], index));
+    .map((pair: any[], index: number): Pair => new Pair(new Value(pair[0]), new Value(pair[1]), index));
 }
 
 function orderedIndexes(description: string) {
