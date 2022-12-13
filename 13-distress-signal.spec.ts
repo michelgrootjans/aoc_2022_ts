@@ -22,8 +22,13 @@ function orderedIndexes(description: string) {
         .map(pair => pair.index);
 }
 
+function sumOfOrderedIndexes(description: string): number {
+    return _.flow(_.sum)(orderedIndexes(description));
+}
+
 test('[] vs []', function () {
     expect(orderedIndexes('[]/n[]')).toEqual([0]);
+    expect(sumOfOrderedIndexes('[]/n[]')).toEqual(0);
 });
 
 test('[1] vs []', function () {
