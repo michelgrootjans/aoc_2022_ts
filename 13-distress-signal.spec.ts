@@ -104,7 +104,7 @@ const example = '' +
     '[[[]]]\n[[]]\n\n' + // 6: ordered
     '[1,[2,[3,[4,[5,6,7]]]],8,9]\n[1,[2,[3,[4,[5,6,0]]]],8,9]' // 7: NOT ordered
 
-xtest('example part 1', function () {
+test('example part 1', function () {
     expect(parse(example)).toEqual([
             [[1,1,3,1,1],[1,1,5,1,1]],
             [[[1],[2,3,4]],[[1],4]],
