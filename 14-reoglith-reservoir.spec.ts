@@ -113,8 +113,7 @@ function getRocks(paths: number[][][]): Coordinate[] {
 }
 
 function unitsAtRest(paths: number[][][]) {
-    const rocks = getRocks(paths);
-    const grid = new Grid(new Coordinate(500, 0), rocks);
+    const grid = new Grid(new Coordinate(500, 0), getRocks(paths));
     console.log(grid.tick().tick().render());
     return 24;
 }
