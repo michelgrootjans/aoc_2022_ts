@@ -19,6 +19,14 @@ class Coordinate {
     down(): Coordinate {
         return new Coordinate(this.x, this.y + 1);
     }
+
+    downLeft(): Coordinate {
+        return new Coordinate(this.x - 1, this.y + 1);
+    }
+
+    downRight() {
+        return new Coordinate(this.x + 1, this.y + 1);
+    }
 }
 
 class Grid {
@@ -29,20 +37,30 @@ class Grid {
     private topLeft: Coordinate;
     private bottomRight: Coordinate;
     private grid: Tile[][];
+    private g: { coordinate: Coordinate, tile: Tile }[];
 
     constructor(source: Coordinate, rocks: Coordinate[], sand: Coordinate[] = []) {
-
-
         this.source = source;
         this.sand = sand;
         this.rocks = rocks;
 
         this.topLeft = new Coordinate(_.minBy(rocks, 'x')?.x || 0, source.y)
-        this.bottomRight = new Coordinate(_.maxBy(rocks, 'x')?.x || 0,_.maxBy(rocks, 'y')?.y || 0)
+        this.bottomRight = new Coordinate(_.maxBy(rocks, 'x')?.x || 0, _.maxBy(rocks, 'y')?.y || 0)
+
+        const array = _.range(this.topLeft.y, this.bottomRight.y + 1)
+            .map((y) => _.range(this.topLeft.x, this.bottomRight.x + 1)
+                .map((x) => {
+                    const coordinate = new Coordinate(x, y);
+                    return {coordinate, tile: this.getPoint(coordinate)};
+                }));
+        this.g = _.flatten(array);
+
 
         this.grid = _.range(this.topLeft.y, this.bottomRight.y + 1).map(
             (y) => _.range(this.topLeft.x, this.bottomRight.x + 1)
-                .map((x) => this.getPoint(new Coordinate(x, y))));
+                .map((x) => {
+                    return this.getPoint(new Coordinate(x, y));
+                }));
     }
 
     render(): string {
@@ -50,19 +68,20 @@ class Grid {
     }
 
     tick(): Grid {
-        return new Grid(this.source, this.rocks, [...this.sand, this.newSand()]);
+        const newSand = this.newSand(this.source);
+        return new Grid(this.source, this.rocks, [...this.sand, newSand]);
     }
 
 
-    private newSand(): Coordinate {
-        let currentPosition = this.source;
-        let candidate: Coordinate = this.fallFrom(currentPosition);
-        while (!this.overlaps(currentPosition, candidate)) {
-            currentPosition = candidate;
-            candidate = this.fallFrom(currentPosition);
-        }
+    isFree(coordinate: Coordinate) {
+        return this.g.find(t => this.overlaps(t.coordinate, coordinate))?.tile === '.';
+    }
 
-        return candidate;
+    private newSand(from: Coordinate): Coordinate {
+        if (this.isFree(from.down())) return this.newSand(from.down());
+        if (this.isFree(from.downLeft())) return this.newSand(from.downLeft());
+        if (this.isFree(from.downRight())) return this.newSand(from.downRight());
+        return from;
     }
 
     private fallFrom(current: Coordinate): Coordinate {
@@ -114,7 +133,7 @@ function getRocks(paths: number[][][]): Coordinate[] {
 
 function unitsAtRest(paths: number[][][]) {
     const grid = new Grid(new Coordinate(500, 0), getRocks(paths));
-    console.log(grid.tick().tick().render());
+    console.log(grid.tick().tick().tick().render());
     return 24;
 }
 
