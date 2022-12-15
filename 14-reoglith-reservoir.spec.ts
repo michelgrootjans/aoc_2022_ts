@@ -85,22 +85,21 @@ class Grid {
     }
 
     private fallFrom(from: Coordinate): Coordinate {
-        if(!this.isInGrid(from))
-            return from;
+        if(!this.isInGrid(from)) return from;
         if (this.isFree(from.down())) return this.fallFrom(from.down());
         if (this.isFree(from.downLeft())) return this.fallFrom(from.downLeft());
         if (this.isFree(from.downRight())) return this.fallFrom(from.downRight());
         return from;
     }
 
-    private isFree(coordinate: Coordinate): boolean {
+    protected isFree(coordinate: Coordinate): boolean {
         const tile = this.tileAt(coordinate);
         if(['+', '#', 'o'].includes(tile.unit)) return false;
         if(['.'].includes(tile.unit)) return true;
         return tile.unit === ' ';
     }
 
-    private tileAt(coordinate: Coordinate): Tile {
+    protected tileAt(coordinate: Coordinate): Tile {
         return this.grid.find(t => this.overlaps(t.coordinate, coordinate)) || new Tile(coordinate, ' ');
     }
 
@@ -125,8 +124,7 @@ class Grid {
     render(): string {
         let result = '';
 
-        const topLeft = this.grid[0].coordinate;
-        const bottomRight = this.grid[this.grid.length - 1].coordinate;
+        const {topLeft, bottomRight} = this.boundaries();
 
         for (let y = topLeft.y; y <= bottomRight.y; y++) {
             for (let x = topLeft.x; x <= bottomRight.x; x++) {
@@ -137,6 +135,31 @@ class Grid {
 
         return result
     }
+
+    protected boundaries() {
+        const topLeft = new Coordinate(_.minBy(this.grid, 'coordinate.x')?.coordinate.x || 0, 0)
+        const bottomRight = new Coordinate(_.maxBy(this.grid, 'coordinate.x')?.coordinate.x || 0, _.maxBy(this.grid, 'coordinate.y')?.coordinate.y || 0)
+
+
+        return {topLeft, bottomRight};
+    }
+}
+
+class GridWithFloor extends Grid {
+    private floor: number;
+
+    constructor(t: Tile[]) {
+        super(t);
+        this.floor = (t[t.length - 1]?.coordinate.y || 9) + 2;
+    }
+
+    protected isFree(coordinate: Coordinate): boolean {
+        const tile = this.tileAt(coordinate);
+        if(['+', '#', 'o'].includes(tile.unit)) return false;
+        if(['.'].includes(tile.unit)) return true;
+        return tile.unit === ' ';
+    }
+
 }
 
 const example: number[][][] = [
@@ -194,6 +217,10 @@ function unitsAtRest(paths: number[][][], createGrid: (t: Tile[]) => Grid) {
 
 test('example - part 1', function () {
     expect(unitsAtRest(example, (t) => new Grid(t))).toBe(24)
+});
+
+xtest('example - part 2', function () {
+    expect(unitsAtRest(example, (t) => new GridWithFloor(t))).toBe(24)
 });
 
 xtest('input', function () {
