@@ -47,13 +47,12 @@ class Grid {
         this.topLeft = new Coordinate(_.minBy(rocks, 'x')?.x || 0, source.y)
         this.bottomRight = new Coordinate(_.maxBy(rocks, 'x')?.x || 0, _.maxBy(rocks, 'y')?.y || 0)
 
-        const array = _.range(this.topLeft.y, this.bottomRight.y + 1)
+        this.g = _.flatten(_.range(this.topLeft.y, this.bottomRight.y + 1)
             .map((y) => _.range(this.topLeft.x, this.bottomRight.x + 1)
                 .map((x) => {
                     const coordinate = new Coordinate(x, y);
                     return {coordinate, tile: this.getPoint(coordinate)};
-                }));
-        this.g = _.flatten(array);
+                })));
 
 
         this.grid = _.range(this.topLeft.y, this.bottomRight.y + 1).map(
