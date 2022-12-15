@@ -192,7 +192,7 @@ function unitsAtRest(paths: number[][][], createGrid: (t: Tile[]) => Grid) {
     return endState.grainsOfSand();
 }
 
-test('example', function () {
+test('example - part 1', function () {
     expect(unitsAtRest(example, (t) => new Grid(t))).toBe(24)
 });
 
