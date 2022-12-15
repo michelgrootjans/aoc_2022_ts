@@ -168,7 +168,7 @@ function getRocks(paths: number[][][]): Coordinate[] {
     return rocks;
 }
 
-function unitsAtRest(paths: number[][][]) {
+function unitsAtRest(paths: number[][][], createGrid: (t: Tile[]) => Grid) {
     const rocks = getRocks(paths);
 
     const topLeft = new Coordinate(_.minBy(rocks, 'x')?.x || 0, 0)
@@ -181,7 +181,7 @@ function unitsAtRest(paths: number[][][]) {
                 return new Tile(coordinate, '.');
             })));
 
-    const grid = new Grid(tiles);
+    const grid = createGrid(tiles);
     grid.set(new Coordinate(500, 0), '+');
     for (const rock of rocks) {
         grid.set(rock, '#');
@@ -193,9 +193,9 @@ function unitsAtRest(paths: number[][][]) {
 }
 
 test('example', function () {
-    expect(unitsAtRest(example)).toBe(24)
+    expect(unitsAtRest(example, (t) => new Grid(t))).toBe(24)
 });
 
 xtest('input', function () {
-    expect(unitsAtRest(input)).toBe(979)
+    expect(unitsAtRest(input, (t) => new Grid(t))).toBe(979)
 });
