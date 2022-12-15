@@ -5,7 +5,8 @@ type Air = '.'
 type Rock = '#'
 type Sand = 'o'
 type Source = '+'
-type Unit = Air | Rock | Sand | Source
+type Void = ' '
+type Unit = Air | Rock | Sand | Source | Void
 
 class Tile {
     public readonly coordinate: Coordinate;
@@ -58,6 +59,69 @@ class Grid {
         this.grid = grid;
     }
 
+    tick(): Grid {
+        const grain = this.fallFrom(this.source().coordinate);
+        if (this.grid.some(t => this.overlaps(t.coordinate, grain))) {
+            this.tileAt(grain).unit = 'o';
+        };
+        return this;
+    }
+
+
+    set(coordinate: Coordinate, unit: Unit) {
+        this.tileAt(coordinate).unit = unit
+    }
+
+    endState(): Grid {
+        let counter = 0;
+        const source = this.source().coordinate;
+        let grain = this.fallFrom(source);
+        while (this.isInGrid(grain)) {
+            if(counter++ > 1000) throw 'too many loops'
+            this.tileAt(grain).unit = 'o';
+            grain = this.fallFrom(source);
+        }
+        return this;
+    }
+
+    private fallFrom(from: Coordinate): Coordinate {
+        if(!this.isInGrid(from))
+            return from;
+        if (this.isFree(from.down())) return this.fallFrom(from.down());
+        if (this.isFree(from.downLeft())) return this.fallFrom(from.downLeft());
+        if (this.isFree(from.downRight())) return this.fallFrom(from.downRight());
+        return from;
+    }
+
+    private isFree(coordinate: Coordinate): boolean {
+        const tile = this.tileAt(coordinate);
+        if(['+', '#', 'o'].includes(tile.unit)) return false;
+        if(['.'].includes(tile.unit)) return true;
+        return tile.unit === ' ';
+    }
+
+    private tileAt(coordinate: Coordinate): Tile {
+        return this.grid.find(t => this.overlaps(t.coordinate, coordinate)) || new Tile(coordinate, ' ');
+    }
+
+    private overlaps(left: Coordinate, right: Coordinate) {
+        return left.x === right.x && left.y === right.y;
+    }
+
+    private source(): Tile {
+        const source = this.grid.find(t => t.unit === '+');
+        if(!source) throw 'no source found';
+        return source
+    }
+
+    private isInGrid(grain: Coordinate) {
+        return this.grid.some(t => this.overlaps(t.coordinate, grain));
+    }
+
+    grainsOfSand() {
+        return this.grid.filter(t => t.unit === 'o').length;
+    }
+
     render(): string {
         let result = '';
 
@@ -73,34 +137,6 @@ class Grid {
 
         return result
     }
-
-
-    tick(): Grid {
-        return this;
-    }
-
-    // isFree(coordinate: Coordinate) {
-    //     return this.g.find(t => this.overlaps(t.coordinate, coordinate))?.tile === '.';
-    // }
-    //
-    // private newSand(from: Coordinate): Coordinate {
-    //     if (this.isFree(from.down())) return this.newSand(from.down());
-    //     if (this.isFree(from.downLeft())) return this.newSand(from.downLeft());
-    //     if (this.isFree(from.downRight())) return this.newSand(from.downRight());
-    //     return from;
-    // }
-    //
-    private overlaps(left: Coordinate, right: Coordinate) {
-        return left.x === right.x && left.y === right.y;
-    }
-
-    private tileAt(coordinate: Coordinate): Tile {
-        return this.grid.find(t => this.overlaps(t.coordinate, coordinate)) || new Tile(coordinate, '.');
-    }
-
-    set(coordinate: Coordinate, unit: Unit) {
-        this.tileAt(coordinate).unit = unit
-    }
 }
 
 const example: number[][][] = [
@@ -108,15 +144,15 @@ const example: number[][][] = [
     [[503, 4], [502, 4], [502, 9], [494, 9]],
 ];
 
-function order(lineRange: number[][], line: number): { from: number[], to: number[] } {
-    const left = lineRange[line - 1];
-    const right = lineRange[line];
-    if (left[0] < right[0]) return {from: left, to: right};
-    if (left[1] < right[1]) return {from: left, to: right};
-    return {from: right, to: left};
-}
-
 function getRocks(paths: number[][][]): Coordinate[] {
+    function order(lineRange: number[][], line: number): { from: number[], to: number[] } {
+        const left = lineRange[line - 1];
+        const right = lineRange[line];
+        if (left[0] < right[0]) return {from: left, to: right};
+        if (left[1] < right[1]) return {from: left, to: right};
+        return {from: right, to: left};
+    }
+
     const rocks: Coordinate[] = []
     for (let pathIndex = 0; pathIndex < paths.length; pathIndex++) {
         const lineRange = paths[pathIndex];
@@ -146,12 +182,14 @@ function unitsAtRest(paths: number[][][]) {
             })));
 
     const grid = new Grid(tiles);
+    grid.set(new Coordinate(500, 0), '+');
     for (const rock of rocks) {
         grid.set(rock, '#');
     }
 
-    console.log(grid.tick().tick().tick().render());
-    return 24;
+    const endState = grid.endState();
+    console.log(endState.render())
+    return endState.grainsOfSand();
 }
 
 test('example', function () {
@@ -159,5 +197,5 @@ test('example', function () {
 });
 
 xtest('input', function () {
-    expect(unitsAtRest(input)).toBe(24)
+    expect(unitsAtRest(input)).toBe(979)
 });
