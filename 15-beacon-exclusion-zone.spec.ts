@@ -45,12 +45,6 @@ class Scanner {
 
     constructor(links: Link[]) {
         this.links = links;
-
-        const render = (link: Link) => {
-            return `(${link.sensor.x}, ${link.sensor.y}) ${link.distance}`
-        };
-
-        console.log({links: links.map(render)})
     }
 
     scan(lineNumber: number): number {
