@@ -317,8 +317,8 @@ test('example - part 2', () => {
 
     const state = grid.move(24);
     const grid1 = state.move(1);
-    console.log(grid1.render());
-    console.log((state.grainsOfSand()))
+    // console.log(grid1.render());
+    // console.log((state.grainsOfSand()))
 
     // expect(unitsAtRest(example, (t) => new GridWithFloor(t))).toBe(24)
 });
