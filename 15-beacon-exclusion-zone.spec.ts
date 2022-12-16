@@ -81,12 +81,13 @@ const example = '' +
     'Sensor at x=14, y=3: closest beacon is at x=15, y=3\n' +
     'Sensor at x=20, y=1: closest beacon is at x=15, y=3'
 
-test('example', () => {
+test('example - part 1', () => {
     const scanner = new Scanner(parseSensors(example));
     expect(scanner.scan(10)).toBe(26);
 });
 
-xtest('input', () => {
+xtest('input - part 1', () => {
     const scanner = new Scanner(parseSensors(input));
     expect(scanner.scan(2000000)).toBe(6124805);
 });
+
