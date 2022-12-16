@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {input} from "./15-input";
 
 class Coordinate {
     public readonly x: number;
@@ -24,7 +25,7 @@ function parseSensors(description: string): Link[] {
             .replace('closest beacon is at ', '')
             .split(': ')
             .map(parseCoordinate);
-        return {sensor: coordinates[0], beacon: coordinates[1]}
+        return {sensor: coordinates[0], beacon: coordinates[1], distance: coordinates[0].distanceTo(coordinates[1])}
     }
 
     function parseCoordinate(description: string): Coordinate {
@@ -37,18 +38,24 @@ function parseSensors(description: string): Link[] {
     return description.split('\n').map(parseSensor);
 }
 
-type Link = { sensor: Coordinate; beacon: Coordinate };
+type Link = { sensor: Coordinate; beacon: Coordinate, distance: number };
 
 type Point = { coordinate: Coordinate; type: string };
 
 class Scanner {
     private points: Point[];
     private links: Link[];
+    private map: string[][]
 
-    constructor(links: Link[]) {
-        this.links = links;
-        this.points = links.reduce((acc: { coordinate: Coordinate, type: string }[], sensor) =>
+    constructor(links: Link[], focusLine: number) {
+        this.links = links.filter(link => {
+            if (link.sensor.y + link.distance < focusLine) return false;
+            if (link.sensor.y - link.distance > focusLine) return false;
+            return true;
+        });
+        this.points = this.links.reduce((acc: { coordinate: Coordinate, type: string }[], sensor) =>
             [...acc, {coordinate: sensor.sensor, type: 'S'}, {coordinate: sensor.beacon, type: 'B'}], []);
+        this.map = []
     }
 
     private getPoint(coordinate: Coordinate): string {
@@ -114,8 +121,7 @@ class Scanner {
         }
     }
 
-    private scanLink({sensor, beacon}: Link) {
-        const distance = sensor.distanceTo(beacon);
+    private scanLink({sensor, distance}: Link) {
         for (let y = sensor.y - distance; y <= sensor.y + distance; y++) {
             for (let x = sensor.x - distance; x <= sensor.x + distance; x++) {
                 const coordinate = new Coordinate(x, y);
@@ -150,10 +156,18 @@ const example = '' +
     'Sensor at x=14, y=3: closest beacon is at x=15, y=3\n' +
     'Sensor at x=20, y=1: closest beacon is at x=15, y=3'
 
-test('should work', () => {
+test('example', () => {
     const sensors = parseSensors(example);
-    const scanner = new Scanner(sensors);
+    const scanner = new Scanner(sensors, 10);
     scanner.scan()
     console.log(scanner.render())
     expect(scanner.emptyLocationsOnLine(10)).toBe(26);
+});
+
+xtest('input', () => {
+    const sensors = parseSensors(input);
+    const scanner = new Scanner(sensors, 2000000);
+    scanner.scan()
+    // console.log(scanner.render())
+    expect(scanner.emptyLocationsOnLine(2000000)).toBe(26);
 });
