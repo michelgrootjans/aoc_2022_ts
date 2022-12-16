@@ -159,9 +159,7 @@ class GridWithFloor extends Grid {
 
     tick(): Grid {
         const grain = this.fallFrom(this.source().coordinate);
-        if (this.grid.some(t => this.overlaps(t.coordinate, grain))) {
-            this.tileAt(grain).unit = 'o';
-        };
+        this.tileAt(grain).unit = 'o';
         return this;
     }
 
@@ -183,7 +181,6 @@ class GridWithFloor extends Grid {
     }
 
     protected fallFrom(from: Coordinate): Coordinate {
-        if(!this.isInGrid(from)) return from;
         if (this.isFree(from.down())) return this.fallFrom(from.down());
         if (this.isFree(from.downLeft())) return this.fallFrom(from.downLeft());
         if (this.isFree(from.downRight())) return this.fallFrom(from.downRight());
@@ -194,11 +191,16 @@ class GridWithFloor extends Grid {
         const tile = this.tileAt(coordinate);
         if(['+', '#', 'o'].includes(tile.unit)) return false;
         if(['.'].includes(tile.unit)) return true;
-        return tile.unit === ' ';
+        return coordinate.y < this.floor;
     }
 
     protected tileAt(coordinate: Coordinate): Tile {
-        return this.grid.find(t => this.overlaps(t.coordinate, coordinate)) || new Tile(coordinate, ' ');
+        const tile = this.grid.find(t => this.overlaps(t.coordinate, coordinate));
+        if(tile) return tile;
+
+        if(coordinate.y < this.floor) return new Tile(coordinate, '.')
+        if(coordinate.y === this.floor) return new Tile(coordinate, '#')
+        return new Tile(coordinate, ' ');
     }
 
     protected overlaps(left: Coordinate, right: Coordinate) {
@@ -313,8 +315,9 @@ xtest('example - part 1', () => {
 test('example - part 2', () => {
     const grid = buildGrid(example, (t) => new GridWithFloor(t));
 
-    const state = grid.move(25);
-    console.log(state.render());
+    const state = grid.move(24);
+    const grid1 = state.move(1);
+    console.log(grid1.render());
     console.log((state.grainsOfSand()))
 
     // expect(unitsAtRest(example, (t) => new GridWithFloor(t))).toBe(24)
