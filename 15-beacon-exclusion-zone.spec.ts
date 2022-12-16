@@ -131,7 +131,10 @@ class Scanner {
     }
 
     emptyLocationsOnLine(number: number) {
-        return 26;
+        return this.points
+            .filter(p => p.coordinate.y === number)
+            .filter(p => p.type === '#')
+            .length;
     }
 }
 
