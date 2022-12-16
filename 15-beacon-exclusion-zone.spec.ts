@@ -39,49 +39,18 @@ function parseSensors(description: string): Link[] {
 
 type Link = { sensor: Coordinate; beacon: Coordinate, distance: number };
 
-type Point = { coordinate: Coordinate; type: string };
-
 class Scanner {
-    // private points: Point[];
     private links: Link[];
-    private focusLine: number;
 
     constructor(links: Link[], focusLine: number) {
-        this.focusLine = focusLine;
         this.links = links;
-        // this.points = this.links.reduce((acc: { coordinate: Coordinate, type: string }[], sensor) =>
-        //     [...acc, {coordinate: sensor.sensor, type: 'S'}, {coordinate: sensor.beacon, type: 'B'}], []);
     }
-
-    // private getPoint(coordinate: Coordinate): string {
-    //     return this.findPoint(coordinate)?.type || '.';
-    // }
-
-    // private setPoint(coordinate: Coordinate, type: string) {
-    //     const point = this.findPoint(coordinate);
-    //     if (point) {
-    //         if (point.type === '.') {
-    //             point.type = type;
-    //         }
-    //     } else {
-    //
-    //         this.points.push({coordinate, type})
-    //     }
-    // }
-
-    // private findPoint(coordinate: Coordinate) {
-    //     return this.points.find(p => this.overlaps(coordinate, p.coordinate));
-    // }
-
-    // private overlaps(left: Coordinate, right: Coordinate): boolean {
-    //     return left.overlapsWith(right);
-    // }
 
     scan(lineNumber: number): number {
         const emptyPositions = new Set();
         for (const link of this.links.filter(l => {
-            if (l.sensor.y + l.distance < this.focusLine) return false;
-            if (l.sensor.y - l.distance > this.focusLine) return false;
+            if (l.sensor.y + l.distance < lineNumber) return false;
+            if (l.sensor.y - l.distance > lineNumber) return false;
             return true;
         })) {
             let {sensor, beacon, distance}: Link = link;
@@ -116,7 +85,6 @@ test('example', () => {
     const sensors = parseSensors(example);
     const scanner = new Scanner(sensors, 10);
     scanner.scan(10)
-    // console.log(scanner.render())
     expect(scanner.scan(10)).toBe(26);
 });
 
