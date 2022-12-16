@@ -1,5 +1,6 @@
 import {input} from "./15-input";
 
+
 class Coordinate {
     public readonly x: number;
     public readonly y: number;
@@ -44,6 +45,12 @@ class Scanner {
 
     constructor(links: Link[]) {
         this.links = links;
+
+        const render = (link: Link) => {
+            return `(${link.sensor.x}, ${link.sensor.y}) ${link.distance}`
+        };
+
+        console.log({links: links.map(render)})
     }
 
     scan(lineNumber: number): number {
@@ -62,6 +69,20 @@ class Scanner {
             }
         }
         return emptyPositions.size;
+    }
+
+    beacon(): Coordinate {
+        const canSee = (coordinate: Coordinate) => (link: Link): boolean => link.sensor.distanceTo(coordinate) <= link.distance;
+
+        for (let i = 0; i < 4000000; i++) {
+            for (let x = 0; x <= i; x++) {
+                for (let y = 0; y <= i; y++) {
+                    if(this.links.some(canSee(new Coordinate(x, y)))) continue;
+                    return new Coordinate(x, y);
+                }
+            }
+        }
+        return new Coordinate(0, 0);
     }
 }
 
@@ -89,5 +110,10 @@ test('example - part 1', () => {
 xtest('input - part 1', () => {
     const scanner = new Scanner(parseSensors(input));
     expect(scanner.scan(2000000)).toBe(6124805);
+});
+
+test('example - part 2', () => {
+    const scanner = new Scanner(parseSensors(example));
+    expect(scanner.beacon()).toMatchObject({x: 14, y: 11});
 });
 
