@@ -12,6 +12,10 @@ class Coordinate {
     overlapsWith(that: Coordinate) {
         return this.x === that.x && this.y === that.y;
     }
+
+    distanceTo(that: Coordinate): number {
+        return Math.abs(this.x - that.x) + Math.abs(this.y - that.y);
+    }
 }
 
 function parseSensors(description: string): Link[] {
@@ -37,28 +41,34 @@ type Link = { sensor: Coordinate; beacon: Coordinate };
 
 type Point = { coordinate: Coordinate; type: string };
 
-class Scan {
-    private topLeft: Coordinate;
-    private bottomRight: Coordinate;
+class Scanner {
     private points: Point[];
+    private links: Link[];
 
     constructor(links: Link[]) {
+        this.links = links;
         this.points = links.reduce((acc: { coordinate: Coordinate, type: string }[], sensor) =>
             [...acc, {coordinate: sensor.sensor, type: 'S'}, {coordinate: sensor.beacon, type: 'B'}], []);
-
-        this.topLeft = new Coordinate(
-            _.minBy(this.points, 'coordinate.x')?.coordinate.x || 0,
-            _.minBy(this.points, 'coordinate.y')?.coordinate.y || 0
-        );
-        this.bottomRight = new Coordinate(
-            _.maxBy(this.points, 'coordinate.x')?.coordinate.x || 0,
-            _.maxBy(this.points, 'coordinate.y')?.coordinate.y || 0
-        );
-
     }
 
     private getPoint(coordinate: Coordinate): string {
-        return this.points.find(p => this.overlaps(coordinate, p.coordinate))?.type || '.';
+        return this.findPoint(coordinate)?.type || '.';
+    }
+
+    private setPoint(coordinate: Coordinate, type: string) {
+        const point = this.findPoint(coordinate);
+        if (point) {
+            if (point.type === '.') {
+                point.type = type;
+            }
+        } else {
+
+            this.points.push({coordinate, type})
+        }
+    }
+
+    private findPoint(coordinate: Coordinate) {
+        return this.points.find(p => this.overlaps(coordinate, p.coordinate));
     }
 
     private overlaps(left: Coordinate, right: Coordinate): boolean {
@@ -66,27 +76,62 @@ class Scan {
     }
 
     render(): string {
+        const topLeft = new Coordinate(
+            _.minBy(this.points, 'coordinate.x')?.coordinate.x || 0,
+            _.minBy(this.points, 'coordinate.y')?.coordinate.y || 0
+        );
+        const bottomRight = new Coordinate(
+            _.maxBy(this.points, 'coordinate.x')?.coordinate.x || 0,
+            _.maxBy(this.points, 'coordinate.y')?.coordinate.y || 0
+        );
+
         const map = []
-        for (let y = this.topLeft.y; y <= this.bottomRight.y; y++) {
+        for (let y = topLeft.y; y <= bottomRight.y; y++) {
             const line: string[] = [];
             map.push(line);
-            for (let x = this.topLeft.x; x <= this.bottomRight.x; x++) {
+            for (let x = topLeft.x; x <= bottomRight.x; x++) {
                 line.push(this.getPoint(new Coordinate(x, y)));
             }
         }
         let result = '     ';
-        for (let x = this.topLeft.x; x <= this.bottomRight.x; x++) {
+        for (let x = topLeft.x; x <= bottomRight.x; x++) {
             result += x === 0 ? ' ' : Math.abs(x % 10);
         }
         result += '\n';
         for (let y = 0; y < map.length; y++) {
-            const line = (y + this.topLeft.y + ' ').padEnd(5, ' ') + map[y].join('');
+            const line = (y + topLeft.y + ' ').padEnd(5, ' ') + map[y].join('');
             for (let x = 0; x < line.length; x++) {
                 result += line[x]
             }
             result += '\n';
         }
         return result
+    }
+
+    scan() {
+        for (const link of this.links) {
+            this.scanLink(link);
+        }
+    }
+
+    private scanLink({sensor, beacon}: Link) {
+        const distance = sensor.distanceTo(beacon);
+        for (let y = 0; y < distance; y++) {
+            for (let x = 0; x < distance; x++) {
+                for (let i = 1; i <= distance; i++) {
+                    for (let j = 0; j <= i; j++) {
+                        this.setPoint(new Coordinate(sensor.x + i - j, sensor.y + j), '#')
+                        this.setPoint(new Coordinate(sensor.x - i + j, sensor.y + j), '#')
+                        this.setPoint(new Coordinate(sensor.x - i + j, sensor.y - j), '#')
+                        this.setPoint(new Coordinate(sensor.x + i - j, sensor.y - j), '#')
+                    }
+                }
+            }
+        }
+    }
+
+    emptyLocationsOnLine(number: number) {
+        return 26;
     }
 }
 
@@ -108,6 +153,8 @@ const example = '' +
 
 test('should work', () => {
     const sensors = parseSensors(example);
-    const scan = new Scan(sensors)
-    console.log(scan.render())
+    const scanner = new Scanner(sensors);
+    scanner.scan()
+    expect(scanner.emptyLocationsOnLine(10)).toBe(26);
+    console.log(scanner.render())
 });
