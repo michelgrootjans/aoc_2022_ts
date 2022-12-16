@@ -116,15 +116,11 @@ class Scanner {
 
     private scanLink({sensor, beacon}: Link) {
         const distance = sensor.distanceTo(beacon);
-        for (let y = 0; y < distance; y++) {
-            for (let x = 0; x < distance; x++) {
-                for (let i = 1; i <= distance; i++) {
-                    for (let j = 0; j <= i; j++) {
-                        this.setPoint(new Coordinate(sensor.x + i - j, sensor.y + j), '#')
-                        this.setPoint(new Coordinate(sensor.x - i + j, sensor.y + j), '#')
-                        this.setPoint(new Coordinate(sensor.x - i + j, sensor.y - j), '#')
-                        this.setPoint(new Coordinate(sensor.x + i - j, sensor.y - j), '#')
-                    }
+        for (let y = sensor.y - distance; y <= sensor.y + distance; y++) {
+            for (let x = sensor.x - distance; x <= sensor.x + distance; x++) {
+                const coordinate = new Coordinate(x, y);
+                if (sensor.distanceTo(coordinate) <= distance) {
+                    this.setPoint(coordinate, '#');
                 }
             }
         }
@@ -158,6 +154,6 @@ test('should work', () => {
     const sensors = parseSensors(example);
     const scanner = new Scanner(sensors);
     scanner.scan()
-    expect(scanner.emptyLocationsOnLine(10)).toBe(26);
     console.log(scanner.render())
+    expect(scanner.emptyLocationsOnLine(10)).toBe(26);
 });
