@@ -42,7 +42,7 @@ type Link = { sensor: Coordinate; beacon: Coordinate, distance: number };
 class Scanner {
     private links: Link[];
 
-    constructor(links: Link[], focusLine: number) {
+    constructor(links: Link[]) {
         this.links = links;
     }
 
@@ -83,13 +83,13 @@ const example = '' +
 
 test('example', () => {
     const sensors = parseSensors(example);
-    const scanner = new Scanner(sensors, 10);
+    const scanner = new Scanner(sensors);
     scanner.scan(10)
     expect(scanner.scan(10)).toBe(26);
 });
 
-test('input', () => {
+xtest('input', () => {
     const sensors = parseSensors(input);
-    const scanner = new Scanner(sensors, 2000000);
+    const scanner = new Scanner(sensors);
     expect(scanner.scan(2000000)).toBe(6124805);
 });
