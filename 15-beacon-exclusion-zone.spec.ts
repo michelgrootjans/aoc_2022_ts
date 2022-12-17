@@ -67,7 +67,6 @@ class Scanner {
 
     beacon(): Coordinate {
         const canSee = (coordinate: Coordinate) => (link: Link): boolean => link.sensor.distanceTo(coordinate) <= link.distance;
-
         for (let i = 0; i < 4000000; i++) {
             for (let x = 0; x <= i; x++) {
                 for (let y = 0; y <= i; y++) {
@@ -108,6 +107,11 @@ xtest('input - part 1', () => {
 
 test('example - part 2', () => {
     const scanner = new Scanner(parseSensors(example));
+    expect(scanner.beacon()).toMatchObject({x: 14, y: 11});
+});
+
+xtest('input - part 2', () => {
+    const scanner = new Scanner(parseSensors(input));
     expect(scanner.beacon()).toMatchObject({x: 14, y: 11});
 });
 
