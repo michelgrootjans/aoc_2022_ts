@@ -39,5 +39,4 @@ xdescribe('part 1', () => {
     test('example part 1', function () {
         expect(orderedIndexes(example)).toEqual([1, 2, 4, 6]);
     });
-
 });
