@@ -16,33 +16,87 @@ const example = [
     [2, 3, 5],
 ]
 
-type Cube = { x: number; y: number; z: number };
+type Coordinate = { x: number; y: number; z: number };
+type Direction = 'N' | 'S' | 'E' | 'W' | 'U' | 'D';
+type Type = 'Outside' | 'Inside' | 'Touching' | 'Unknown';
+type Side = { direction: Direction, type: Type}
 
-function areNeigbours(left: Cube, right: Cube) {
-    return Math.abs(left.x - right.x)
-        + Math.abs(left.y - right.y)
-        + Math.abs(left.z - right.z) === 1;
+class Cube {
+    public readonly sides: Side[]
+    public readonly coordinate: Coordinate
+
+    constructor(coordinate: Coordinate, sides: Side[]) {
+        this.coordinate = coordinate;
+        this.sides = sides;
+    }
+
+    freeSides(): number {
+        return this.sides.filter(s => s.type !== 'Touching').length;
+    }
+
+    outSides() {
+        return this.sides.filter(s => s.type === 'Outside').length;
+    }
+}
+
+function areNeigbours(left: Cube, right: Cube): boolean {
+    return Math.abs(left.coordinate.x - right.coordinate.x)
+        + Math.abs(left.coordinate.y - right.coordinate.y)
+        + Math.abs(left.coordinate.z - right.coordinate.z) === 1;
+}
+
+function canSeeOutside(cube: Coordinate, cubes: Coordinate[]) {
+    const canSeeNorth = () => !cubes.some(other => cube.x < other.x && cube.y === other.y && cube.z === other.z);
+    const canSeeSouth = () => !cubes.some(other => cube.x > other.x && cube.y === other.y && cube.z === other.z);
+    const canSeeEast  = () => !cubes.some(other => cube.x === other.x && cube.y < other.y && cube.z === other.z);
+    const canSeeWest  = () => !cubes.some(other => cube.x === other.x && cube.y > other.y && cube.z === other.z);
+    const canSeeUp    = () => !cubes.some(other => cube.x === other.x && cube.y === other.y && cube.z < other.z);
+    const canSeeDown  = () => !cubes.some(other => cube.x === other.x && cube.y === other.y && cube.z > other.z);
+
+    return canSeeNorth() || canSeeSouth()
+        || canSeeEast() || canSeeWest()
+        || canSeeUp() || canSeeDown()
 }
 
 function neigboursOf(cube: Cube, cubes: Cube[]) {
     return cubes.filter((other) => areNeigbours(cube, other));
 }
 
-function toCubes(coordinates: number[][]): Cube[] {
+function toCoordinates(coordinates: number[][]): Coordinate[] {
     return coordinates
-        .map(cube => ({x: cube[0], y: cube[1], z: cube[2]}));
+        .map(coordinate => ({x: coordinate[0], y: coordinate[1], z: coordinate[2]}));
+}
+
+function getType(coordinate: Coordinate, coordinates: Coordinate[]): Type {
+    if(coordinates.some(other => coordinate.x === other.x && coordinate.y === other.y && coordinate.z === other.z))
+        return 'Touching'
+    return 'Outside';
+}
+
+function toCube(coordinate: Coordinate, coordinates: Coordinate[]): Cube {
+    const sides: Side[] = [
+        {direction: 'N', type: getType({...coordinate, y: coordinate.y + 1}, coordinates)},
+        {direction: 'S', type: getType({...coordinate, y: coordinate.y - 1}, coordinates)},
+        {direction: 'E', type: getType({...coordinate, x: coordinate.x + 1}, coordinates)},
+        {direction: 'W', type: getType({...coordinate, x: coordinate.x - 1}, coordinates)},
+        {direction: 'U', type: getType({...coordinate, z: coordinate.z + 1}, coordinates)},
+        {direction: 'D', type: getType({...coordinate, z: coordinate.z - 1}, coordinates)},
+    ];
+    return new Cube(coordinate, sides);
 }
 
 function surfaceOf(coordinates: number[][]): number {
-    return toCubes(coordinates)
-        .map((cube, index, cubes) => (
-            6 - neigboursOf(cube, cubes).length
-        ))
+    return toCoordinates(coordinates)
+        .map((coordinate, index, coordinates) => toCube(coordinate, coordinates))
+        .map((cube) => cube.freeSides())
         .reduce((sum, sides) => sum + sides, 0);
 }
 
 function outsideSurface(coordinates: number[][]) {
-    return surfaceOf(coordinates);
+    return toCoordinates(coordinates)
+        .map((coordinate, index, coordinates) => toCube(coordinate, coordinates))
+        .map((cube) => cube.outSides())
+        .reduce((sum, sides) => sum + sides, 0);
 }
 
 describe('total surface ', () => {
