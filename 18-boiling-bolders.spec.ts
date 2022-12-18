@@ -37,29 +37,37 @@ function surfaceOf(cubes: number[][]): number {
         .reduce((sum, sides) => sum + sides, 0);
 }
 
-test('no cubes', function () {
-    expect(surfaceOf([])).toBe(0);
-});
-test('one cube', function () {
-    expect(surfaceOf([[1, 1, 1]])).toBe(6);
-});
-test('two cubes', function () {
-    expect(surfaceOf([[1, 1, 1], [10, 10, 10]])).toBe(6 * 2);
-});
-test('two touching cubes', function () {
-    expect(surfaceOf([[1, 1, 1], [2, 1, 1]])).toBe(5 * 2);
-});
-test('example: part 1', function () {
-    expect(surfaceOf(example)).toBe(64);
-});
-test('input: part 1', function () {
-    expect(surfaceOf(input)).toBe(4348);
-});
-
 function outsideSurface(example: number[][]) {
     return 58;
 }
 
-test('example: part 2', function () {
-    expect(outsideSurface(example)).toBe(58);
+describe('total surface ', function () {
+    test('no cubes', function () {
+        expect(surfaceOf([])).toBe(0);
+    });
+    test('one cube', function () {
+        expect(surfaceOf([[1, 1, 1]])).toBe(6);
+    });
+    test('two cubes', function () {
+        expect(surfaceOf([[1, 1, 1], [10, 10, 10]])).toBe(6 * 2);
+    });
+    test('two touching cubes', function () {
+        expect(surfaceOf([[1, 1, 1], [2, 1, 1]])).toBe(5 * 2);
+    });
+    test('example: part 1', function () {
+        expect(surfaceOf(example)).toBe(64);
+    });
+
+    test('input: part 1', function () {
+        expect(surfaceOf(input)).toBe(4348);
+    });
 });
+
+
+
+describe('outside sruface', function () {
+    test('example: part 2', function () {
+        expect(outsideSurface(example)).toBe(58);
+    });
+});
+
