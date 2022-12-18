@@ -56,3 +56,10 @@ test('input: part 1', function () {
     expect(surfaceOf(input)).toBe(4348);
 });
 
+function outsideSurface(example: number[][]) {
+    return 58;
+}
+
+test('example: part 2', function () {
+    expect(outsideSurface(example)).toBe(58);
+});
