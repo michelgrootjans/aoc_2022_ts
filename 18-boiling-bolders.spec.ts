@@ -1,3 +1,5 @@
+import {input} from "./18-input";
+
 const example = [
     [2, 2, 2],
     [1, 2, 2],
@@ -49,4 +51,7 @@ test('two touching cubes', function () {
 });
 test('examples', function () {
     expect(surfaceOf(example)).toBe(64);
+});
+test('input', function () {
+    expect(surfaceOf(input)).toBe(4348);
 });
