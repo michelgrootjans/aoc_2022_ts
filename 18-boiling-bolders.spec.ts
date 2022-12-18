@@ -45,6 +45,16 @@ function areNeigbours(left: Cube, right: Cube): boolean {
         + Math.abs(left.coordinate.z - right.coordinate.z) === 1;
 }
 
+function getSide(coordinate: Coordinate, direction: Direction, coordinates: Coordinate[]): Side {
+    return {direction, type: getType({...coordinate, y: coordinate.y + 1}, coordinates)};
+}
+
+function getType(coordinate: Coordinate, coordinates: Coordinate[]): Type {
+    if(coordinates.some(other => coordinate.x === other.x && coordinate.y === other.y && coordinate.z === other.z))
+        return 'Touching'
+    return 'Outside';
+}
+
 function canSeeOutside(cube: Coordinate, cubes: Coordinate[]) {
     const canSeeNorth = () => !cubes.some(other => cube.x < other.x && cube.y === other.y && cube.z === other.z);
     const canSeeSouth = () => !cubes.some(other => cube.x > other.x && cube.y === other.y && cube.z === other.z);
@@ -67,15 +77,9 @@ function toCoordinates(coordinates: number[][]): Coordinate[] {
         .map(coordinate => ({x: coordinate[0], y: coordinate[1], z: coordinate[2]}));
 }
 
-function getType(coordinate: Coordinate, coordinates: Coordinate[]): Type {
-    if(coordinates.some(other => coordinate.x === other.x && coordinate.y === other.y && coordinate.z === other.z))
-        return 'Touching'
-    return 'Outside';
-}
-
 function toCube(coordinate: Coordinate, coordinates: Coordinate[]): Cube {
     const sides: Side[] = [
-        {direction: 'N', type: getType({...coordinate, y: coordinate.y + 1}, coordinates)},
+        getSide(coordinate, 'N', coordinates),
         {direction: 'S', type: getType({...coordinate, y: coordinate.y - 1}, coordinates)},
         {direction: 'E', type: getType({...coordinate, x: coordinate.x + 1}, coordinates)},
         {direction: 'W', type: getType({...coordinate, x: coordinate.x - 1}, coordinates)},
