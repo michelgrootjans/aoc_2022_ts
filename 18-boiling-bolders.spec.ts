@@ -49,9 +49,10 @@ test('two cubes', function () {
 test('two touching cubes', function () {
     expect(surfaceOf([[1, 1, 1], [2, 1, 1]])).toBe(5 * 2);
 });
-test('examples', function () {
+test('example: part 1', function () {
     expect(surfaceOf(example)).toBe(64);
 });
-test('input', function () {
+test('input: part 1', function () {
     expect(surfaceOf(input)).toBe(4348);
 });
+
